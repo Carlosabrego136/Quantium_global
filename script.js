@@ -152,6 +152,31 @@ onScroll();
 })();
 
 /* ============================================================
+   HERO VIZ — subtle pointer parallax (desktop only, no fake tilt on touch)
+   ============================================================ */
+(function heroParallax(){
+  const viz = document.querySelector('.hero-viz');
+  if (!viz || window.matchMedia('(pointer: coarse)').matches) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  let raf = null;
+  viz.addEventListener('mousemove', (e) => {
+    const rect = viz.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      viz.style.transform = `perspective(900px) rotateY(${px*4}deg) rotateX(${-py*4}deg)`;
+    });
+  });
+  viz.addEventListener('mouseleave', () => {
+    if (raf) cancelAnimationFrame(raf);
+    viz.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
+  });
+})();
+
+/* ============================================================
    GAMMA SURFACE — layered wave lines (showcase section)
    ============================================================ */
 (function waveSurface(){

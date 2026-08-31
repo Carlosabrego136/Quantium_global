@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantium Global — Inteligencia de mercado para operadores activos</title>
+<meta name="description" content="El flujo de opciones, la gamma del dealer y el dark pool, en una sola pantalla. 84 herramientas de análisis sobre opciones, volatilidad, macro y cripto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="wordmark">
+      <span class="wordmark-mark" aria-hidden="true">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M14 1L26 7.5V20.5L14 27L2 20.5V7.5L14 1Z" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M14 8L20 11.3V17.7L14 21L8 17.7V11.3L14 8Z" fill="currentColor"/>
+        </svg>
+      </span>
+      Quantium
+    </a>
+    <nav class="nav-links">
+      <a href="#herramientas">Herramientas</a>
+      <a href="#gamma">Superficie de gamma</a>
+      <a href="#metodo">Metodología</a>
+      <a href="#planes">Planes</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#planes" class="btn btn-ghost">Entrar</a>
+      <a href="#planes" class="btn btn-solid">Solicitar acceso</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="ticker-rail" aria-hidden="true">
+      <div class="ticker-track" id="tickerTrack"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1>
+          Ve el mercado<br>
+          como lo ve un <em>dealer.</em>
+        </h1>
+        <p class="hero-sub">
+          Flujo de opciones, gamma del dealer y actividad de dark pool, cruzados en tiempo real.
+          84 herramientas para leer el posicionamiento detrás del precio — sin pagar
+          una terminal institucional.
+        </p>
+        <div class="hero-actions">
+          <a href="#planes" class="btn btn-solid btn-lg">Solicitar acceso</a>
+          <a href="#herramientas" class="btn btn-line btn-lg">Ver las 84 herramientas</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-item">
+            <span class="proof-num">84</span>
+            <span class="proof-label">herramientas de análisis</span>
+          </div>
+          <div class="proof-div" aria-hidden="true"></div>
+          <div class="proof-item">
+            <span class="proof-num">12</span>
+            <span class="proof-label">clases de activos cubiertas</span>
+          </div>
+          <div class="proof-div" aria-hidden="true"></div>
+          <div class="proof-item">
+            <span class="proof-num">&lt;1s</span>
+            <span class="proof-label">latencia de actualización</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-viz">
+        <canvas id="networkCanvas"></canvas>
+        <div class="viz-caption">
+          <span class="viz-dot"></span> mapa de exposición en vivo
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STAT STRIP ============ -->
+  <section class="stat-strip" aria-label="Niveles clave del mercado">
+    <div class="stat-strip-inner" id="statStrip">
+      <div class="stat-card">
+        <span class="stat-tag tag-put">put floor</span>
+        <span class="stat-value">7,090</span>
+        <span class="stat-label">SPX · dealer put floor</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-tag tag-call">call short</span>
+        <span class="stat-value">7,890</span>
+        <span class="stat-label">SPX · call resistance</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-tag tag-neutral">gamma flip</span>
+        <span class="stat-value">7,410</span>
+        <span class="stat-label">SPX · zero gamma</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-tag tag-call">call wall</span>
+        <span class="stat-value">760</span>
+        <span class="stat-label">SPY · muro de calls</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-tag tag-neutral">vencimiento</span>
+        <span class="stat-value">Q3 2026</span>
+        <span class="stat-label">concentración de OI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ POSITIONING ============ -->
+  <section class="positioning">
+    <div class="positioning-inner">
+      <div class="positioning-label">El problema</div>
+      <h2>
+        Los datos que mueven el precio existen.<br>
+        El problema es que están repartidos en seis pestañas distintas.
+      </h2>
+      <p class="positioning-body">
+        Flujo de opciones en una herramienta, gamma del dealer en otra, dark pool en un
+        tercer sitio que cobra aparte. Para cuando cruzas los tres, el nivel ya se movió.
+        Quantium junta el flujo, la exposición del dealer y la actividad fuera de bolsa
+        en una sola pantalla — con la misma profundidad de datos que usa una mesa
+        institucional.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FEATURE GRID ============ -->
+  <section class="tools" id="herramientas">
+    <div class="section-head">
+      <div class="positioning-label">La plataforma</div>
+      <h2>Ocho módulos.<br>Un solo mapa del posicionamiento.</h2>
+      <p>Cada herramienta responde una pregunta concreta sobre quién está posicionado,
+        dónde, y qué tan forzados están los dealers a reaccionar.</p>
+    </div>
+
+    <div class="tool-grid">
+
+      <article class="tool-card" data-accent="cyan">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M8 30V18M17 30V10M26 30V21M35 30V14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Flujo de opciones</h3>
+        <p>Cada orden grande, en su nivel. Sweeps, bloques y prints de dark pool,
+          clasificados por strike y por vencimiento en tiempo real.</p>
+      </article>
+
+      <article class="tool-card" data-accent="violet">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="4" fill="currentColor"/><circle cx="8" cy="12" r="2.4" fill="currentColor" opacity=".55"/><circle cx="33" cy="9" r="2.4" fill="currentColor" opacity=".55"/><circle cx="34" cy="27" r="2.4" fill="currentColor" opacity=".55"/><circle cx="7" cy="29" r="2.4" fill="currentColor" opacity=".55"/><path d="M20 20L8 12M20 20L33 9M20 20L34 27M20 20L7 29" stroke="currentColor" stroke-width="1.3" opacity=".5"/></svg>
+        </div>
+        <h3>Gamma del dealer</h3>
+        <p>Dónde el mercado se pega y dónde se suelta. Exposición neta de los
+          market makers, agregada por strike, con el punto de flip a la vista.</p>
+      </article>
+
+      <article class="tool-card" data-accent="blue">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><rect x="6" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="2"/><path d="M6 15H34M13 15V28" stroke="currentColor" stroke-width="1.6" opacity=".6"/></svg>
+        </div>
+        <h3>Dark pool</h3>
+        <p>El volumen que no pasa por el libro público. Prints fuera de bolsa
+          agrupados por ticker, con el precio y el tamaño de cada bloque.</p>
+      </article>
+
+      <article class="tool-card" data-accent="cyan">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M4 26C10 26 10 14 16 14C22 14 22 26 28 26C34 26 34 14 40 14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none" transform="translate(-2,0)"/></svg>
+        </div>
+        <h3>Superficie de gamma 3D</h3>
+        <p>La exposición del dealer por strike y vencimiento, convertida en
+          relieve. Rota la superficie y encuentra los puntos de tensión.</p>
+      </article>
+
+      <article class="tool-card" data-accent="violet">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M6 30C6 30 12 10 20 10C28 10 34 30 34 30" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M6 30H34" stroke="currentColor" stroke-width="1.4" opacity=".4"/></svg>
+        </div>
+        <h3>Skew y volatilidad</h3>
+        <p>Cómo está pagando el mercado por protegerse. Skew put-call,
+          term structure y volatilidad implícita por vencimiento.</p>
+      </article>
+
+      <article class="tool-card" data-accent="blue">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M8 8L20 20L8 32M32 8V32" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <h3>Hedging y open interest</h3>
+        <p>Cuánto tienen que cubrir los market makers y a qué velocidad.
+          Open interest vivo cruzado con la necesidad de cobertura.</p>
+      </article>
+
+      <article class="tool-card" data-accent="cyan">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="13" stroke="currentColor" stroke-width="2"/><path d="M20 20L27 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Liquidez y spreads</h3>
+        <p>Profundidad real del libro antes de que envíes la orden.
+          Spreads, tamaño disponible y su costo estimado de entrada.</p>
+      </article>
+
+      <article class="tool-card" data-accent="violet">
+        <div class="tool-icon">
+          <svg viewBox="0 0 40 40" fill="none"><path d="M6 20C6 12 12 6 20 6C28 6 34 12 34 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/><path d="M6 20C6 28 12 34 20 34C28 34 34 28 34 20" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="1 5" fill="none"/></svg>
+        </div>
+        <h3>Cripto y macro</h3>
+        <p>El mismo marco de exposición aplicado a BTC y ETH, más los
+          niveles macro que mueven a todo el book al mismo tiempo.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ GAMMA SURFACE SHOWCASE ============ -->
+  <section class="showcase" id="gamma">
+    <div class="showcase-visual" aria-hidden="true">
+      <svg class="wave-svg" viewBox="0 0 800 420" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="showcase-copy">
+      <div class="positioning-label">Superficie de gamma · 3D</div>
+      <h2>La exposición del dealer, por strike y por vencimiento.</h2>
+      <p>
+        Dónde el mercado se pega y dónde se suelta. Convertimos la gamma agregada
+        de los dealers en una superficie que puedes rotar e inclinar — para ver de
+        un vistazo en qué strikes el precio encuentra resistencia y en cuáles
+        queda libre para moverse.
+      </p>
+      <a href="#planes" class="link-arrow">Ver superficies en vivo</a>
+    </div>
+  </section>
+
+  <!-- ============ METHODOLOGY ============ -->
+  <section class="method" id="metodo">
+    <div class="section-head">
+      <div class="positioning-label">Cómo funciona</div>
+      <h2>De la cinta de órdenes a una señal que puedes usar.</h2>
+    </div>
+    <div class="method-steps">
+      <div class="method-step">
+        <span class="method-index">01</span>
+        <h3>Ingerimos el tape completo</h3>
+        <p>Cada contrato de opciones que se opera en el día, incluyendo bloques,
+          sweeps y actividad reportada fuera de bolsa, entra a nuestro pipeline
+          en tiempo real.</p>
+      </div>
+      <div class="method-step">
+        <span class="method-index">02</span>
+        <h3>Reconstruimos la exposición</h3>
+        <p>Cruzamos ese flujo con el open interest existente para estimar cuánta
+          gamma, vanna y delta están cargando los market makers en cada strike.</p>
+      </div>
+      <div class="method-step">
+        <span class="method-index">03</span>
+        <h3>Lo dejamos en tu pantalla</h3>
+        <p>Niveles, superficies y alertas listas para usar — sin hojas de cálculo
+          ni que tengas que programar tu propio pipeline de datos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLANS ============ -->
+  <section class="plans" id="planes">
+    <div class="section-head">
+      <div class="positioning-label">Acceso</div>
+      <h2>Un plan para cada nivel de operativa.</h2>
+    </div>
+    <div class="plan-grid">
+      <div class="plan-card">
+        <h3>Trader</h3>
+        <div class="plan-price">$49<span>/mes</span></div>
+        <p class="plan-desc">Para quien ya opera opciones y quiere dejar de adivinar los niveles clave.</p>
+        <ul class="plan-list">
+          <li>Flujo de opciones en tiempo real</li>
+          <li>Gamma del dealer por strike</li>
+          <li>Niveles clave de SPX, SPY y QQQ</li>
+          <li>Alertas de sweeps y bloques</li>
+        </ul>
+        <a href="#" class="btn btn-line btn-block">Empezar</a>
+      </div>
+      <div class="plan-card plan-featured">
+        <span class="plan-badge">Más elegido</span>
+        <h3>Desk</h3>
+        <div class="plan-price">$149<span>/mes</span></div>
+        <p class="plan-desc">Las 84 herramientas, cobertura completa de tickers y superficies en 3D.</p>
+        <ul class="plan-list">
+          <li>Todo lo incluido en Trader</li>
+          <li>Dark pool y superficie de gamma 3D</li>
+          <li>Skew, volatilidad y term structure</li>
+          <li>Cobertura de cripto y macro</li>
+          <li>Acceso a la API de datos</li>
+        </ul>
+        <a href="#" class="btn btn-solid btn-block">Solicitar acceso</a>
+      </div>
+      <div class="plan-card">
+        <h3>Firma</h3>
+        <div class="plan-price">A medida</div>
+        <p class="plan-desc">Para fondos y mesas propietarias que necesitan asientos y datos a la medida.</p>
+        <ul class="plan-list">
+          <li>Todo lo incluido en Desk</li>
+          <li>Múltiples asientos y permisos</li>
+          <li>Feeds a la medida</li>
+          <li>Soporte directo con el equipo</li>
+        </ul>
+        <a href="#" class="btn btn-line btn-block">Hablar con nosotros</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final-cta">
+    <h2>Deja de operar con la mitad de la información.</h2>
+    <p>El posicionamiento de los dealers ya existe en el mercado. Nosotros lo ponemos en tu pantalla.</p>
+    <a href="#planes" class="btn btn-solid btn-lg">Solicitar acceso</a>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#top" class="wordmark">
+        <span class="wordmark-mark" aria-hidden="true">
+          <svg viewBox="0 0 28 28" fill="none">
+            <path d="M14 1L26 7.5V20.5L14 27L2 20.5V7.5L14 1Z" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M14 8L20 11.3V17.7L14 21L8 17.7V11.3L14 8Z" fill="currentColor"/>
+          </svg>
+        </span>
+        Quantium
+      </a>
+      <p>Inteligencia de mercado para operadores activos.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Plataforma</h4>
+        <a href="#herramientas">Herramientas</a>
+        <a href="#gamma">Superficie de gamma</a>
+        <a href="#metodo">Metodología</a>
+        <a href="#planes">Planes</a>
+      </div>
+      <div class="footer-col">
+        <h4>Compañía</h4>
+        <a href="#">Nosotros</a>
+        <a href="#">Contacto</a>
+        <a href="#">Términos</a>
+        <a href="#">Privacidad</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Quantium Global. Datos con fines informativos, no son asesoría de inversión.</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

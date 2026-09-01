@@ -255,6 +255,35 @@ onScroll();
 })();
 
 /* ============================================================
+   STAT CARDS — subtle per-card 3D tilt toward the cursor, so they
+   feel like they're floating just above the parallax grid floor
+   ============================================================ */
+(function statCardTilt(){
+  const cards = document.querySelectorAll('.stat-card');
+  if (!cards.length || window.matchMedia('(pointer: coarse)').matches) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+
+  cards.forEach(card => {
+    let raf = null;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5;
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transform =
+          `perspective(900px) rotateX(${(-py*7)+6}deg) rotateY(${px*7}deg) translateY(-8px)`;
+      });
+    });
+    card.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      card.style.transform = '';
+    });
+  });
+})();
+
+/* ============================================================
    GAMMA SURFACE — layered wave lines (showcase section)
    ============================================================ */
 (function waveSurface(){

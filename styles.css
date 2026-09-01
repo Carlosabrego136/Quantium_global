@@ -430,28 +430,37 @@ section{ position:relative; }
 }
 .stat-card{
   position:relative;
-  background-color:var(--surface);
+  background-color:rgba(12,20,28,.42);
   background-image:
-    linear-gradient(135deg, rgba(201,162,89,.11) 0%, rgba(148,158,168,.06) 46%, rgba(77,123,245,.13) 100%),
-    linear-gradient(165deg, rgba(255,255,255,.025), transparent 40%);
-  border:1px solid var(--border-soft);
+    linear-gradient(135deg, rgba(201,162,89,.09) 0%, rgba(148,158,168,.04) 46%, rgba(77,123,245,.1) 100%),
+    linear-gradient(165deg, rgba(255,255,255,.05), transparent 45%);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid rgba(255,255,255,.09);
   border-radius:14px;
   padding:20px 20px 18px;
   display:flex; flex-direction:column; gap:13px;
   overflow:hidden;
-  transition:transform .35s cubic-bezier(.16,.8,.24,1), border-color .3s ease, box-shadow .35s ease;
+  box-shadow:0 26px 50px -30px rgba(0,0,0,.65), 0 30px 60px -38px var(--accent-color, transparent), 0 1px 0 0 rgba(255,255,255,.04) inset;
+  transform:perspective(900px) rotateX(0deg) translateZ(0);
+  transform-origin:50% 100%;
+  transition:transform .4s cubic-bezier(.16,.8,.24,1), border-color .3s ease, box-shadow .4s cubic-bezier(.16,.8,.24,1), background-color .4s ease;
 }
 .stat-card::before{
   content:"";
   position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg, transparent, var(--accent-color, var(--cyan)), transparent);
-  opacity:.45;
+  opacity:.5;
   transition:opacity .3s ease;
 }
 .stat-card:hover{
-  transform:translateY(-4px);
+  transform:perspective(900px) rotateX(6deg) translateY(-8px);
   border-color:var(--accent-color, var(--border-soft));
-  box-shadow:0 22px 40px -26px var(--accent-color, transparent);
+  background-color:rgba(14,23,32,.6);
+  box-shadow:
+    0 20px 34px -18px var(--accent-color, transparent),
+    0 50px 70px -24px var(--accent-color, transparent),
+    0 1px 0 0 rgba(255,255,255,.09) inset;
 }
 .stat-card:hover::before{ opacity:1; }
 .stat-card[data-accent="down"]{ --accent-color: var(--down); }
@@ -1086,77 +1095,4 @@ a:focus-visible, button:focus-visible{
   .final-cta-visual{min-height:270px;}
   .network-line{transform:scale(.75);transform-origin:left center;}
   .final-cta-inner{gap:16px;}
-}
-
-/* ============================================================
-   PREVIEW GALLERY — showcase de las tarjetas de producto,
-   mismo lenguaje visual de vidrio + glow que el resto del sitio
-   ============================================================ */
-.preview-gallery{
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  padding:96px var(--edge) 110px;
-}
-.preview-gallery::before{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(720px 480px at 14% 8%, rgba(63,232,208,.09), transparent 62%),
-    radial-gradient(640px 480px at 90% 92%, rgba(155,134,247,.09), transparent 62%);
-  pointer-events:none; z-index:-2;
-}
-.preview-head{
-  max-width:640px; margin:0 auto 48px;
-  text-align:left;
-}
-.preview-head h2{
-  font-size:clamp(26px,3vw,36px);
-  line-height:1.22;
-  margin-top:16px;
-  text-shadow:0 4px 24px rgba(6,10,14,.7);
-}
-.preview-head p{
-  margin-top:18px;
-  font-size:16px;
-  color:var(--text-dim);
-  max-width:56ch;
-  line-height:1.65;
-}
-.preview-grid{
-  max-width:var(--max); margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:auto auto;
-  gap:22px;
-}
-.preview-wide{
-  grid-column:1 / -1;
-}
-.preview-card{
-  margin:0;
-  border-radius:20px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.08);
-  background:linear-gradient(180deg, var(--bg-1), var(--bg));
-  box-shadow:0 40px 80px -46px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.02) inset;
-  transition:transform .45s cubic-bezier(.16,.8,.24,1), box-shadow .45s cubic-bezier(.16,.8,.24,1), border-color .3s ease;
-}
-.preview-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(63,232,208,.35);
-  box-shadow:0 50px 100px -40px rgba(0,0,0,.8), 0 0 40px -8px rgba(63,232,208,.25);
-}
-.preview-card img{
-  display:block;
-  width:100%; height:100%;
-  object-fit:cover;
-}
-.preview-wide img{ aspect-ratio:1600/893; }
-.preview-grid .preview-card:not(.preview-wide) img{ aspect-ratio:1/1; }
-
-@media (max-width:760px){
-  .preview-gallery{ padding:72px var(--edge) 84px; }
-  .preview-grid{ grid-template-columns:1fr; }
-  .preview-wide{ grid-column:auto; }
 }

@@ -284,6 +284,52 @@ onScroll();
 })();
 
 /* ============================================================
+   STAT CARDS — auto-glow cycle, phones only. On desktop the
+   ":hover" state already lights each card; on touch devices there
+   is no hover, so here we light one card at a time on our own,
+   moving to the next every few seconds.
+   ============================================================ */
+(function statCardsAutoGlow(){
+  const cards = Array.from(document.querySelectorAll('#statStrip .stat-card'));
+  if (!cards.length) return;
+
+  const mq = window.matchMedia('(max-width:760px)');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let timer = null;
+  let index = 0;
+
+  function clearAll(){
+    cards.forEach(c => c.classList.remove('is-lit'));
+  }
+
+  function step(){
+    clearAll();
+    cards[index].classList.add('is-lit');
+    index = (index + 1) % cards.length;
+  }
+
+  function start(){
+    if (timer || reduce) return;
+    step();
+    timer = setInterval(step, 1800);
+  }
+
+  function stop(){
+    if (timer){ clearInterval(timer); timer = null; }
+    clearAll();
+    index = 0;
+  }
+
+  function sync(e){
+    if (e.matches) start(); else stop();
+  }
+
+  sync(mq);
+  if (mq.addEventListener) mq.addEventListener('change', sync);
+  else mq.addListener(sync); // Safari fallback
+})();
+
+/* ============================================================
    GAMMA SURFACE — layered wave lines (showcase section)
    ============================================================ */
 (function waveSurface(){

@@ -94,32 +94,120 @@
 
   <!-- ============ STAT STRIP ============ -->
   <section class="stat-strip" aria-label="Niveles clave del mercado">
+    <div class="stat-strip-head">
+      <div class="stat-strip-eyebrow">
+        <span aria-hidden="true">—</span> Niveles clave del mercado
+      </div>
+      <div class="stat-live">
+        <span class="stat-live-dot" aria-hidden="true"></span> actualización en vivo
+      </div>
+    </div>
     <div class="stat-strip-inner" id="statStrip">
-      <div class="stat-card">
-        <span class="stat-tag tag-put">put floor</span>
+
+      <article class="stat-card" data-accent="down">
+        <div class="stat-card-top">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 5v15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10.5 15L16 20.5L21.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 26.5h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="stat-tag tag-put">put floor</span>
+        </div>
         <span class="stat-value">7,090</span>
         <span class="stat-label">SPX · dealer put floor</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-tag tag-call">call short</span>
+        <svg class="stat-spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="spark-fill" points="0,10 15,16 32,12 48,20 65,17 82,24 100,21 120,26 120,30 0,30" />
+          <polyline points="0,10 15,16 32,12 48,20 65,17 82,24 100,21 120,26" />
+        </svg>
+      </article>
+
+      <article class="stat-card" data-accent="up">
+        <div class="stat-card-top">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 27V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M10.5 17L16 11.5L21.5 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 5.5h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="stat-tag tag-call">call short</span>
+        </div>
         <span class="stat-value">7,890</span>
         <span class="stat-label">SPX · call resistance</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-tag tag-neutral">gamma flip</span>
+        <svg class="stat-spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="spark-fill" points="0,24 15,20 32,22 48,14 65,16 82,8 100,10 120,3 120,30 0,30" />
+          <polyline points="0,24 15,20 32,22 48,14 65,16 82,8 100,10 120,3" />
+        </svg>
+      </article>
+
+      <article class="stat-card" data-accent="violet">
+        <div class="stat-card-top">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M6 12h15.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M17.5 7.5L22 12L17.5 16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M26 20H10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14.5 15.5L10 20L14.5 24.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="stat-tag tag-neutral">gamma flip</span>
+        </div>
         <span class="stat-value">7,410</span>
         <span class="stat-label">SPX · zero gamma</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-tag tag-call">call wall</span>
+        <svg class="stat-spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="spark-fill" points="0,14 15,9 32,17 48,11 65,19 82,12 100,16 120,10 120,30 0,30" />
+          <polyline points="0,14 15,9 32,17 48,11 65,19 82,12 100,16 120,10" />
+        </svg>
+      </article>
+
+      <article class="stat-card" data-accent="up">
+        <div class="stat-card-top">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <rect x="5" y="7" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="17" y="7" width="10" height="7" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="9.5" y="17" width="9" height="7" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="21" y="17" width="6" height="7" rx="1.2" stroke="currentColor" stroke-width="1.7"/>
+              <rect x="5" y="17" width="2" height="7" rx="1" stroke="currentColor" stroke-width="1.7"/>
+            </svg>
+          </span>
+          <span class="stat-tag tag-call">call wall</span>
+        </div>
         <span class="stat-value">760</span>
         <span class="stat-label">SPY · muro de calls</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-tag tag-neutral">vencimiento</span>
+        <svg class="stat-spark" viewBox="0 0 120 30" preserveAspectRatio="none" aria-hidden="true">
+          <polyline class="spark-fill" points="0,22 15,23 32,18 48,19 65,13 82,15 100,7 120,9 120,30 0,30" />
+          <polyline points="0,22 15,23 32,18 48,19 65,13 82,15 100,7 120,9" />
+        </svg>
+      </article>
+
+      <article class="stat-card" data-accent="violet">
+        <div class="stat-card-top">
+          <span class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <rect x="5" y="7" width="22" height="20" rx="3" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M5 13h22" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M10.5 4v6M21.5 4v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              <circle cx="11.5" cy="19.5" r="1.5" fill="currentColor"/>
+              <circle cx="16" cy="19.5" r="1.5" fill="currentColor"/>
+              <circle cx="20.5" cy="19.5" r="1.5" fill="currentColor" opacity=".45"/>
+            </svg>
+          </span>
+          <span class="stat-tag tag-neutral">vencimiento</span>
+        </div>
         <span class="stat-value">Q3 2026</span>
         <span class="stat-label">concentración de OI</span>
-      </div>
+        <div class="stat-timeline" aria-hidden="true">
+          <span class="tl-dot tl-done"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot tl-done"></span>
+          <span class="tl-line"></span>
+          <span class="tl-dot tl-now"></span>
+        </div>
+      </article>
+
     </div>
   </section>
 

@@ -1087,3 +1087,76 @@ a:focus-visible, button:focus-visible{
   .network-line{transform:scale(.75);transform-origin:left center;}
   .final-cta-inner{gap:16px;}
 }
+
+/* ============================================================
+   PREVIEW GALLERY — showcase de las tarjetas de producto,
+   mismo lenguaje visual de vidrio + glow que el resto del sitio
+   ============================================================ */
+.preview-gallery{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:96px var(--edge) 110px;
+}
+.preview-gallery::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(720px 480px at 14% 8%, rgba(63,232,208,.09), transparent 62%),
+    radial-gradient(640px 480px at 90% 92%, rgba(155,134,247,.09), transparent 62%);
+  pointer-events:none; z-index:-2;
+}
+.preview-head{
+  max-width:640px; margin:0 auto 48px;
+  text-align:left;
+}
+.preview-head h2{
+  font-size:clamp(26px,3vw,36px);
+  line-height:1.22;
+  margin-top:16px;
+  text-shadow:0 4px 24px rgba(6,10,14,.7);
+}
+.preview-head p{
+  margin-top:18px;
+  font-size:16px;
+  color:var(--text-dim);
+  max-width:56ch;
+  line-height:1.65;
+}
+.preview-grid{
+  max-width:var(--max); margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:22px;
+}
+.preview-wide{
+  grid-column:1 / -1;
+}
+.preview-card{
+  margin:0;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg, var(--bg-1), var(--bg));
+  box-shadow:0 40px 80px -46px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.02) inset;
+  transition:transform .45s cubic-bezier(.16,.8,.24,1), box-shadow .45s cubic-bezier(.16,.8,.24,1), border-color .3s ease;
+}
+.preview-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(63,232,208,.35);
+  box-shadow:0 50px 100px -40px rgba(0,0,0,.8), 0 0 40px -8px rgba(63,232,208,.25);
+}
+.preview-card img{
+  display:block;
+  width:100%; height:100%;
+  object-fit:cover;
+}
+.preview-wide img{ aspect-ratio:1600/893; }
+.preview-grid .preview-card:not(.preview-wide) img{ aspect-ratio:1/1; }
+
+@media (max-width:760px){
+  .preview-gallery{ padding:72px var(--edge) 84px; }
+  .preview-grid{ grid-template-columns:1fr; }
+  .preview-wide{ grid-column:auto; }
+}

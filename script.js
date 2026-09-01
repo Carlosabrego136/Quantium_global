@@ -284,83 +284,65 @@ onScroll();
 })();
 
 /* ============================================================
-   STAT CARDS — auto-glow cycle, phones only. On desktop the
-   ":hover" state already lights each card; on touch devices there
-   is no hover, so here we light one card at a time on our own,
-   moving to the next every few seconds.
-   ============================================================ */
-(function statCardsAutoGlow(){
-  const cards = Array.from(document.querySelectorAll('#statStrip .stat-card'));
-  if (!cards.length) return;
-
-  const mq = window.matchMedia('(max-width:760px)');
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let timer = null;
-  let index = 0;
-
-  function clearAll(){
-    cards.forEach(c => c.classList.remove('is-lit'));
-  }
-
-  function step(){
-    clearAll();
-    cards[index].classList.add('is-lit');
-    index = (index + 1) % cards.length;
-  }
-
-  function start(){
-    if (timer || reduce) return;
-    step();
-    timer = setInterval(step, 1800);
-  }
-
-  function stop(){
-    if (timer){ clearInterval(timer); timer = null; }
-    clearAll();
-    index = 0;
-  }
-
-  function sync(e){
-    if (e.matches) start(); else stop();
-  }
-
-  sync(mq);
-  if (mq.addEventListener) mq.addEventListener('change', sync);
-  else mq.addListener(sync); // Safari fallback
-})();
-
-/* ============================================================
    GAMMA SURFACE — layered wave lines (showcase section)
    ============================================================ */
 (function waveSurface(){
   const svg = document.querySelector('.wave-svg');
   if (!svg) return;
   const NS = 'http://www.w3.org/2000/svg';
-  const W = 800, H = 420, LINES = 26;
+  const W = 800, H = 420, LINES = 26, STEPS = 40;
   const colors = ['#3fe8d0', '#4d7bf5', '#9b86f7'];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const lines = [];
   for (let i = 0; i < LINES; i++){
     const yBase = 60 + (i / (LINES-1)) * 300;
     const amp = 26 + Math.sin(i*0.4) * 14 + (i/LINES)*10;
-    const phase = i * 0.28;
-    let d = `M -20 ${yBase}`;
-    const steps = 22;
-    for (let s = 0; s <= steps; s++){
-      const x = -20 + (W+40) * (s/steps);
-      const y = yBase
-        + Math.sin(s*0.55 + phase) * amp * Math.sin((i/LINES)*Math.PI)
-        - (i*2.2);
-      d += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
-    }
+    const basePhase = i * 0.28;
     const path = document.createElementNS(NS, 'path');
-    path.setAttribute('d', d);
     path.setAttribute('fill', 'none');
     const colorIdx = Math.floor((i/LINES) * colors.length);
     path.setAttribute('stroke', colors[Math.min(colorIdx, colors.length-1)]);
     path.setAttribute('stroke-width', '1');
     path.setAttribute('opacity', (0.12 + (i/LINES)*0.5).toFixed(2));
     svg.appendChild(path);
+    lines.push({ path, yBase, amp, basePhase, i });
   }
+
+  function render(t){
+    for (const line of lines){
+      const { path, yBase, amp, basePhase, i } = line;
+      let d = `M -20 ${yBase.toFixed(1)}`;
+      for (let s = 0; s <= STEPS; s++){
+        const x = -20 + (W+40) * (s/STEPS);
+        const y = yBase
+          + Math.sin(s*0.42 + basePhase + t) * amp * Math.sin((i/LINES)*Math.PI)
+          - (i*2.2);
+        d += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+      }
+      path.setAttribute('d', d);
+    }
+  }
+
+  render(0);
+  if (reduce) return;
+
+  // Pause the animation while the visual is off-screen — smooth where it
+  // matters, free where it doesn't.
+  let raf = null;
+  let visible = true;
+  const io = new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    if (visible && !raf) raf = requestAnimationFrame(loop);
+  });
+  io.observe(svg);
+
+  function loop(now){
+    if (!visible){ raf = null; return; }
+    render(now * 0.00032);
+    raf = requestAnimationFrame(loop);
+  }
+  raf = requestAnimationFrame(loop);
 })();
 
 /* ============================================================

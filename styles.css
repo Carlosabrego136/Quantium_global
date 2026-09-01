@@ -327,9 +327,9 @@ section{ position:relative; }
 .positioning{
   padding:120px var(--edge) 100px;
   background-image:
-    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.62) 10%, rgba(7,14,18,.74) 50%, rgba(6,10,14,.62) 90%, var(--bg) 100%),
-    linear-gradient(115deg, rgba(6,10,14,.88) 0%, rgba(9,17,22,.58) 45%, rgba(6,10,14,.8) 100%),
-    linear-gradient(135deg, rgba(13,50,76,.4), rgba(63,232,208,.1) 58%, rgba(6,10,14,.25)),
+    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.32) 10%, rgba(7,14,18,.4) 50%, rgba(6,10,14,.32) 90%, var(--bg) 100%),
+    linear-gradient(115deg, rgba(6,10,14,.5) 0%, rgba(9,17,22,.22) 45%, rgba(6,10,14,.44) 100%),
+    linear-gradient(135deg, rgba(13,50,76,.28), rgba(63,232,208,.06) 58%, rgba(6,10,14,.14)),
     url('assets/hero-bg-wide.jpg');
   background-size:100% 100%, 100% 100%, 100% 100%, cover;
   background-position:0 0, 0 0, 0 0, center 32%;
@@ -433,8 +433,8 @@ section{ position:relative; }
   max-width:none; margin:0;
   padding:100px var(--edge) 140px;
   background-image:
-    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.6) 10%, rgba(9,14,21,.7) 50%, rgba(6,10,14,.6) 90%, var(--bg) 100%),
-    linear-gradient(255deg, rgba(6,10,14,.86) 0%, rgba(12,16,28,.5) 48%, rgba(6,10,14,.78) 100%),
+    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.3) 10%, rgba(9,14,21,.38) 50%, rgba(6,10,14,.3) 90%, var(--bg) 100%),
+    linear-gradient(255deg, rgba(6,10,14,.48) 0%, rgba(12,16,28,.2) 48%, rgba(6,10,14,.42) 100%),
     radial-gradient(circle at 70% 28%, rgba(155,134,247,.15), transparent 34%),
     url('assets/hero-bg-wide.jpg');
   background-size:100% 100%, 100% 100%, 100% 100%, cover;
@@ -498,8 +498,8 @@ section{ position:relative; }
 .plans{
   padding:100px var(--edge) 140px;
   background-image:
-    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.62) 10%, rgba(8,15,20,.72) 50%, rgba(6,10,14,.62) 90%, var(--bg) 100%),
-    linear-gradient(100deg, rgba(6,10,14,.88) 0%, rgba(10,16,24,.55) 46%, rgba(6,10,14,.82) 100%),
+    linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.32) 10%, rgba(8,15,20,.4) 50%, rgba(6,10,14,.32) 90%, var(--bg) 100%),
+    linear-gradient(100deg, rgba(6,10,14,.5) 0%, rgba(10,16,24,.24) 46%, rgba(6,10,14,.44) 100%),
     linear-gradient(180deg, rgba(20,40,68,.34), rgba(63,232,208,.08) 70%, rgba(6,10,14,0)),
     url('assets/hero-bg-wide.jpg');
   background-size:100% 100%, 100% 100%, 100% 100%, cover;
@@ -666,24 +666,24 @@ section{ position:relative; }
   }
   .positioning{
     background-image:
-      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.62) 10%, rgba(7,14,18,.74) 50%, rgba(6,10,14,.62) 90%, var(--bg) 100%),
-      linear-gradient(115deg, rgba(6,10,14,.88) 0%, rgba(9,17,22,.58) 45%, rgba(6,10,14,.8) 100%),
-      linear-gradient(135deg, rgba(13,50,76,.4), rgba(63,232,208,.1) 58%, rgba(6,10,14,.25)),
+      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.32) 10%, rgba(7,14,18,.4) 50%, rgba(6,10,14,.32) 90%, var(--bg) 100%),
+      linear-gradient(115deg, rgba(6,10,14,.5) 0%, rgba(9,17,22,.22) 45%, rgba(6,10,14,.44) 100%),
+      linear-gradient(135deg, rgba(13,50,76,.28), rgba(63,232,208,.06) 58%, rgba(6,10,14,.14)),
       url('assets/hero-bg.jpg');
     background-position:0 0, 0 0, 0 0, center 30%;
   }
   .showcase{
     background-image:
-      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.6) 10%, rgba(9,14,21,.7) 50%, rgba(6,10,14,.6) 90%, var(--bg) 100%),
-      linear-gradient(255deg, rgba(6,10,14,.86) 0%, rgba(12,16,28,.5) 48%, rgba(6,10,14,.78) 100%),
+      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.3) 10%, rgba(9,14,21,.38) 50%, rgba(6,10,14,.3) 90%, var(--bg) 100%),
+      linear-gradient(255deg, rgba(6,10,14,.48) 0%, rgba(12,16,28,.2) 48%, rgba(6,10,14,.42) 100%),
       radial-gradient(circle at 70% 28%, rgba(155,134,247,.15), transparent 34%),
       url('assets/hero-bg.jpg');
     background-position:0 0, 0 0, 0 0, center 40%;
   }
   .plans{
     background-image:
-      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.62) 10%, rgba(8,15,20,.72) 50%, rgba(6,10,14,.62) 90%, var(--bg) 100%),
-      linear-gradient(100deg, rgba(6,10,14,.88) 0%, rgba(10,16,24,.55) 46%, rgba(6,10,14,.82) 100%),
+      linear-gradient(180deg, var(--bg) 0%, rgba(6,10,14,.32) 10%, rgba(8,15,20,.4) 50%, rgba(6,10,14,.32) 90%, var(--bg) 100%),
+      linear-gradient(100deg, rgba(6,10,14,.5) 0%, rgba(10,16,24,.24) 46%, rgba(6,10,14,.44) 100%),
       linear-gradient(180deg, rgba(20,40,68,.34), rgba(63,232,208,.08) 70%, rgba(6,10,14,0)),
       url('assets/hero-bg.jpg');
     background-position:0 0, 0 0, 0 0, center 18%;

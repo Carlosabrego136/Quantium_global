@@ -950,8 +950,9 @@ a:focus-visible, button:focus-visible{
 }
 .tools::before{
   background:
-    radial-gradient(600px 420px at 6% 8%, rgba(155,134,247,.06), transparent 62%),
-    radial-gradient(520px 420px at 96% 92%, rgba(63,232,208,.06), transparent 62%);
+    radial-gradient(760px 520px at 12% 6%, rgba(155,134,247,.15), transparent 62%),
+    radial-gradient(680px 520px at 92% 96%, rgba(63,232,208,.13), transparent 62%),
+    radial-gradient(420px 320px at 60% 40%, rgba(77,123,245,.05), transparent 65%);
 }
 .showcase::before{
   background:
@@ -960,8 +961,9 @@ a:focus-visible, button:focus-visible{
 }
 .method::before{
   background:
-    radial-gradient(560px 380px at 12% 14%, rgba(63,232,208,.06), transparent 62%),
-    radial-gradient(500px 380px at 90% 86%, rgba(155,134,247,.06), transparent 60%);
+    radial-gradient(720px 500px at 10% 10%, rgba(63,232,208,.14), transparent 62%),
+    radial-gradient(640px 500px at 94% 90%, rgba(155,134,247,.13), transparent 62%),
+    radial-gradient(380px 300px at 55% 45%, rgba(77,123,245,.05), transparent 65%);
 }
 .plans::before{
   background:
@@ -976,8 +978,65 @@ a:focus-visible, button:focus-visible{
 }
 .stat-strip::before{
   background:
-    radial-gradient(560px 340px at 14% 8%, rgba(63,232,208,.075), transparent 62%),
-    radial-gradient(480px 320px at 88% 96%, rgba(77,123,245,.07), transparent 60%);
+    radial-gradient(720px 460px at 16% 4%, rgba(63,232,208,.16), transparent 62%),
+    radial-gradient(640px 460px at 86% 100%, rgba(77,123,245,.14), transparent 62%),
+    radial-gradient(360px 300px at 55% 50%, rgba(155,134,247,.05), transparent 65%);
+}
+
+/* ------------------------------------------------------------
+   PERSPECTIVE DEPTH FLOOR — real, visible 3D cue for the three
+   "no-photo" alternating sections (stat-strip, tools, method).
+   A converging grid + horizon glow, like a trading-floor surface
+   receding under the cards.
+   ------------------------------------------------------------ */
+.stat-strip, .tools, .method{ overflow:hidden; }
+.depth-grid{
+  position:absolute; left:0; right:0; bottom:0; height:64%;
+  perspective:640px;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:-1;
+}
+.depth-grid::before{
+  content:"";
+  position:absolute; left:-60%; right:-60%; bottom:-25%; height:240%;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(63,232,208,.24) 0 1px, transparent 1px 68px),
+    repeating-linear-gradient(0deg, rgba(63,232,208,.16) 0 1px, transparent 1px 52px);
+  transform:rotateX(63deg);
+  transform-origin:bottom center;
+  mask-image:linear-gradient(to top, black 0%, black 30%, transparent 90%);
+  -webkit-mask-image:linear-gradient(to top, black 0%, black 30%, transparent 90%);
+}
+.depth-grid::after{
+  content:"";
+  position:absolute; left:8%; right:8%; bottom:22%; height:3px;
+  background:radial-gradient(closest-side, rgba(63,232,208,.7), rgba(63,232,208,0) 72%);
+  filter:blur(20px);
+  opacity:.85;
+  animation:horizon-pulse 4.5s ease-in-out infinite;
+}
+@keyframes horizon-pulse{
+  0%,100%{ opacity:.7; }
+  50%{ opacity:1; }
+}
+.tools .depth-grid::before{
+  background-image:
+    repeating-linear-gradient(90deg, rgba(155,134,247,.22) 0 1px, transparent 1px 68px),
+    repeating-linear-gradient(0deg, rgba(155,134,247,.14) 0 1px, transparent 1px 52px);
+}
+.tools .depth-grid::after{ background:radial-gradient(closest-side, rgba(155,134,247,.65), rgba(155,134,247,0) 72%); }
+.method .depth-grid::before{
+  background-image:
+    repeating-linear-gradient(90deg, rgba(63,232,208,.2) 0 1px, transparent 1px 68px),
+    repeating-linear-gradient(0deg, rgba(155,134,247,.14) 0 1px, transparent 1px 52px);
+}
+@media (max-width:760px){
+  .depth-grid{ height:50%; perspective:420px; }
+  .depth-grid::before{ transform:rotateX(68deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .depth-grid::after{ animation:none; }
 }
 
 /* --- profundidad animada: los tres bloques "negros" del ritmo alternado

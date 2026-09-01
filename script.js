@@ -1,4 +1,40 @@
 /* ============================================================
+   PARALLAX — fondo único + capas (brasas/chispas/haces)
+   La foto de fondo y cada capa se mueven a distinta velocidad
+   con el scroll, dando sensación de profundidad sobre un único
+   fondo (no se corta ni se repite por sección).
+   ============================================================ */
+(function parallaxBg(){
+  const photo = document.querySelector('.page-bg-photo');
+  const layers = document.querySelectorAll('.parallax-el');
+  if (!photo && !layers.length) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  let ticking = false;
+
+  const update = () => {
+    const y = window.scrollY;
+    if (photo) photo.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
+    layers.forEach(el => {
+      const speed = parseFloat(el.dataset.speed || '0.15');
+      el.style.transform = `translateY(${y * speed}px)`;
+    });
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive:true });
+
+  update();
+})();
+
+/* ============================================================
    NAV — background on scroll
    ============================================================ */
 const nav = document.getElementById('nav');

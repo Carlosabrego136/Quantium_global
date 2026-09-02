@@ -51,6 +51,16 @@
 
 <div class="grain"></div>
 
+<!-- ============ RED NEURONAL — capa fija, siempre centrada en pantalla.
+     Todo lo demás (nav, hero, secciones con fondo) se desplaza y pasa
+     por encima; esta capa no se mueve con el scroll. ============ -->
+<div class="network-fixed" aria-hidden="true">
+  <div class="hero-viz">
+    <div class="hero-distort" aria-hidden="true"></div>
+    <canvas id="networkCanvas"></canvas>
+  </div>
+</div>
+
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <div class="nav-inner">
@@ -106,15 +116,10 @@
     </div>
   </section>
 
-  <!-- ============ NETWORK SHOWCASE — red neuronal grande y centrada ============ -->
+  <!-- ============ NETWORK SPACER — deja ver la red neuronal fija de
+       fondo; solo lleva el caption y las métricas encima, sin fondo
+       propio ============ -->
   <section class="network-showcase">
-    <div class="depth-grid" aria-hidden="true"></div>
-    <div class="network-showcase-inner">
-      <div class="hero-viz">
-        <div class="hero-distort" aria-hidden="true"></div>
-        <canvas id="networkCanvas"></canvas>
-      </div>
-    </div>
     <div class="network-showcase-foot">
       <div class="viz-caption">
         <span class="viz-dot"></span> mapa de exposición en vivo

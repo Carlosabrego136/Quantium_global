@@ -155,12 +155,12 @@ svg{ display:block; }
 .hw-layer{
   position:absolute; inset:-6% -6%;
   pointer-events:none;
-  will-change:transform, opacity;
+  will-change:transform;
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center 38%;
   filter:drop-shadow(0 40px 70px rgba(0,0,0,.55));
-  opacity:0;
+  opacity:1;
   transform:scale(1.06);
 }
 .watercooling-layer{

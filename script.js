@@ -1,49 +1,29 @@
 /* ============================================================
    PARALLAX — fondo fijo único + capa de hardware (recorte real)
    El fondo (.page-bg-photo) queda estático, no se mueve con el
-   scroll. Solo la capa de hardware (.hw-layer) se mueve a otra
-   velocidad, y además aparece (fade-in) a partir de la 2a página,
-   quedando invisible mientras se está en el hero.
+   scroll. La capa de hardware (.hw-layer) es visible desde la
+   primera página y se mueve a otra velocidad (parallax suave).
    ============================================================ */
 (function parallaxBg(){
   const layer = document.querySelector('.hw-layer');
   const particles = document.querySelectorAll('.parallax-el:not(.hw-layer)');
-  const hero = document.querySelector('.hero');
   if (!layer && !particles.length) return;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* distancia de scroll (px) sobre la que se hace el fade-in
-     de la capa al cruzar del hero a la 2a sección */
-  const FADE_RANGE = 420;
-
-  const setLayerOpacity = () => {
-    if (!layer || !hero) return;
-    const heroBottom = hero.offsetTop + hero.offsetHeight;
-    const fadeStart = heroBottom - FADE_RANGE;
-    let t = (window.scrollY - fadeStart) / FADE_RANGE;
-    t = Math.max(0, Math.min(1, t));
-    layer.style.opacity = String(t);
-  };
-
-  if (reduceMotion){
-    setLayerOpacity();
-    return;
-  }
+  if (reduceMotion) return;
 
   let ticking = false;
 
   const update = () => {
     const y = window.scrollY;
     if (layer){
-      const speed = parseFloat(layer.dataset.speed || '-0.045');
+      const speed = parseFloat(layer.dataset.speed || '-0.02');
       layer.style.transform = `translateY(${y * speed}px) scale(1.06)`;
     }
     particles.forEach(el => {
       const speed = parseFloat(el.dataset.speed || '0.15');
       el.style.transform = `translateY(${y * speed}px)`;
     });
-    setLayerOpacity();
     ticking = false;
   };
 

@@ -16,15 +16,21 @@ export function NeuralNetwork() {
     const GOLD_BRIGHT: [number, number, number] = [255, 224, 150]
     const BLUE: [number, number, number] = [120, 184, 226]
     const SILVER: [number, number, number] = [224, 230, 235]
-    // Paleta de líneas: dorado, azul, blanco y negro metálico (gris oscuro con
-    // un ligero tinte azulado, para que lea "metálico" y no un negro plano)
+    // Paleta de líneas: dorado, azul, gris, blanco y negro metálico (gris oscuro
+    // con un ligero tinte azulado, para que lea "metálico" y no un negro plano)
     const LINE_GOLD: [number, number, number] = [214, 168, 82]
     const LINE_BLUE: [number, number, number] = [90, 150, 210]
+    const LINE_GRAY: [number, number, number] = [150, 158, 168]
     const LINE_WHITE: [number, number, number] = [232, 236, 240]
     const LINE_METAL_BLACK: [number, number, number] = [30, 32, 38]
-    const LINE_PALETTE: [number, number, number][] = [LINE_GOLD, LINE_BLUE, LINE_WHITE, LINE_METAL_BLACK]
+    const LINE_PALETTE: [number, number, number][] = [LINE_GOLD, LINE_BLUE, LINE_GRAY, LINE_WHITE, LINE_METAL_BLACK]
+    // Azul puro para las ondas de luz que salen del núcleo central
+    const WAVE_BLUE: [number, number, number] = [110, 176, 240]
+    const WAVE_BLUE_BRIGHT: [number, number, number] = [176, 216, 255]
 
-    const points = Array.from({ length: 94 }, (_, index) => {
+    const POINT_COUNT = 132
+
+    const points = Array.from({ length: POINT_COUNT }, (_, index) => {
       const isGold = index % 11 === 0
       const isBlue = !isGold && index % 3 === 0
 
@@ -48,7 +54,7 @@ export function NeuralNetwork() {
         y: Math.min(0.97, Math.max(0.03, baseY + warpY)),
         phase: index * 1.7,
         pulseSpeed: 0.8 + ((index * 0.382) % 1) * 0.6,
-        radius: isGold ? 4.6 : index % 4 === 0 ? 2.6 : 1.5,
+        radius: isGold ? 4.6 : index % 4 === 0 ? 2.6 : index % 7 === 0 ? 2.1 : 1.5,
         isGold,
         color: isGold ? GOLD : isBlue ? BLUE : SILVER,
         lineColor: LINE_PALETTE[index % LINE_PALETTE.length],
@@ -66,6 +72,7 @@ export function NeuralNetwork() {
     let height = 0
     let centerX = 0
     let centerY = 0
+    let maxHubDist = 1
 
     // The network no longer drifts/jitters/breathes — every node sits at a fixed
     // spot relative to the others, so its screen position only needs to be
@@ -79,10 +86,14 @@ export function NeuralNetwork() {
     // radianes por frame — una vuelta completa cada ~28s a 60fps, giro notorio y fluido
     const ROTATION_SPEED = (Math.PI * 2) / (28 * 60)
 
-    // Ya no se calculan conexiones entre nodos (era el paso O(n²) que hacía
-    // lento el giro). Solo queda el hub central conectado a cada nodo, así
-    // que el layout se reduce a las posiciones y el alpha del hub.
     const hubAlpha = new Float32Array(pointCount)
+
+    // Conexiones secundarias entre nodos vecinos (no solo hub→nodo). Se calculan
+    // una sola vez por resize (k-nearest sencillo, barato para ~130 nodos) para
+    // que la red se vea como una malla tejida y no solo como una estrella.
+    type Link = { a: number; b: number; color: [number, number, number]; alpha: number }
+    let links: Link[] = []
+    const NEIGHBORS_PER_NODE = 2
 
     const computeLayout = () => {
       for (let i = 0; i < pointCount; i++) {
@@ -92,7 +103,7 @@ export function NeuralNetwork() {
         offsetY[i] = activeY[i] - centerY
       }
 
-      const maxHubDist = Math.sqrt(centerX * centerX + centerY * centerY) || 1
+      maxHubDist = Math.sqrt(centerX * centerX + centerY * centerY) || 1
 
       for (let i = 0; i < pointCount; i++) {
         const px = activeX[i]
@@ -104,6 +115,33 @@ export function NeuralNetwork() {
         const hubDist = Math.sqrt(hdx * hdx + hdy * hdy)
         hubAlpha[i] = 0.16 + (1 - Math.min(1, hubDist / maxHubDist)) * 0.22
       }
+
+      // k-nearest vecinos por nodo, evitando duplicar el mismo par A-B
+      const seen = new Set<string>()
+      const newLinks: Link[] = []
+      for (let i = 0; i < pointCount; i++) {
+        const dists: { j: number; d: number }[] = []
+        for (let j = 0; j < pointCount; j++) {
+          if (i === j) continue
+          const dx = activeX[i] - activeX[j]
+          const dy = activeY[i] - activeY[j]
+          dists.push({ j, d: dx * dx + dy * dy })
+        }
+        dists.sort((a, b) => a.d - b.d)
+        for (let k = 0; k < NEIGHBORS_PER_NODE && k < dists.length; k++) {
+          const j = dists[k].j
+          const key = i < j ? `${i}-${j}` : `${j}-${i}`
+          if (seen.has(key)) continue
+          seen.add(key)
+          const dist = Math.sqrt(dists[k].d)
+          const maxLinkDist = maxHubDist * 0.22
+          if (dist > maxLinkDist) continue
+          const color = points[(i + j) % pointCount].lineColor
+          const alpha = 0.08 + (1 - Math.min(1, dist / maxLinkDist)) * 0.16
+          newLinks.push({ a: i, b: j, color, alpha })
+        }
+      }
+      links = newLinks
     }
 
     const resize = () => {
@@ -124,6 +162,34 @@ export function NeuralNetwork() {
     }
     resize()
     window.addEventListener('resize', resize)
+
+    // Ondas de luz azul que laten desde el núcleo central hacia afuera —
+    // varios anillos concéntricos, escalonados en el tiempo, cada uno se
+    // desvanece al nacer y al morir para que el movimiento se sienta fluido
+    // en vez de un parpadeo.
+    const WAVE_COUNT = 3
+    const WAVE_DURATION = 4.2 * 60 // frames para que una onda recorra todo el radio
+    const drawWaves = () => {
+      context.save()
+      context.globalCompositeOperation = 'lighter'
+      for (let w = 0; w < WAVE_COUNT; w++) {
+        const phase = ((frame + (w * WAVE_DURATION) / WAVE_COUNT) % WAVE_DURATION) / WAVE_DURATION
+        const radius = phase * maxHubDist * 1.05
+        // curva suave de aparición/desvanecimiento (0 al nacer, pico a la mitad, 0 al morir)
+        const fade = Math.sin(Math.PI * phase)
+        if (fade <= 0.001) continue
+        const alpha = fade * 0.32
+        context.lineWidth = 1.4 + fade * 1.8
+        context.strokeStyle = `rgba(${WAVE_BLUE[0]}, ${WAVE_BLUE[1]}, ${WAVE_BLUE[2]}, ${alpha})`
+        context.shadowColor = `rgba(${WAVE_BLUE_BRIGHT[0]}, ${WAVE_BLUE_BRIGHT[1]}, ${WAVE_BLUE_BRIGHT[2]}, ${alpha})`
+        context.shadowBlur = 18 * fade
+        context.beginPath()
+        context.arc(centerX, centerY, radius, 0, Math.PI * 2)
+        context.stroke()
+      }
+      context.shadowBlur = 0
+      context.restore()
+    }
 
     const draw = (timestamp: number) => {
       animationFrame = requestAnimationFrame(draw)
@@ -153,8 +219,25 @@ export function NeuralNetwork() {
 
       context.clearRect(0, 0, width, height)
 
+      // ondas de luz azul saliendo del núcleo — se dibujan primero para que
+      // queden detrás de la malla y los nodos
+      drawWaves()
+
+      // conexiones secundarias entre nodos vecinos — la "malla" que le da
+      // profundidad y detalle a la red, más allá de las líneas al hub
+      context.lineWidth = 0.7
+      for (let l = 0; l < links.length; l++) {
+        const link = links[l]
+        const [lr, lg, lb] = link.color
+        context.strokeStyle = `rgba(${lr}, ${lg}, ${lb}, ${link.alpha})`
+        context.beginPath()
+        context.moveTo(activeX[link.a], activeY[link.a])
+        context.lineTo(activeX[link.b], activeY[link.b])
+        context.stroke()
+      }
+
       // central hub — thin static lines out to every node in the network,
-      // cada una tiñendo hacia dorado, azul, blanco o negro metálico
+      // cada una tiñendo hacia dorado, azul, gris, blanco o negro metálico
       context.lineWidth = 1
       for (let i = 0; i < pointCount; i++) {
         const px = activeX[i]

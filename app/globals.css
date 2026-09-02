@@ -202,7 +202,7 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
 /* Quantium: el gris vive solo en el lienzo fijo; todo el contenido flota sobre él. */
 .site-shell, .site-header, .content-section, .site-footer, .ticker-rail, .stat-strip, .stat-card, .section-block, .tools-section, .gamma-section, .rates-section { background: transparent !important; }
 .site-shell { min-height: 100vh; }
-.neural-network { opacity: 1; image-rendering: auto; }
+.neural-network { opacity: 1; image-rendering: auto; filter: saturate(1.12) contrast(1.05); }
 .site-header { max-width: none; }
 .hero { min-height: 760px; padding-top: 95px; }
 .hero-grid { grid-template-columns: minmax(0, 1fr); }

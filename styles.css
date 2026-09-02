@@ -1080,6 +1080,19 @@ a:focus-visible, button:focus-visible{
     linear-gradient(135deg, #08151d 0%, #0a111d 54%, #120e1f 100%);
   background-size:100% 100%;
 }
+.final-cta-photo{
+  position:absolute; inset:0;
+  z-index:-1;
+  background-image:url('assets/fondoelsiguientemoviento.jpg');
+  background-size:min(1400px,120%);
+  background-position:center 42%;
+  background-repeat:no-repeat;
+  mix-blend-mode:screen;
+  opacity:.85;
+  pointer-events:none;
+  -webkit-mask-image:radial-gradient(ellipse 68% 72% at 50% 42%, #000 40%, transparent 86%);
+  mask-image:radial-gradient(ellipse 68% 72% at 50% 42%, #000 40%, transparent 86%);
+}
 .stat-strip::before{
   background:
     radial-gradient(720px 460px at 16% 4%, rgba(63,232,208,.16), transparent 62%),

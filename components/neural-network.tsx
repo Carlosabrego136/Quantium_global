@@ -16,18 +16,42 @@ export function NeuralNetwork() {
     const GOLD_BRIGHT: [number, number, number] = [255, 224, 150]
     const BLUE: [number, number, number] = [120, 184, 226]
     const SILVER: [number, number, number] = [224, 230, 235]
+    // Paleta de líneas: dorado, azul, blanco y negro metálico (gris oscuro con
+    // un ligero tinte azulado, para que lea "metálico" y no un negro plano)
+    const LINE_GOLD: [number, number, number] = [214, 168, 82]
+    const LINE_BLUE: [number, number, number] = [90, 150, 210]
+    const LINE_WHITE: [number, number, number] = [232, 236, 240]
+    const LINE_METAL_BLACK: [number, number, number] = [30, 32, 38]
+    const LINE_PALETTE: [number, number, number][] = [LINE_GOLD, LINE_BLUE, LINE_WHITE, LINE_METAL_BLACK]
 
     const points = Array.from({ length: 94 }, (_, index) => {
       const isGold = index % 11 === 0
       const isBlue = !isGold && index % 3 === 0
+
+      // Desplazamiento orgánico: varias ondas seno/coseno de distinta frecuencia
+      // se suman a la posición base para romper la cuadrícula uniforme y generar
+      // "picos" altos y bajos — zonas densas y huecos, como una red fragmentándose.
+      const warpX =
+        Math.sin(index * 0.9 + 0.4) * 0.075 +
+        Math.sin(index * 2.7 + 1.8) * 0.04 +
+        Math.sin(index * 5.3 + 0.9) * 0.018
+      const warpY =
+        Math.cos(index * 1.3 + 1.1) * 0.075 +
+        Math.cos(index * 3.1 + 0.6) * 0.04 +
+        Math.cos(index * 6.1 + 2.2) * 0.018
+
+      const baseX = 0.03 + ((index * 0.137) % 0.94)
+      const baseY = 0.05 + ((index * 0.239) % 0.9)
+
       return {
-        x: 0.03 + ((index * 0.137) % 0.94),
-        y: 0.05 + ((index * 0.239) % 0.9),
+        x: Math.min(0.985, Math.max(0.015, baseX + warpX)),
+        y: Math.min(0.97, Math.max(0.03, baseY + warpY)),
         phase: index * 1.7,
         pulseSpeed: 0.8 + ((index * 0.382) % 1) * 0.6,
         radius: isGold ? 4.6 : index % 4 === 0 ? 2.6 : 1.5,
         isGold,
         color: isGold ? GOLD : isBlue ? BLUE : SILVER,
+        lineColor: LINE_PALETTE[index % LINE_PALETTE.length],
       }
     })
     const pointCount = points.length
@@ -126,16 +150,18 @@ export function NeuralNetwork() {
 
       context.clearRect(0, 0, width, height)
 
-      // central hub — thin static lines out to every node in the network
+      // central hub — thin static lines out to every node in the network,
+      // cada una tiñendo hacia dorado, azul, blanco o negro metálico
       context.lineWidth = 1
       for (let i = 0; i < pointCount; i++) {
         const px = activeX[i]
         const py = activeY[i]
         const alpha = hubAlpha[i]
+        const [lr, lg, lb] = points[i].lineColor
 
         const grad = context.createLinearGradient(centerX, centerY, px, py)
         grad.addColorStop(0, `rgba(${GOLD_BRIGHT[0]}, ${GOLD_BRIGHT[1]}, ${GOLD_BRIGHT[2]}, ${Math.min(0.55, alpha + 0.2)})`)
-        grad.addColorStop(1, `rgba(8, 8, 10, ${alpha})`)
+        grad.addColorStop(1, `rgba(${lr}, ${lg}, ${lb}, ${alpha})`)
         context.strokeStyle = grad
         context.beginPath()
         context.moveTo(centerX, centerY)
@@ -153,6 +179,11 @@ export function NeuralNetwork() {
         const oy = activeY[line.j]
         const phaseI = points[line.i].phase
         const baseAlpha = line.baseAlpha
+        // el color base de la línea alterna entre el nodo de origen y el de
+        // destino, así el mismo trazo puede leer dorado en un extremo y azul
+        // o blanco en el otro
+        const [lr1, lg1, lb1] = points[line.i].lineColor
+        const [lr2, lg2, lb2] = points[line.j].lineColor
 
         // a bright glint travels back and forth along each line at its own pace
         const glintPos = (Math.sin(frame * 0.012 + line.i * 0.63 + phaseI * 0.2) + 1) / 2
@@ -161,15 +192,15 @@ export function NeuralNetwork() {
         const s2 = Math.min(1, glintPos + band)
 
         const grad = context.createLinearGradient(px, py, ox, oy)
-        grad.addColorStop(0, `rgba(8, 8, 10, ${baseAlpha})`)
-        grad.addColorStop(s0, `rgba(8, 8, 10, ${baseAlpha})`)
+        grad.addColorStop(0, `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha})`)
+        grad.addColorStop(s0, `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha})`)
         grad.addColorStop(glintPos, `rgba(255, 255, 255, ${Math.min(1, baseAlpha + 0.55)})`)
-        grad.addColorStop(s2, `rgba(8, 8, 10, ${baseAlpha})`)
-        grad.addColorStop(1, `rgba(8, 8, 10, ${baseAlpha})`)
+        grad.addColorStop(s2, `rgba(${lr2}, ${lg2}, ${lb2}, ${baseAlpha})`)
+        grad.addColorStop(1, `rgba(${lr2}, ${lg2}, ${lb2}, ${baseAlpha})`)
 
         context.strokeStyle = grad
         if (!isMobile) {
-          context.shadowColor = `rgba(0, 0, 0, ${baseAlpha * 0.6})`
+          context.shadowColor = `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha * 0.6})`
           context.shadowBlur = 3
         }
         context.beginPath()

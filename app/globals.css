@@ -163,6 +163,16 @@
 
 :root { --graphite: #171717; --grey: #b8b8b6; --cream: #efe3c6; --line: rgba(23,23,23,.24); }
 .site-shell { position: relative; overflow: hidden; background: var(--grey); }
+.site-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(184, 184, 182, 0.5), rgba(184, 184, 182, 0.62)),
+    url('/network-bg.jpg') center center / cover no-repeat;
+  pointer-events: none;
+}
 .neural-network { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 .site-header, .content-section, .site-footer { position: relative; z-index: 1; }
 .site-header { display: flex; align-items: center; justify-content: space-between; min-height: 68px; padding: 0 2.6vw; border-bottom: 1px solid var(--line); text-transform: uppercase; font-size: 10px; letter-spacing: .1em; }

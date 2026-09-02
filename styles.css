@@ -344,9 +344,16 @@ section{ position:relative; }
 
 .hero-copy h1{
   font-size:clamp(38px, 4.6vw, 62px);
-  line-height:1.06;
+  line-height:1.5;
   color:var(--text);
-  text-shadow:0 4px 24px rgba(0,0,0,.9), 0 2px 6px rgba(0,0,0,.85);
+}
+.hero-copy h1 .hl{
+  display:inline;
+  background:rgba(6,10,14,.6);
+  padding:.1em .4em;
+  border-radius:8px;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
 }
 .hero-copy h1 em{
   font-style:normal;
@@ -356,9 +363,16 @@ section{ position:relative; }
   margin-top:22px;
   max-width:46ch;
   font-size:17.5px;
-  line-height:1.65;
+  line-height:2;
   color:var(--text-dim);
-  text-shadow:0 3px 14px rgba(0,0,0,.9), 0 1px 4px rgba(0,0,0,.85);
+}
+.hero-sub .hl{
+  display:inline;
+  background:rgba(6,10,14,.56);
+  padding:.08em .35em;
+  border-radius:6px;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
 }
 .hero-actions{
   margin-top:32px;
@@ -382,6 +396,23 @@ section{ position:relative; }
   aspect-ratio:1/0.95;
   overflow:visible;
   transition:transform .5s cubic-bezier(.16,.8,.24,1);
+}
+.hero-viz::before{
+  content:"";
+  position:absolute; inset:-14%;
+  background:
+    radial-gradient(closest-side, rgba(63,232,208,.24), transparent 68%),
+    radial-gradient(closest-side at 62% 40%, rgba(77,123,245,.16), transparent 62%);
+  filter:blur(18px);
+  pointer-events:none;
+  z-index:-1;
+  animation:viz-glow-pulse 3.4s ease-in-out infinite;
+}
+@keyframes viz-glow-pulse{
+  0%,100%{ opacity:.75; } 50%{ opacity:1; }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-viz::before{ animation:none; }
 }
 .hero-viz canvas{ width:100%; height:100%; display:block; }
 .viz-caption{

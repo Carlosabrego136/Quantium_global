@@ -134,6 +134,16 @@ onScroll();
     return { sx: cx + x * s, sy: cy - y * s, depth: s };
   }
 
+  function roundRect(c, x, y, w, h, r){
+    c.beginPath();
+    c.moveTo(x+r, y);
+    c.arcTo(x+w, y,   x+w, y+h, r);
+    c.arcTo(x+w, y+h, x,   y+h, r);
+    c.arcTo(x,   y+h, x,   y,   r);
+    c.arcTo(x,   y,   x+w, y,   r);
+    c.closePath();
+  }
+
   function frame(time){
     const t = reduce ? 0 : time;
     ctx.clearRect(0,0,W,H);
@@ -176,39 +186,55 @@ onScroll();
       grad.addColorStop(0, hexA(byId(aId).color, alphaBase*aA));
       grad.addColorStop(1, hexA(byId(bId).color, alphaBase*bA*0.4));
       ctx.strokeStyle = grad;
-      ctx.lineWidth = dashed ? 1 : 1.1;
+      ctx.lineWidth = dashed ? 1.3 : 1.6;
+      ctx.shadowColor = hexA(byId(aId).color, 0.9);
+      ctx.shadowBlur = dashed ? 4 : 8;
       if (dashed) ctx.setLineDash([2,4]); else ctx.setLineDash([]);
       ctx.beginPath(); ctx.moveTo(a.sx,a.sy); ctx.lineTo(b.sx,b.sy); ctx.stroke();
       ctx.setLineDash([]);
+      ctx.shadowBlur = 0;
     }
 
-    secondary.forEach(([a,b]) => drawEdge(a,b,0.11,true));
-    edges.forEach(([a,b]) => drawEdge(a,b,0.32,false));
+    secondary.forEach(([a,b]) => drawEdge(a,b,0.2,true));
+    edges.forEach(([a,b]) => drawEdge(a,b,0.5,false));
 
     function drawNode(n, p){
       const dScale = n.core ? 1.15 : depthScale(p.z);
       const dAlpha = n.core ? 1 : depthAlpha(p.z);
       const rr = n.r * dScale;
       const pulse = n.core ? (Math.sin(t*0.0018)*0.5+0.5) : (Math.sin(t*0.002 + n.theta*4)*0.5+0.5);
-      const glowR = rr * (n.core ? 3.4 : 2.6) * (0.85 + pulse*0.3);
+      const glowR = rr * (n.core ? 5.2 : 4.2) * (0.85 + pulse*0.35);
 
       const glow = ctx.createRadialGradient(p.sx,p.sy,0,p.sx,p.sy,glowR);
-      glow.addColorStop(0, hexA(n.color, (n.core?0.38:0.24)*dAlpha));
+      glow.addColorStop(0, hexA(n.color, (n.core?0.6:0.44)*dAlpha));
+      glow.addColorStop(0.5, hexA(n.color, (n.core?0.22:0.15)*dAlpha));
       glow.addColorStop(1, hexA(n.color, 0));
       ctx.fillStyle = glow;
       ctx.beginPath(); ctx.arc(p.sx,p.sy,glowR,0,Math.PI*2); ctx.fill();
 
-      ctx.fillStyle = hexA(n.color, (n.core?1:0.92)*dAlpha);
+      ctx.shadowColor = hexA(n.color, dAlpha);
+      ctx.shadowBlur = (n.core ? 22 : 14) * (0.8 + pulse*0.4);
+      ctx.fillStyle = hexA(n.color, (n.core?1:1)*dAlpha);
       ctx.beginPath(); ctx.arc(p.sx,p.sy,rr,0,Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0;
 
-      ctx.fillStyle = `rgba(255,255,255,${0.85*dAlpha})`;
+      ctx.fillStyle = `rgba(255,255,255,${0.9*dAlpha})`;
       ctx.beginPath(); ctx.arc(p.sx-rr*0.28,p.sy-rr*0.28,rr*0.32,0,Math.PI*2); ctx.fill();
 
       if (dAlpha > 0.55){
-        ctx.font = `${n.core?600:500} ${(n.core?12.5:10)*Math.min(dScale,1.1)}px 'IBM Plex Mono', monospace`;
-        ctx.fillStyle = `rgba(${n.core?'234,243,241':'159,176,183'},${n.core?0.95:0.85*dAlpha})`;
+        const fontSize = (n.core?12.5:10)*Math.min(dScale,1.1);
+        ctx.font = `${n.core?600:500} ${fontSize}px 'IBM Plex Mono', monospace`;
         ctx.textAlign = 'center';
-        ctx.fillText(n.label, p.sx, p.sy + rr + (n.core?21:15));
+        const label = n.label;
+        const tw = ctx.measureText(label).width;
+        const tx = p.sx, ty = p.sy + rr + (n.core?21:15);
+        const padX = 6, padY = 4;
+        const boxW = tw + padX*2, boxH = fontSize + padY*2;
+        ctx.fillStyle = `rgba(6,10,14,${0.62*dAlpha})`;
+        roundRect(ctx, tx-boxW/2, ty-fontSize*0.85-padY, boxW, boxH, 5);
+        ctx.fill();
+        ctx.fillStyle = `rgba(${n.core?'234,243,241':'159,176,183'},${n.core?0.95:0.85*dAlpha})`;
+        ctx.fillText(label, tx, ty);
       }
     }
 

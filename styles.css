@@ -148,26 +148,24 @@ svg{ display:block; }
   background-position:center;
 }
 
-/* --- capas de hardware (foto real recortada): profundidad "premium",
-   solo en escritorio — en móvil se ocultan para no saturar la pantalla --- */
+/* --- capas de hardware (foto real recortada): usan el MISMO cover/position
+   que el fondo (.page-bg-photo) para quedar alineadas en escala y posición
+   con la foto real; al hacer scroll se mueven a otra velocidad y "se
+   despegan" del fondo, dando el efecto pop-3D --- */
 .hw-layer{
-  mix-blend-mode:normal;
-  background-size:contain;
-  filter:drop-shadow(0 30px 45px rgba(0,0,0,.55));
-  -webkit-mask-image:radial-gradient(closest-side, #000 60%, transparent 100%);
-  mask-image:radial-gradient(closest-side, #000 60%, transparent 100%);
+  position:absolute; inset:-2% -2%;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center 38%;
+  filter:drop-shadow(0 40px 70px rgba(0,0,0,.55));
 }
 .pc-case-layer{
-  top:8vh; left:-8%;
-  width:min(480px, 34vw); aspect-ratio:1024/572;
   background-image:url('assets/pc-case-cutout.png');
-  opacity:.5;
+  opacity:.88;
 }
 .watercooling-layer{
-  top:96vh; right:-8%;
-  width:min(520px, 36vw); aspect-ratio:1024/572;
   background-image:url('assets/watercooling-cutout.png');
-  opacity:.55;
+  opacity:.92;
 }
 @media (max-width:1080px){
   .hw-layer{ display:none; }

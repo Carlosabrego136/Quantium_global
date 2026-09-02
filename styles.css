@@ -93,6 +93,21 @@ svg{ display:block; }
   transform:translateY(0) scale(1.06);
   will-change:transform;
 }
+/* segundo fondo: la foto que se muestra a partir de la 2a sección
+   (stat-strip en adelante). Va superpuesta a .page-bg-photo y su
+   opacidad la controla el scroll (JS) para hacer un crossfade suave
+   justo al cruzar el final del hero. En el hero permanece en 0. */
+.page-bg-photo-alt{
+  position:absolute;
+  inset:-6% -6%;
+  background-image:url('assets/section-bg-wide.jpg');
+  background-size:cover;
+  background-position:center 42%;
+  background-repeat:no-repeat;
+  transform:translateY(0) scale(1.06);
+  will-change:transform, opacity;
+  opacity:0;
+}
 /* scrim: fondo casi sin oscurecer (solo un leve viñeteado en bordes
    para dar profundidad) para que la foto se vea nítida y clara */
 .page-bg-scrim{
@@ -146,26 +161,6 @@ svg{ display:block; }
   background-repeat:no-repeat;
   background-size:contain;
   background-position:center;
-}
-
-/* --- capa de hardware (foto real recortada): usa EXACTAMENTE el mismo
-   inset/cover/position que el fondo (.page-bg-photo) para quedar cuadrada
-   en escala y posición con la foto real; al hacer scroll se mueve a otra
-   velocidad y "se despega" del fondo, dando el efecto pop-3D. Sin opacidad
-   reducida para que se vea nítida sobre el fondo. --- */
-.hw-layer{
-  position:absolute; inset:-6% -6%;
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center 38%;
-  filter:drop-shadow(0 40px 70px rgba(0,0,0,.55));
-}
-.watercooling-layer{
-  background-image:url('assets/watercooling-cutout.png');
-  opacity:1;
-}
-@media (max-width:1080px){
-  .hw-layer{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){

@@ -6,21 +6,42 @@
    ============================================================ */
 (function parallaxBg(){
   const photo = document.querySelector('.page-bg-photo');
+  const photoAlt = document.querySelector('.page-bg-photo-alt');
   const layers = document.querySelectorAll('.parallax-el');
+  const hero = document.querySelector('.hero');
   if (!photo && !layers.length) return;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return;
+  if (reduceMotion){
+    /* aún sin animación, deja el 2do fondo visible pasado el hero */
+    if (photoAlt && hero){
+      const heroBottom = hero.offsetTop + hero.offsetHeight;
+      photoAlt.style.opacity = window.scrollY > heroBottom ? '1' : '0';
+    }
+    return;
+  }
 
   let ticking = false;
+  /* distancia de scroll (px) sobre la que se hace el crossfade
+     entre el fondo del hero y el de las secciones siguientes */
+  const FADE_RANGE = 420;
 
   const update = () => {
     const y = window.scrollY;
     if (photo) photo.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
+    if (photoAlt){
+      photoAlt.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
+      if (hero){
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        const fadeStart = heroBottom - FADE_RANGE;
+        let t = (y - fadeStart) / FADE_RANGE;
+        t = Math.max(0, Math.min(1, t));
+        photoAlt.style.opacity = String(t);
+      }
+    }
     layers.forEach(el => {
       const speed = parseFloat(el.dataset.speed || '0.15');
-      const scale = el.classList.contains('hw-layer') ? ' scale(1.06)' : '';
-      el.style.transform = `translateY(${y * speed}px)${scale}`;
+      el.style.transform = `translateY(${y * speed}px)`;
     });
     ticking = false;
   };
@@ -31,6 +52,8 @@
       ticking = true;
     }
   }, { passive:true });
+
+  window.addEventListener('resize', update, { passive:true });
 
   update();
 })();

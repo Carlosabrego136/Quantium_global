@@ -185,13 +185,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ============ fixed video background ============ */
 .video-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #050505; }
-.video-background-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 46% 32%; filter: saturate(1.05) contrast(1.03) brightness(0.92); }
+.video-background-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 46% 32%; filter: saturate(1.12) contrast(1.08) brightness(1.03); }
 .video-background-overlay {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(5, 5, 5, 0.18) 0%, rgba(5, 5, 5, 0.42) 45%, rgba(5, 5, 5, 0.66) 100%),
-    radial-gradient(ellipse at center, transparent 0%, rgba(5, 5, 5, 0.22) 65%, rgba(5, 5, 5, 0.5) 100%);
+    linear-gradient(180deg, rgba(5, 5, 5, 0.05) 0%, rgba(5, 5, 5, 0.18) 45%, rgba(5, 5, 5, 0.32) 100%),
+    radial-gradient(ellipse at center, transparent 0%, rgba(5, 5, 5, 0.08) 65%, rgba(5, 5, 5, 0.24) 100%);
 }
 
 /* ============ fixed navbar ============ */
@@ -262,6 +262,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .ticker-track span { flex: 0 0 auto; }
 .ticker-track b { color: var(--ink-mute); margin-left: 25px; }
 .hero-bottom-text {
+  text-shadow: 0 1px 10px rgba(0,0,0,0.4);
   position: absolute;
   top: 74%;
   transform: translateY(-50%);
@@ -276,11 +277,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ============ Section 2 — Statement (over video) ============ */
 .section-statement { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 70px 32px 32px 32px; }
 .statement-inner { display: flex; flex-direction: column; align-items: flex-start; max-width: 720px; padding: 80px 0; }
-.statement-heading { font-size: clamp(26px, 3vw, 42px); font-weight: 700; line-height: 1.08; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; display: flex; flex-wrap: wrap; gap: 0.25em; }
-.statement-sub { margin-top: 24px; font-size: 14px; line-height: 1.65; color: rgba(255, 255, 255, 0.85); max-width: 340px; }
+.statement-heading { font-size: clamp(26px, 3vw, 42px); font-weight: 700; line-height: 1.08; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; display: flex; flex-wrap: wrap; gap: 0.25em; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
+.statement-sub { margin-top: 24px; font-size: 14px; line-height: 1.65; color: rgba(255, 255, 255, 0.85); max-width: 340px; text-shadow: 0 1px 10px rgba(0,0,0,0.4); }
 .statement-proof { margin-top: 36px; display: flex; gap: 34px; flex-wrap: wrap; }
 .proof-item-light { display: grid; gap: 4px; }
-.proof-item-light strong { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: #fff; }
+.proof-item-light strong { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,0.4); }
 .proof-item-light span { max-width: 120px; font-size: 10px; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.7); }
 
 /* ============ Section 3 — Services (gray) ============ */
@@ -307,7 +308,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .stat-strip-light { margin-top: 56px; }
 .stat-strip-head-light { margin-bottom: 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .eyebrow-dark { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
-.eyebrow-light { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+.eyebrow-light { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
 .live-dark { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); }
 .stats-grid-light { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
 .stat-card-light { display: grid; gap: 9px; padding: 16px 0; border-top: 1px solid var(--panel-line); }
@@ -317,9 +318,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ============ Gamma 3D — over video ============ */
 .section-gamma { position: relative; z-index: 1; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 70px 32px; max-width: 720px; }
-.gamma-heading { font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; }
+.gamma-heading { font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
 .gamma-copy { display: grid; gap: 22px; max-width: 480px; }
-.gamma-copy p { font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); }
+.gamma-copy p { font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); text-shadow: 0 1px 10px rgba(0,0,0,0.4); }
 
 /* ============ Methodology — gray ============ */
 .section-method { position: relative; z-index: 2; background: var(--panel); padding: 70px 32px 80px 32px; display: flex; flex-direction: column; gap: 16px; }
@@ -345,8 +346,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ============ Final CTA — over video ============ */
 .section-cta { position: relative; z-index: 1; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 70px 32px; max-width: 640px; }
-.cta-heading { font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; }
-.cta-sub { font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); max-width: 420px; }
+.cta-heading { font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,0.45); }
+.cta-sub { font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.85); max-width: 420px; text-shadow: 0 1px 10px rgba(0,0,0,0.4); }
 
 /* ============ Footer — gray ============ */
 .site-footer-light { position: relative; z-index: 2; background: var(--panel); display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; padding: 48px 32px 56px 32px; border-top: 1px solid var(--panel-line); }

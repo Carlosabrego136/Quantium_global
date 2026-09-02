@@ -68,10 +68,16 @@ export function NeuralNetwork() {
     let centerY = 0
 
     // The network no longer drifts/jitters/breathes — every node sits at a fixed
-    // spot, so its screen position only needs to be computed once per resize
-    // instead of on every animation frame.
+    // spot relative to the others, so its screen position only needs to be
+    // computed once per resize instead of on every animation frame. On desktop
+    // we additionally spin the whole network as a rigid body around its center,
+    // so we keep each node's offset from the center to rotate cheaply per frame.
     const activeX = new Float32Array(pointCount)
     const activeY = new Float32Array(pointCount)
+    const offsetX = new Float32Array(pointCount)
+    const offsetY = new Float32Array(pointCount)
+    // radianes por frame — una vuelta completa cada ~140s a 60fps, giro lento y fluido
+    const ROTATION_SPEED = (Math.PI * 2) / (140 * 60)
 
     // Precomputed connections. Because positions are now static between resizes,
     // the O(n²) distance pass that used to run 60x/sec now runs once per resize —
@@ -84,6 +90,8 @@ export function NeuralNetwork() {
       for (let i = 0; i < pointCount; i++) {
         activeX[i] = points[i].x * width
         activeY[i] = points[i].y * height
+        offsetX[i] = activeX[i] - centerX
+        offsetY[i] = activeY[i] - centerY
       }
 
       const threshold = Math.min(width, height) * 0.36
@@ -146,6 +154,22 @@ export function NeuralNetwork() {
       if (isMobile) {
         if (timestamp - lastFrameTime < 33) return
         lastFrameTime = timestamp
+      }
+
+      // Solo en computadora: gira la red completa como un sólido rígido alrededor
+      // del centro — como una red neuronal 3D rotando lentamente. Las distancias
+      // entre nodos no cambian con una rotación rígida, así que las líneas
+      // (topología) y el hubAlpha precalculados siguen siendo válidos.
+      if (!isMobile) {
+        const angle = frame * ROTATION_SPEED
+        const cos = Math.cos(angle)
+        const sin = Math.sin(angle)
+        for (let i = 0; i < pointCount; i++) {
+          const ox = offsetX[i]
+          const oy = offsetY[i]
+          activeX[i] = centerX + ox * cos - oy * sin
+          activeY[i] = centerY + ox * sin + oy * cos
+        }
       }
 
       context.clearRect(0, 0, width, height)

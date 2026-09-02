@@ -79,11 +79,9 @@ export function NeuralNetwork() {
     // radianes por frame — una vuelta completa cada ~28s a 60fps, giro notorio y fluido
     const ROTATION_SPEED = (Math.PI * 2) / (28 * 60)
 
-    // Precomputed connections. Because positions are now static between resizes,
-    // the O(n²) distance pass that used to run 60x/sec now runs once per resize —
-    // this is what removes the scroll jank on mobile.
-    type Line = { i: number; j: number; baseAlpha: number }
-    let lines: Line[] = []
+    // Ya no se calculan conexiones entre nodos (era el paso O(n²) que hacía
+    // lento el giro). Solo queda el hub central conectado a cada nodo, así
+    // que el layout se reduce a las posiciones y el alpha del hub.
     const hubAlpha = new Float32Array(pointCount)
 
     const computeLayout = () => {
@@ -94,9 +92,6 @@ export function NeuralNetwork() {
         offsetY[i] = activeY[i] - centerY
       }
 
-      const threshold = Math.min(width, height) * 0.36
-      const thresholdSq = threshold * threshold
-      const next: Line[] = []
       const maxHubDist = Math.sqrt(centerX * centerX + centerY * centerY) || 1
 
       for (let i = 0; i < pointCount; i++) {
@@ -108,23 +103,7 @@ export function NeuralNetwork() {
         const hdy = py - centerY
         const hubDist = Math.sqrt(hdx * hdx + hdy * hdy)
         hubAlpha[i] = 0.16 + (1 - Math.min(1, hubDist / maxHubDist)) * 0.22
-
-        for (let j = i + 1; j < pointCount; j++) {
-          const dx = px - activeX[j]
-          const dy = py - activeY[j]
-          const distanceSq = dx * dx + dy * dy
-          // squared-distance pre-filter avoids a sqrt() call for the many pairs
-          // that are already too far apart to be drawn
-          if (distanceSq >= thresholdSq) continue
-
-          const distance = Math.sqrt(distanceSq)
-          const proximity = 1 - distance / threshold
-          const baseAlpha = Math.min(0.9, Math.max(0.22, proximity * 0.75))
-          next.push({ i, j, baseAlpha })
-        }
       }
-
-      lines = next
     }
 
     const resize = () => {
@@ -191,47 +170,6 @@ export function NeuralNetwork() {
         context.moveTo(centerX, centerY)
         context.lineTo(px, py)
         context.stroke()
-      }
-
-      // connective lines — black, with a bright glint that travels along each line
-      context.lineWidth = 1.1
-      for (let l = 0; l < lines.length; l++) {
-        const line = lines[l]
-        const px = activeX[line.i]
-        const py = activeY[line.i]
-        const ox = activeX[line.j]
-        const oy = activeY[line.j]
-        const phaseI = points[line.i].phase
-        const baseAlpha = line.baseAlpha
-        // el color base de la línea alterna entre el nodo de origen y el de
-        // destino, así el mismo trazo puede leer dorado en un extremo y azul
-        // o blanco en el otro
-        const [lr1, lg1, lb1] = points[line.i].lineColor
-        const [lr2, lg2, lb2] = points[line.j].lineColor
-
-        // a bright glint travels back and forth along each line at its own pace
-        const glintPos = (Math.sin(frame * 0.012 + line.i * 0.63 + phaseI * 0.2) + 1) / 2
-        const band = 0.22
-        const s0 = Math.max(0, glintPos - band)
-        const s2 = Math.min(1, glintPos + band)
-
-        const grad = context.createLinearGradient(px, py, ox, oy)
-        grad.addColorStop(0, `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha})`)
-        grad.addColorStop(s0, `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha})`)
-        grad.addColorStop(glintPos, `rgba(255, 255, 255, ${Math.min(1, baseAlpha + 0.55)})`)
-        grad.addColorStop(s2, `rgba(${lr2}, ${lg2}, ${lb2}, ${baseAlpha})`)
-        grad.addColorStop(1, `rgba(${lr2}, ${lg2}, ${lb2}, ${baseAlpha})`)
-
-        context.strokeStyle = grad
-        if (!isMobile) {
-          context.shadowColor = `rgba(${lr1}, ${lg1}, ${lb1}, ${baseAlpha * 0.6})`
-          context.shadowBlur = 3
-        }
-        context.beginPath()
-        context.moveTo(px, py)
-        context.lineTo(ox, oy)
-        context.stroke()
-        context.shadowBlur = 0
       }
 
       // central hub node — bright core with a breathing halo, same treatment as a gold node

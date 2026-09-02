@@ -76,8 +76,8 @@ export function NeuralNetwork() {
     const activeY = new Float32Array(pointCount)
     const offsetX = new Float32Array(pointCount)
     const offsetY = new Float32Array(pointCount)
-    // radianes por frame — una vuelta completa cada ~140s a 60fps, giro lento y fluido
-    const ROTATION_SPEED = (Math.PI * 2) / (140 * 60)
+    // radianes por frame — una vuelta completa cada ~28s a 60fps, giro notorio y fluido
+    const ROTATION_SPEED = (Math.PI * 2) / (28 * 60)
 
     // Precomputed connections. Because positions are now static between resizes,
     // the O(n²) distance pass that used to run 60x/sec now runs once per resize —

@@ -48,8 +48,14 @@ export function NeuralNetwork() {
 
       const active = points.map((point) => ({
         ...point,
-        px: point.x * width + Math.sin(frame * 0.004 * point.driftSpeed + point.phase) * 8,
-        py: point.y * height + Math.cos(frame * 0.003 * point.driftSpeed + point.phase) * 8,
+        px:
+          point.x * width +
+          Math.sin(frame * 0.004 * point.driftSpeed + point.phase) * 22 +
+          Math.sin(frame * 0.0017 * point.driftSpeed + point.phase * 1.3) * 14,
+        py:
+          point.y * height +
+          Math.cos(frame * 0.0032 * point.driftSpeed + point.phase) * 22 +
+          Math.cos(frame * 0.0021 * point.driftSpeed + point.phase * 1.3) * 14,
       }))
 
       // connective lines — gold links glow brighter and pulse in sync with their node
@@ -57,7 +63,7 @@ export function NeuralNetwork() {
       active.forEach((point, index) => {
         active.slice(index + 1).forEach((other) => {
           const distance = Math.hypot(point.px - other.px, point.py - other.py)
-          const threshold = Math.min(width, height) * 0.24
+          const threshold = Math.min(width, height) * 0.27
           if (distance < threshold) {
             const bothGold = point.isGold && other.isGold
             const eitherGold = point.isGold || other.isGold

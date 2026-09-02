@@ -214,7 +214,7 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
 .ticker-rail { display: flex; gap: 32px; overflow: hidden; white-space: nowrap; padding: 14px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px; letter-spacing: .04em; }
 .ticker-rail span { flex: 0 0 auto; }
 .ticker-rail b { color: var(--cream); margin-left: 25px; }
-.network-showcase { min-height: 540px; display: flex; align-items: flex-end; }
+.network-showcase { min-height: 200px; display: flex; align-items: flex-end; padding-top: 0; }
 .network-showcase-foot { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; }
 .proof-row { display: flex; gap: 34px; }
 .proof-item { display: grid; gap: 4px; }

@@ -50,35 +50,40 @@ export function NeuralNetwork() {
         ...point,
         px:
           point.x * width +
-          Math.sin(frame * 0.004 * point.driftSpeed + point.phase) * 22 +
-          Math.sin(frame * 0.0017 * point.driftSpeed + point.phase * 1.3) * 14,
+          Math.sin(frame * 0.0055 * point.driftSpeed + point.phase) * 46 +
+          Math.sin(frame * 0.0022 * point.driftSpeed + point.phase * 1.3) * 28,
         py:
           point.y * height +
-          Math.cos(frame * 0.0032 * point.driftSpeed + point.phase) * 22 +
-          Math.cos(frame * 0.0021 * point.driftSpeed + point.phase * 1.3) * 14,
+          Math.cos(frame * 0.0044 * point.driftSpeed + point.phase) * 46 +
+          Math.cos(frame * 0.0027 * point.driftSpeed + point.phase * 1.3) * 28,
       }))
 
-      // connective lines — gold links glow brighter and pulse in sync with their node
-      context.lineWidth = 0.75
+      // connective lines — black, with a bright glint that travels along each line
+      context.lineWidth = 1.1
       active.forEach((point, index) => {
         active.slice(index + 1).forEach((other) => {
           const distance = Math.hypot(point.px - other.px, point.py - other.py)
-          const threshold = Math.min(width, height) * 0.27
+          const threshold = Math.min(width, height) * 0.33
           if (distance < threshold) {
-            const bothGold = point.isGold && other.isGold
-            const eitherGold = point.isGold || other.isGold
-            const [red, green, blue] = eitherGold ? GOLD : point.color
             const proximity = 1 - distance / threshold
-            const basePulse = ease(frame * 0.02 * point.pulseSpeed + point.phase)
-            const glowBoost = eitherGold ? 0.25 + basePulse * 0.35 : 0
-            const alpha = Math.min(0.85, Math.max(0.1, proximity * (bothGold ? 0.6 : 0.4) + glowBoost * 0.3))
-            context.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`
-            if (eitherGold) {
-              context.shadowColor = `rgba(255, 205, 110, ${0.4 + basePulse * 0.3})`
-              context.shadowBlur = 6 + basePulse * 6
-            } else {
-              context.shadowBlur = 0
-            }
+            const baseAlpha = Math.min(0.9, Math.max(0.22, proximity * 0.75))
+
+            // a bright glint travels back and forth along each line at its own pace
+            const glintPos = (Math.sin(frame * 0.012 + index * 0.63 + point.phase * 0.2) + 1) / 2
+            const band = 0.22
+            const s0 = Math.max(0, glintPos - band)
+            const s2 = Math.min(1, glintPos + band)
+
+            const grad = context.createLinearGradient(point.px, point.py, other.px, other.py)
+            grad.addColorStop(0, `rgba(8, 8, 10, ${baseAlpha})`)
+            grad.addColorStop(s0, `rgba(8, 8, 10, ${baseAlpha})`)
+            grad.addColorStop(glintPos, `rgba(255, 255, 255, ${Math.min(1, baseAlpha + 0.55)})`)
+            grad.addColorStop(s2, `rgba(8, 8, 10, ${baseAlpha})`)
+            grad.addColorStop(1, `rgba(8, 8, 10, ${baseAlpha})`)
+
+            context.strokeStyle = grad
+            context.shadowColor = `rgba(0, 0, 0, ${baseAlpha * 0.6})`
+            context.shadowBlur = 3
             context.beginPath()
             context.moveTo(point.px, point.py)
             context.lineTo(other.px, other.py)

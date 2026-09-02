@@ -46,24 +46,43 @@ export function NeuralNetwork() {
       context.setTransform(ratio, 0, 0, ratio, 0, 0)
       context.clearRect(0, 0, width, height)
 
-      const active = points.map((point) => ({
-        ...point,
-        px:
-          point.x * width +
-          Math.sin(frame * 0.0055 * point.driftSpeed + point.phase) * 46 +
-          Math.sin(frame * 0.0022 * point.driftSpeed + point.phase * 1.3) * 28,
-        py:
-          point.y * height +
-          Math.cos(frame * 0.0044 * point.driftSpeed + point.phase) * 46 +
-          Math.cos(frame * 0.0027 * point.driftSpeed + point.phase * 1.3) * 28,
-      }))
+      const centerX = width / 2
+      const centerY = height / 2
+      // the whole web breathes — contracts and expands from the center, not perfectly
+      // periodic (two mismatched frequencies layered) so it never feels like a strict loop
+      const breathe = 1 + Math.sin(frame * 0.006) * 0.16 + Math.sin(frame * 0.0037 + 1.4) * 0.07
+
+      const active = points.map((point) => {
+        const anchorX = point.x * width
+        const anchorY = point.y * height
+        const dx = anchorX - centerX
+        const dy = anchorY - centerY
+
+        // chaotic, multi-directional jitter — three mismatched sine waves per axis so
+        // each node wanders unpredictably instead of tracing a clean ellipse
+        const jitterX =
+          Math.sin(frame * 0.006 * point.driftSpeed + point.phase) * 32 +
+          Math.sin(frame * 0.0021 * point.driftSpeed + point.phase * 2.1) * 22 +
+          Math.sin(frame * 0.0043 * point.driftSpeed * 1.6 + point.phase * 0.6) * 16
+
+        const jitterY =
+          Math.cos(frame * 0.0048 * point.driftSpeed + point.phase * 1.4) * 32 +
+          Math.cos(frame * 0.0026 * point.driftSpeed + point.phase * 0.8) * 22 +
+          Math.cos(frame * 0.0039 * point.driftSpeed * 1.3 + point.phase * 2.3) * 16
+
+        return {
+          ...point,
+          px: centerX + dx * breathe + jitterX,
+          py: centerY + dy * breathe + jitterY,
+        }
+      })
 
       // connective lines — black, with a bright glint that travels along each line
       context.lineWidth = 1.1
       active.forEach((point, index) => {
         active.slice(index + 1).forEach((other) => {
           const distance = Math.hypot(point.px - other.px, point.py - other.py)
-          const threshold = Math.min(width, height) * 0.33
+          const threshold = Math.min(width, height) * 0.36
           if (distance < threshold) {
             const proximity = 1 - distance / threshold
             const baseAlpha = Math.min(0.9, Math.max(0.22, proximity * 0.75))

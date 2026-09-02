@@ -12,8 +12,8 @@ export function NeuralNetwork() {
     let frame = 0
     let animationFrame = 0
     const points = Array.from({ length: 94 }, (_, index) => ({
-      x: 0.18 + ((index * 0.137) % 0.64),
-      y: 0.18 + ((index * 0.239) % 0.64),
+      x: 0.03 + ((index * 0.137) % 0.94),
+      y: 0.05 + ((index * 0.239) % 0.9),
       phase: index * 1.7,
       radius: index % 11 === 0 ? 4.2 : index % 4 === 0 ? 2.6 : 1.5,
       color: index % 11 === 0 ? [239, 194, 92] : index % 3 === 0 ? [120, 184, 226] : [224, 230, 235],

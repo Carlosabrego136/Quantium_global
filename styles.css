@@ -1252,6 +1252,51 @@ a:focus-visible, button:focus-visible{
   .depth-grid::after{ animation:none; }
 }
 
+/* ============================================================
+   CAPA ABIERTA — red neuronal visible detrás de todo el relato
+   ============================================================ */
+:root{
+  --bg:#080b0f; --bg-1:#0d1116; --surface:transparent;
+  --text:#edf0ee; --text-dim:#b3bbb9; --text-faint:#78817f;
+  --cyan:#4d7bf5; --blue:#4d7bf5; --violet:#cda86a;
+  --gold:#cda86a; --gold-bright:#f0d9a8; --border:rgba(240,217,168,.2);
+}
+body{background:var(--bg);}
+.gradient-zone{background:linear-gradient(180deg,rgba(8,11,15,.08),rgba(8,11,15,.34) 48%,rgba(8,11,15,.72));}
+.network-fixed{z-index:0;}
+.network-fixed .hero-viz{width:100vw;max-width:none;height:100vh;aspect-ratio:auto;opacity:.94;transform:scale(1.22);}
+.network-fixed .hero-viz::before{inset:-30%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(205,168,106,.28) 0%,rgba(141,151,157,.18) 34%,rgba(77,123,245,.16) 58%,transparent 86%);filter:blur(34px);}
+.network-fixed .hero-viz canvas{width:100%;height:100%;-webkit-mask-image:radial-gradient(ellipse 72% 70% at center,black 48%,rgba(0,0,0,.72) 67%,transparent 94%);mask-image:radial-gradient(ellipse 72% 70% at center,black 48%,rgba(0,0,0,.72) 67%,transparent 94%);}
+.hero,.network-showcase,.gradient-zone,.stat-strip,.positioning,.tools,.showcase,.method,.plans,.final-cta,.footer{background:transparent;}
+.hero,.network-showcase,.gradient-zone{z-index:1;}
+.hero-copy,.section-head,.positioning-inner,.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{margin-left:auto;margin-right:0;text-align:right;}
+.hero-copy{max-width:640px;}
+.hero-actions{justify-content:flex-end;}
+.section-head,.positioning-inner{max-width:760px;}
+.stat-strip-inner,.tool-grid,.plans-grid{background:transparent;}
+.stat-card,.tool-card,.plan-card{background:rgba(8,11,15,.16);backdrop-filter:blur(3px);border-color:rgba(240,217,168,.16);box-shadow:none;}
+.stat-card:hover,.tool-card:hover,.plan-card:hover{background:rgba(8,11,15,.26);}
+.depth-grid{opacity:.18;}
+.hero-distort{background:radial-gradient(closest-side,rgba(8,11,15,.52),rgba(8,11,15,.2) 55%,transparent 86%);mix-blend-mode:normal;opacity:.72;}
+@media (max-width:720px){
+  .nav-links{display:none !important;}
+  .nav-cta .btn-ghost{display:none;}
+  .nav-inner{padding:14px var(--edge);gap:14px;}
+  .nav-cta{margin-left:auto;}
+  .nav-cta .btn-solid{padding:10px 14px;font-size:12px;}
+  .nav-toggle{display:flex;flex-direction:column;gap:5px;width:28px;padding:4px 0;background:transparent;border:0;}
+  .nav-toggle span{display:block;height:1px;width:100%;background:var(--gold-bright);}
+  .network-fixed .hero-viz{width:92vw;max-width:58vh;opacity:.62;}
+  .hero-copy,.section-head,.positioning-inner,.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{max-width:100%;margin-left:0;text-align:right;}
+  .hero{padding-top:92px;min-height:72vh;display:flex;align-items:center;}
+  .hero-copy h1{font-size:clamp(30px,9vw,42px);}
+  .hero-sub{margin-left:auto;max-width:34ch;}
+  .hero-actions{justify-content:flex-end;}
+  .stat-strip-inner{grid-template-columns:1fr 1fr;}
+  .tool-grid{grid-template-columns:1fr;}
+  .stat-card,.tool-card,.plan-card{background:rgba(8,11,15,.2);}
+}
+
 /* --- profundidad animada: los tres bloques "negros" del ritmo alternado
    (stat-strip, tools, method) llevan su glow y su starfield en movimiento
    lento, para que no se sientan planos frente a las secciones con foto --- */
@@ -1282,6 +1327,56 @@ a:focus-visible, button:focus-visible{
   .stat-strip::before, .tools::before, .method::before,
   .stat-strip::after, .tools::after, .method::after{ animation:none; }
 }
+
+/* ============================================================
+   COMPOSICIÓN EDITORIAL — bloques que respiran a izquierda y derecha
+   ============================================================ */
+.stat-strip,.positioning,.tools,.showcase,.method,.plans,.final-cta{position:relative;}
+.stat-strip-head{max-width:var(--max);margin-left:auto;margin-right:0;justify-content:flex-end;gap:28px;}
+.stat-strip-inner{margin-left:auto;margin-right:0;}
+.stat-card{border-radius:18px;}
+.positioning-inner,.section-head,.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{width:min(100%,760px);}
+.positioning-label{background:transparent!important;padding:0!important;border-radius:0!important;}
+.section-head{margin-left:auto;margin-right:0;}
+.section-head p,.showcase-copy,.method-copy,.plans-intro,.final-cta-copy{margin-left:auto;}
+.tools .tool-grid{width:min(100%,1040px);margin-left:auto;margin-right:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;}
+.tool-card{min-height:240px;border-radius:20px;padding:30px 32px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;}
+.tool-card:nth-child(odd){transform:translateX(-24px);}
+.tool-card:nth-child(even){transform:translateX(24px);}
+.tool-card .tool-icon{margin-left:auto;margin-right:0;}
+.tool-card h3,.tool-card p{max-width:34ch;}
+.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{margin-left:auto;margin-right:0;}
+.showcase-copy,.method-copy{max-width:600px;text-align:right;}
+.plans-grid{width:min(100%,1040px);margin-left:auto;margin-right:0;}
+.plan-card{text-align:right;border-radius:20px;}
+.plan-card .plan-features,.plan-card .plan-price,.plan-card .plan-action{margin-left:auto;}
+.final-cta-copy{text-align:right;}
+.stat-card,.tool-card,.plan-card{background:linear-gradient(135deg,rgba(8,11,15,.12),rgba(13,17,22,.28));}
+@media (max-width:720px){
+  .stat-strip-head,.stat-strip-inner,.tools .tool-grid,.plans-grid{width:100%;margin-left:0;margin-right:0;}
+  .stat-strip-head{justify-content:space-between;}
+  .tools .tool-grid{grid-template-columns:1fr;gap:14px;}
+  .tool-card:nth-child(odd),.tool-card:nth-child(even){transform:none;}
+  .tool-card{min-height:0;padding:24px;text-align:right;}
+  .positioning-inner,.section-head,.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{width:100%;}
+  .stat-card{border-radius:14px;padding:18px;}
+  .plans-grid{display:grid;grid-template-columns:1fr;}
+}
+
+/* Superficie cristalina abierta: solo texto, cards y red tornasol */
+html,body{background:#080b0f;}
+.network-fixed{background:radial-gradient(ellipse at 42% 42%,rgba(205,168,106,.28),rgba(77,123,245,.16) 34%,rgba(8,11,15,0) 70%);}
+.gradient-zone,.hero,.network-showcase,.stat-strip,.positioning,.tools,.showcase,.method,.plans,.final-cta,.footer{background:transparent!important;}
+.stat-card,.tool-card,.plan-card{background:transparent!important;backdrop-filter:none;box-shadow:none;border:0;border-bottom:1px solid rgba(205,168,106,.3);border-radius:0;}
+.stat-card:hover,.tool-card:hover,.plan-card:hover{background:transparent!important;box-shadow:none;}
+.tool-grid,.plans-grid,.stat-strip-inner{background:transparent!important;}
+.section-head,.positioning-inner,.showcase-inner,.method-inner,.plans-inner,.final-cta-inner{position:relative;z-index:2;}
+.depth-grid,.hero-distort{opacity:.1;}
+@media (max-width:720px){.stat-card,.tool-card,.plan-card{border-bottom-color:rgba(77,123,245,.35);}
+  .network-fixed .hero-viz{width:140vw;max-width:none;height:100vh;transform:scale(1.12);opacity:.72;}
+  .network-fixed .hero-viz canvas{-webkit-mask-image:radial-gradient(ellipse 78% 70% at center,black 42%,rgba(0,0,0,.65) 68%,transparent 96%);mask-image:radial-gradient(ellipse 78% 70% at center,black 42%,rgba(0,0,0,.65) 68%,transparent 96%);}
+}
+
 
 /* Alternancia limpia: 1 con foto, 2 sin foto, 3 con foto, 4 sin foto,
    5 con foto, 6 sin foto, 7 con foto, 8 sin foto (final-cta ya usa un

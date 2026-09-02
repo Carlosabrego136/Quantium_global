@@ -135,20 +135,20 @@ onScroll();
 
   // Nodes placed on a unit sphere (theta = azimuth, phi = elevation from equator)
   const nodes = [
-    { id:'core', label:'Dealer Gamma', r:16, core:true, color:'#3fe8d0' },
+    { id:'core', label:'Dealer Gamma', r:16, core:true, color:'#cda86a' },
     { id:'spx',  label:'SPX',   r:7.5, theta: 0.35,  phi: 0.28,  color:'#4d7bf5' },
-    { id:'vix',  label:'VIX',   r:6,   theta: 2.55,  phi:-0.35,  color:'#9b86f7' },
+    { id:'vix',  label:'VIX',   r:6,   theta: 2.55,  phi:-0.35,  color:'#8d979d' },
     { id:'nvda', label:'NVDA',  r:6.5, theta: 0.95,  phi:-0.55,  color:'#4d7bf5' },
-    { id:'tsla', label:'TSLA',  r:5.5, theta: 3.55,  phi: 0.45,  color:'#9b86f7' },
+    { id:'tsla', label:'TSLA',  r:5.5, theta: 3.55,  phi: 0.45,  color:'#8d979d' },
     { id:'aapl', label:'AAPL',  r:5.5, theta: 2.95,  phi: 0.62,  color:'#4d7bf5' },
-    { id:'eth',  label:'ETH',   r:6,   theta: 1.55,  phi: 0.68,  color:'#3fe8d0' },
-    { id:'btc',  label:'BTC',   r:6.5, theta: 0.65,  phi: 0.72,  color:'#3fe8d0' },
-    { id:'skew', label:'Skew',  r:5,   theta: 4.15,  phi:-0.55,  color:'#9b86f7' },
+    { id:'eth',  label:'ETH',   r:6,   theta: 1.55,  phi: 0.68,  color:'#cda86a' },
+    { id:'btc',  label:'BTC',   r:6.5, theta: 0.65,  phi: 0.72,  color:'#cda86a' },
+    { id:'skew', label:'Skew',  r:5,   theta: 4.15,  phi:-0.55,  color:'#8d979d' },
     { id:'vanna',label:'Vanna', r:5,   theta: 5.35,  phi:-0.42,  color:'#4d7bf5' },
-    { id:'oi',   label:'Open Interest', r:5.5, theta: 5.9, phi: 0.18, color:'#3fe8d0' },
-    { id:'dp',   label:'Dark Pool', r:6, theta: 3.95, phi:-0.68,  color:'#9b86f7' },
+    { id:'oi',   label:'Open Interest', r:5.5, theta: 5.9, phi: 0.18, color:'#cda86a' },
+    { id:'dp',   label:'Dark Pool', r:6, theta: 3.95, phi:-0.68,  color:'#8d979d' },
     { id:'liq',  label:'Liquidez', r:5, theta: 2.35, phi:-0.72,  color:'#4d7bf5' },
-    { id:'hedge',label:'Hedging', r:5.5, theta: 5.55, phi:-0.15, color:'#3fe8d0' },
+    { id:'hedge',label:'Hedging', r:5.5, theta: 5.55, phi:-0.15, color:'#cda86a' },
   ];
   const edges = ['spx','vix','nvda','tsla','aapl','eth','btc','skew','vanna','oi','dp','liq','hedge']
     .map(id => ['core', id]);
@@ -172,7 +172,7 @@ onScroll();
 
   const FOCAL = 2.1;   // camera focal length
   const CAMD  = 2.6;   // camera distance from origin
-  const SPHERE_R = 0.92;
+  const SPHERE_R = 1.18;
 
   // Precompute base 3D positions on the sphere for satellites
   nodes.forEach(n => {
@@ -198,7 +198,7 @@ onScroll();
     c.closePath();
   }
 
-  const VORTEX_COLORS = ['#3fe8d0', '#4d7bf5', '#9b86f7'];
+  const VORTEX_COLORS = ['#cda86a', '#4d7bf5', '#8d979d'];
 
   // Vórtice digital de fondo: brazos en espiral + partículas cayendo hacia
   // el centro (Dealer Gamma), como flujo de datos siendo "absorbido" por
@@ -208,7 +208,7 @@ onScroll();
 
     // halo ambiental suave detrás de todo
     const haze = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-    haze.addColorStop(0,   hexA('#3fe8d0', 0.07));
+    haze.addColorStop(0,   hexA('#cda86a', 0.07));
     haze.addColorStop(0.5, hexA('#4d7bf5', 0.035));
     haze.addColorStop(1,   hexA('#4d7bf5', 0));
     ctx.fillStyle = haze;
@@ -360,10 +360,8 @@ onScroll();
         const tx = p.sx, ty = p.sy + rr + (n.core?21:15);
         const padX = 6, padY = 4;
         const boxW = tw + padX*2, boxH = fontSize + padY*2;
-        ctx.fillStyle = `rgba(6,10,14,${0.62*dAlpha})`;
-        roundRect(ctx, tx-boxW/2, ty-fontSize*0.85-padY, boxW, boxH, 5);
-        ctx.fill();
-        ctx.fillStyle = `rgba(${n.core?'234,243,241':'159,176,183'},${n.core?0.95:0.85*dAlpha})`;
+        // Etiquetas abiertas: el texto flota sobre la red sin tarjetas ni marcos.
+        ctx.fillStyle = `rgba(${n.core?'240,217,168':'237,240,238'},${n.core?0.95:0.78*dAlpha})`;
         ctx.fillText(label, tx, ty);
       }
     }
@@ -446,7 +444,7 @@ onScroll();
   if (!svg) return;
   const NS = 'http://www.w3.org/2000/svg';
   const W = 800, H = 420, LINES = 26, STEPS = 40;
-  const colors = ['#3fe8d0', '#4d7bf5', '#9b86f7'];
+  const colors = ['#cda86a', '#4d7bf5', '#8d979d'];
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const lines = [];

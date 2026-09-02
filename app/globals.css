@@ -155,22 +155,28 @@
 
 @layer base {
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; background: #b8b8b6; }
+  html { scroll-behavior: smooth; background: #050505; }
   body {
     margin: 0;
-    color: #171717;
+    color: #fafafa;
     font-family: Arial, Helvetica, sans-serif;
-    background:
-      linear-gradient(rgba(184, 184, 182, 0.5), rgba(184, 184, 182, 0.62)),
-      url('/network-bg.jpg') center center / cover no-repeat fixed;
+    background: #050505;
   }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; }
 }
 
-:root { --graphite: #171717; --grey: #b8b8b6; --cream: #efe3c6; --line: rgba(23,23,23,.24); }
+:root { --graphite: #fafafa; --grey: #050505; --cream: #efe3c6; --line: rgba(255,255,255,.16); }
 .site-shell { position: relative; overflow: hidden; background: transparent; }
-.neural-network { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.video-background { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #050505; }
+.video-background-el { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 46% 32%; }
+.video-background-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5,5,5,.30) 0%, rgba(5,5,5,.52) 38%, rgba(5,5,5,.70) 100%),
+    radial-gradient(ellipse at center, transparent 0%, rgba(5,5,5,.30) 65%, rgba(5,5,5,.62) 100%);
+}
 .site-header, .content-section, .site-footer { position: relative; z-index: 1; }
 .site-header { display: flex; align-items: center; justify-content: space-between; min-height: 68px; padding: 0 2.6vw; border-bottom: 1px solid var(--line); text-transform: uppercase; font-size: 10px; letter-spacing: .1em; }
 .wordmark { font-weight: 800; letter-spacing: .16em; }
@@ -184,10 +190,10 @@ h1, h2, h3, p { margin: 0; }
 h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -.07em; font-weight: 500; text-transform: uppercase; text-wrap: balance; }
 .hero-copy { max-width: 330px; display: grid; gap: 34px; align-content: end; }
 .hero-copy p, .case-row p, .site-footer p { max-width: 300px; font-size: 14px; line-height: 1.5; }
-.button { width: fit-content; display: inline-flex; align-items: center; gap: 20px; padding: 14px 18px; border: 1px solid var(--graphite); border-radius: 999px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; transition: transform .25s ease, background .25s ease; }
+.button { width: fit-content; display: inline-flex; align-items: center; gap: 20px; padding: 14px 18px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; transition: transform .25s ease, background .25s ease; }
 .button:hover { transform: translateY(-3px); }
-.button-dark { background: var(--graphite); color: var(--cream); }
-.button-light { background: var(--cream); color: var(--graphite); border-color: var(--cream); }
+.button-dark { background: var(--graphite); color: #050505; border-color: var(--graphite); }
+.button-light { background: var(--cream); color: #050505; border-color: var(--cream); }
 .hero-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 16px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
 .section-block { display: grid; grid-template-columns: 1fr 1fr; gap: 7vw; border-top: 1px solid var(--line); }
 .section-heading { display: grid; align-content: start; gap: 65px; }
@@ -209,7 +215,7 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
 /* Quantium: el gris vive solo en el lienzo fijo; todo el contenido flota sobre él. */
 .site-shell, .site-header, .content-section, .site-footer, .ticker-rail, .stat-strip, .stat-card, .section-block, .tools-section, .gamma-section, .rates-section { background: transparent !important; }
 .site-shell { min-height: 100vh; }
-.neural-network { opacity: 1; image-rendering: auto; filter: saturate(1.12) contrast(1.05); }
+.video-background-el { filter: saturate(1.05) contrast(1.03) brightness(.92); }
 .site-header { max-width: none; }
 .hero { min-height: 760px; padding-top: 95px; }
 .hero-grid { grid-template-columns: minmax(0, 1fr); }
@@ -253,8 +259,8 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
 .rates-section .section-note { max-width: 390px; align-self: flex-start; font-size: 15px; }
 .site-footer { border-top: 1px solid var(--line); }
 @media (max-width: 760px) { .hero { min-height: 590px; padding-top: 42px; } .network-showcase { min-height: 330px; padding-top: 24px; padding-bottom: 42px; } .network-showcase-foot, .proof-row, .stat-strip-head { flex-direction: column; align-items: flex-start; } .proof-row { display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; gap: 14px; } .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .stats-grid .stat-card:last-child { grid-column: span 2; } .section-block { grid-template-columns: 1fr; gap: 30px; } .content-section { padding-top: 54px; padding-bottom: 54px; } h1, h2 { max-width: 100%; overflow-wrap: anywhere; } .hero-grid h1 { font-size: clamp(43px, 13vw, 68px); line-height: .91; } .hero-sub { font-size: 14px; } .section-heading h2, .rates-section h2 { font-size: clamp(42px, 12vw, 64px); } .tool-row, .method-row { grid-template-columns: 28px minmax(0, 1fr) 16px; gap: 10px; } .tool-row h3, .method-row h3 { font-size: 16px; } .tool-row p, .method-row p, .case-row p { overflow-wrap: anywhere; } .gamma-section, .rates-section { min-height: 430px; } h1, h2, h3, p, a, li, span { max-width: 100%; overflow-wrap: break-word; } .tool-row p, .method-row p, .plan-item p { word-break: normal; } }
-/* Legibilidad en móvil: una opacidad clara pegada solo al texto (no un bloque completo)
-   para que las letras no se pierdan sobre la red neuronal en movimiento. box-decoration-break
+/* Legibilidad en móvil: una opacidad oscura pegada solo al texto (no un bloque completo)
+   para que las letras claras no se pierdan sobre el video en movimiento. box-decoration-break
    hace que cada línea de texto que se envuelve tenga su propio "parche", en vez de una sola
    caja rectangular gigante detrás de todo el párrafo. */
 @media (max-width: 760px) {
@@ -279,7 +285,7 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
   .plan-item li,
   .site-footer p,
   .footer-link {
-    background: rgba(184, 184, 182, 0.86);
+    background: rgba(5, 5, 5, 0.72);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     padding: 0.08em 0.4em;
@@ -288,15 +294,15 @@ h1, h2 { font-size: clamp(50px, 8vw, 128px); line-height: .86; letter-spacing: -
   .hero-grid h1,
   .section-heading h2,
   .rates-section h2 {
-    background: rgba(184, 184, 182, 0.86);
+    background: rgba(5, 5, 5, 0.8);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     padding: 0.02em 0.12em;
     border-radius: 6px;
   }
-  /* la palabra en crema dentro del título necesita su propio fondo oscuro para no perderse */
+  /* la palabra en crema dentro del título necesita su propio fondo para no perderse */
   .hero-grid h1 em {
-    background: rgba(23, 23, 23, 0.62);
+    background: rgba(5, 5, 5, 0.55);
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
     padding: 0.02em 0.12em;

@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowUpRight, Menu, MoveDown } from 'lucide-react'
-import { NeuralNetwork } from '@/components/neural-network'
+import { VideoBackground } from '@/components/video-background'
 
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
 const tools = [
@@ -19,7 +19,7 @@ const stats = [['7,090', 'SPX · dealer put floor'], ['7,890', 'SPX · call resi
 export default function Page() {
   return (
     <main className="site-shell">
-      <NeuralNetwork />
+      <VideoBackground />
       <header className="site-header">
         <a className="wordmark" href="#top">QUANTIUM</a>
         <nav className="desktop-nav" aria-label="Navegación principal"><a href="#herramientas">Herramientas</a><a href="#gamma">Gamma</a><a href="#metodo">Metodología</a><a href="#planes">Planes</a></nav>

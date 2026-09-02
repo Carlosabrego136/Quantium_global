@@ -93,12 +93,12 @@ svg{ display:block; }
   transform:translateY(0) scale(1.06);
   will-change:transform;
 }
-/* scrim uniforme: la misma oscurecida en toda la página, sin cortes por sección */
+/* scrim: fondo casi sin oscurecer (solo un leve viñeteado en bordes
+   para dar profundidad) para que la foto se vea nítida y clara */
 .page-bg-scrim{
   position:absolute; inset:0;
   background:
-    linear-gradient(180deg, rgba(6,10,14,.88) 0%, rgba(6,10,14,.58) 16%, rgba(6,10,14,.5) 48%, rgba(6,10,14,.62) 74%, rgba(6,10,14,.92) 100%),
-    linear-gradient(100deg, rgba(6,10,14,.5) 0%, rgba(6,10,14,.2) 45%, rgba(6,10,14,.46) 100%);
+    linear-gradient(180deg, rgba(6,10,14,.32) 0%, rgba(6,10,14,.06) 14%, rgba(6,10,14,0) 42%, rgba(6,10,14,.08) 76%, rgba(6,10,14,.4) 100%);
 }
 .page-bg-glow{
   position:absolute; inset:0;
@@ -259,6 +259,7 @@ section{ position:relative; }
   display:flex; align-items:center; gap:9px;
   font-family:var(--font-display); font-weight:600; font-size:19px;
   color:var(--text);
+  text-shadow:0 2px 10px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
 }
 .wordmark-mark{ width:22px; height:22px; color:var(--cyan); }
 .wordmark-mark svg{ width:100%; height:100%; }
@@ -267,6 +268,7 @@ section{ position:relative; }
 .nav-links a{
   font-size:14.5px; color:var(--text-dim); font-weight:500;
   transition:color .18s ease;
+  text-shadow:0 2px 8px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
 }
 .nav-links a:hover{ color:var(--text); }
 .nav-cta{ display:flex; align-items:center; gap:10px; }
@@ -280,8 +282,8 @@ section{ position:relative; }
   padding-bottom:64px;
   position:relative;
   background-image:
-    linear-gradient(100deg, rgba(6,10,14,.5) 0%, rgba(6,10,14,.28) 26%, rgba(6,10,14,.08) 50%, rgba(6,10,14,.05) 72%, rgba(6,10,14,.3) 100%),
-    linear-gradient(180deg, rgba(7,13,16,0) 0%, rgba(6,10,14,.1) 62%, rgba(6,10,14,.55) 100%);
+    linear-gradient(100deg, rgba(6,10,14,.62) 0%, rgba(6,10,14,.38) 30%, rgba(6,10,14,.1) 54%, rgba(6,10,14,.04) 74%, rgba(6,10,14,.28) 100%),
+    linear-gradient(180deg, rgba(7,13,16,0) 0%, rgba(6,10,14,.06) 62%, rgba(6,10,14,.5) 100%);
 }
 
 .hero::before{
@@ -324,6 +326,7 @@ section{ position:relative; }
   color:var(--text-dim);
   width:max-content;
   animation:ticker 38s linear infinite;
+  text-shadow:0 2px 8px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
 }
 @keyframes ticker{
   from{ transform:translateX(0); }
@@ -343,6 +346,7 @@ section{ position:relative; }
   font-size:clamp(38px, 4.6vw, 62px);
   line-height:1.06;
   color:var(--text);
+  text-shadow:0 4px 24px rgba(0,0,0,.9), 0 2px 6px rgba(0,0,0,.85);
 }
 .hero-copy h1 em{
   font-style:normal;
@@ -354,6 +358,7 @@ section{ position:relative; }
   font-size:17.5px;
   line-height:1.65;
   color:var(--text-dim);
+  text-shadow:0 3px 14px rgba(0,0,0,.9), 0 1px 4px rgba(0,0,0,.85);
 }
 .hero-actions{
   margin-top:32px;
@@ -367,8 +372,9 @@ section{ position:relative; }
 .proof-num{
   font-family:var(--font-mono);
   font-size:22px; font-weight:600; color:var(--text);
+  text-shadow:0 2px 10px rgba(0,0,0,.9);
 }
-.proof-label{ font-size:12.5px; color:var(--text-faint); }
+.proof-label{ font-size:12.5px; color:var(--text-faint); text-shadow:0 2px 8px rgba(0,0,0,.9); }
 .proof-div{ width:1px; height:30px; background:var(--border); }
 
 .hero-viz{

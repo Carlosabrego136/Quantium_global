@@ -40,6 +40,56 @@
 })();
 
 /* ============================================================
+   PARALLAX EN TÍTULOS Y TEXTOS
+   Cada título/eyebrow/párrafo marcado con .px-title o .px-text se
+   desplaza un poco (solo transform, nunca toca el layout) según
+   qué tan lejos está del centro del viewport. Da una sensación de
+   profundidad elegante y sutil al hacer scroll, sin mover nada de
+   su lugar real en la página.
+   ============================================================ */
+(function parallaxText(){
+  const titles = document.querySelectorAll('.px-title');
+  const texts = document.querySelectorAll('.px-text');
+  if (!titles.length && !texts.length) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) return;
+
+  let ticking = false;
+
+  const offsetFor = (el, factor, max) => {
+    const rect = el.getBoundingClientRect();
+    const elCenter = rect.top + rect.height / 2;
+    const viewCenter = window.innerHeight / 2;
+    let d = (viewCenter - elCenter) * factor;
+    if (d > max) d = max;
+    if (d < -max) d = -max;
+    return d;
+  };
+
+  const update = () => {
+    titles.forEach(el => {
+      el.style.transform = `translateY(${offsetFor(el, 0.06, 22)}px)`;
+    });
+    texts.forEach(el => {
+      el.style.transform = `translateY(${offsetFor(el, 0.03, 12)}px)`;
+    });
+    ticking = false;
+  };
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive:true });
+
+  window.addEventListener('resize', update, { passive:true });
+
+  update();
+})();
+
+/* ============================================================
    NAV — background on scroll
    ============================================================ */
 const nav = document.getElementById('nav');

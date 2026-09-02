@@ -190,6 +190,11 @@ h1,h2,h3{
 
 section{ position:relative; }
 
+/* --- parallax de títulos/textos: el JS solo escribe transform,
+   así que el elemento nunca se mueve de su lugar real (document
+   flow intacto) — sólo un desplazamiento visual sutil --- */
+.px-title, .px-text{ will-change:transform; }
+
 /* ============================================================
    BUTTONS
    ============================================================ */

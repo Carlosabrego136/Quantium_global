@@ -71,10 +71,9 @@ svg{ display:block; }
 }
 
 /* ============================================================
-   FONDO GLOBAL ÚNICO (desktop + móvil) + CAPAS PARALLAX
-   Un solo fondo fijo detrás de toda la página: nunca se corta
-   ni se reinicia entre secciones. El scroll mueve la foto y las
-   capas de brillo/partículas a distinta velocidad (efecto profundidad).
+   FONDO GLOBAL ÚNICO (desktop + móvil), FIJO (no se mueve con el
+   scroll) + CAPA de hardware con parallax que aparece (fade-in)
+   a partir de la 2a sección.
    ============================================================ */
 .page-bg{
   position:fixed;
@@ -90,23 +89,7 @@ svg{ display:block; }
   background-size:cover;
   background-position:center 38%;
   background-repeat:no-repeat;
-  transform:translateY(0) scale(1.06);
-  will-change:transform;
-}
-/* segundo fondo: la foto que se muestra a partir de la 2a sección
-   (stat-strip en adelante). Va superpuesta a .page-bg-photo y su
-   opacidad la controla el scroll (JS) para hacer un crossfade suave
-   justo al cruzar el final del hero. En el hero permanece en 0. */
-.page-bg-photo-alt{
-  position:absolute;
-  inset:-6% -6%;
-  background-image:url('assets/section-bg-wide.jpg');
-  background-size:cover;
-  background-position:center 42%;
-  background-repeat:no-repeat;
-  transform:translateY(0) scale(1.06);
-  will-change:transform, opacity;
-  opacity:0;
+  transform:scale(1.06);
 }
 /* scrim: fondo casi sin oscurecer (solo un leve viñeteado en bordes
    para dar profundidad) para que la foto se vea nítida y clara */
@@ -163,8 +146,32 @@ svg{ display:block; }
   background-position:center;
 }
 
+/* --- capa de hardware (foto real recortada): usa EXACTAMENTE el mismo
+   inset/cover/position que el fondo (.page-bg-photo) para quedar cuadrada
+   en escala y posición con la foto real. Empieza invisible (opacity 0):
+   el JS la va revelando (fade-in) recién al cruzar del hero a la 2a
+   sección, y es la única capa que se mueve con el scroll (parallax);
+   el fondo de abajo se queda fijo. --- */
+.hw-layer{
+  position:absolute; inset:-6% -6%;
+  pointer-events:none;
+  will-change:transform, opacity;
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center 38%;
+  filter:drop-shadow(0 40px 70px rgba(0,0,0,.55));
+  opacity:0;
+  transform:scale(1.06);
+}
+.watercooling-layer{
+  background-image:url('assets/watercooling-cutout.png');
+}
+@media (max-width:1080px){
+  .hw-layer{ display:none; }
+}
+
 @media (prefers-reduced-motion: reduce){
-  .page-bg-photo, .parallax-el{ transform:none !important; transition:none !important; }
+  .page-bg-photo, .parallax-el, .hw-layer{ transform:none !important; transition:none !important; }
 }
 
 @media (max-width:760px){
@@ -408,6 +415,32 @@ section{ position:relative; }
 }
 @media (prefers-reduced-motion: reduce){
   .hero-viz::before{ animation:none; }
+}
+/* efecto "distorsión negra": simula que el fondo se deforma con el
+   tiempo justo detrás de la red neuronal. feTurbulence (animado vía
+   SMIL en el <svg> del <body>) + feDisplacementMap generan el boil;
+   aquí solo se pinta la mancha negra que ese filtro deforma. */
+.hero-distort{
+  position:absolute;
+  inset:-22%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(closest-side, rgba(0,0,0,.94) 0%, rgba(0,0,0,.68) 40%, rgba(0,0,0,.22) 64%, transparent 82%);
+  filter:url(#heroDistortFilter);
+  mix-blend-mode:multiply;
+  opacity:.88;
+  animation:hero-distort-breathe 9s ease-in-out infinite;
+}
+@keyframes hero-distort-breathe{
+  0%,100%{ opacity:.72; transform:scale(1); }
+  50%{ opacity:.92; transform:scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-distort{ animation:none; opacity:.8; }
+}
+@media (max-width:1080px){
+  .hero-distort{ inset:-14%; }
 }
 .hero-viz canvas{ width:100%; height:100%; display:block; }
 .viz-caption{

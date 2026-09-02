@@ -1,48 +1,49 @@
 /* ============================================================
-   PARALLAX — fondo único + capas (brasas/chispas/haces)
-   La foto de fondo y cada capa se mueven a distinta velocidad
-   con el scroll, dando sensación de profundidad sobre un único
-   fondo (no se corta ni se repite por sección).
+   PARALLAX — fondo fijo único + capa de hardware (recorte real)
+   El fondo (.page-bg-photo) queda estático, no se mueve con el
+   scroll. Solo la capa de hardware (.hw-layer) se mueve a otra
+   velocidad, y además aparece (fade-in) a partir de la 2a página,
+   quedando invisible mientras se está en el hero.
    ============================================================ */
 (function parallaxBg(){
-  const photo = document.querySelector('.page-bg-photo');
-  const photoAlt = document.querySelector('.page-bg-photo-alt');
-  const layers = document.querySelectorAll('.parallax-el');
+  const layer = document.querySelector('.hw-layer');
+  const particles = document.querySelectorAll('.parallax-el:not(.hw-layer)');
   const hero = document.querySelector('.hero');
-  if (!photo && !layers.length) return;
+  if (!layer && !particles.length) return;
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* distancia de scroll (px) sobre la que se hace el fade-in
+     de la capa al cruzar del hero a la 2a sección */
+  const FADE_RANGE = 420;
+
+  const setLayerOpacity = () => {
+    if (!layer || !hero) return;
+    const heroBottom = hero.offsetTop + hero.offsetHeight;
+    const fadeStart = heroBottom - FADE_RANGE;
+    let t = (window.scrollY - fadeStart) / FADE_RANGE;
+    t = Math.max(0, Math.min(1, t));
+    layer.style.opacity = String(t);
+  };
+
   if (reduceMotion){
-    /* aún sin animación, deja el 2do fondo visible pasado el hero */
-    if (photoAlt && hero){
-      const heroBottom = hero.offsetTop + hero.offsetHeight;
-      photoAlt.style.opacity = window.scrollY > heroBottom ? '1' : '0';
-    }
+    setLayerOpacity();
     return;
   }
 
   let ticking = false;
-  /* distancia de scroll (px) sobre la que se hace el crossfade
-     entre el fondo del hero y el de las secciones siguientes */
-  const FADE_RANGE = 420;
 
   const update = () => {
     const y = window.scrollY;
-    if (photo) photo.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
-    if (photoAlt){
-      photoAlt.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
-      if (hero){
-        const heroBottom = hero.offsetTop + hero.offsetHeight;
-        const fadeStart = heroBottom - FADE_RANGE;
-        let t = (y - fadeStart) / FADE_RANGE;
-        t = Math.max(0, Math.min(1, t));
-        photoAlt.style.opacity = String(t);
-      }
+    if (layer){
+      const speed = parseFloat(layer.dataset.speed || '-0.045');
+      layer.style.transform = `translateY(${y * speed}px) scale(1.06)`;
     }
-    layers.forEach(el => {
+    particles.forEach(el => {
       const speed = parseFloat(el.dataset.speed || '0.15');
       el.style.transform = `translateY(${y * speed}px)`;
     });
+    setLayerOpacity();
     ticking = false;
   };
 

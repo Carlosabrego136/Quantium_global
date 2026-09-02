@@ -12,10 +12,23 @@
 </head>
 <body>
 
+<!-- filtro SVG reutilizado por el efecto de distorsión del hero -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="heroDistortFilter" x="-60%" y="-60%" width="220%" height="220%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="7" result="noise">
+        <animate attributeName="baseFrequency"
+          values="0.008 0.014;0.015 0.02;0.006 0.01;0.011 0.016;0.008 0.014"
+          dur="22s" repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="70" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </defs>
+</svg>
+
 <!-- ============ FONDO GLOBAL + CAPAS PARALLAX ============ -->
 <div class="page-bg" aria-hidden="true">
   <div class="page-bg-photo"></div>
-  <div class="page-bg-photo-alt" id="pageBgPhotoAlt"></div>
   <div class="page-bg-scrim"></div>
   <div class="page-bg-glow"></div>
 
@@ -30,6 +43,10 @@
 
   <div class="parallax-el beam b1" data-speed="0.05"></div>
   <div class="parallax-el beam b2" data-speed="0.08"></div>
+
+  <!-- capa de hardware recortado (foto real) — solo escritorio.
+       Invisible en el hero; el JS la revela (fade-in) al pasar a la 2a sección -->
+  <span class="hw-layer watercooling-layer" data-speed="-0.045" aria-hidden="true"></span>
 </div>
 
 <div class="grain"></div>
@@ -104,6 +121,7 @@
       </div>
 
       <div class="hero-viz">
+        <div class="hero-distort" aria-hidden="true"></div>
         <canvas id="networkCanvas"></canvas>
         <div class="viz-caption">
           <span class="viz-dot"></span> mapa de exposición en vivo

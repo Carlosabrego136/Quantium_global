@@ -140,37 +140,37 @@ svg{ display:block; }
 .beam.b1{ top:30vh; left:-6%; }
 .beam.b2{ top:82vh; right:-6%; transform:rotate(7deg); background:linear-gradient(90deg, transparent, rgba(63,232,208,.16), transparent); }
 
-/* --- capas de imagen: circuito de datos, brasas y destello de luz,
-   integradas al mismo sistema de parallax, muy sutiles y en los
-   tonos de marca (cian) y del rig (rojo/ámbar) --- */
+/* --- capas de imagen: base para cualquier foto recortada integrada
+   al mismo sistema de parallax --- */
 .img-layer{
   background-repeat:no-repeat;
   background-size:contain;
   background-position:center;
-  mix-blend-mode:screen;
 }
-.circuit-layer{
-  top:2vh; right:-5%;
-  width:min(560px,50vw); aspect-ratio:1376/768;
-  background-image:url('assets/circuit.png');
-  opacity:.34;
+
+/* --- capas de hardware (foto real recortada): profundidad "premium",
+   solo en escritorio — en móvil se ocultan para no saturar la pantalla --- */
+.hw-layer{
+  mix-blend-mode:normal;
+  background-size:contain;
+  filter:drop-shadow(0 30px 45px rgba(0,0,0,.55));
+  -webkit-mask-image:radial-gradient(closest-side, #000 60%, transparent 100%);
+  mask-image:radial-gradient(closest-side, #000 60%, transparent 100%);
 }
-.embers-layer{
-  top:134vh; left:-7%;
-  width:min(600px,56vw); aspect-ratio:1408/768;
-  background-image:url('assets/embers.png');
-  opacity:.4;
+.pc-case-layer{
+  top:8vh; left:-8%;
+  width:min(480px, 34vw); aspect-ratio:1024/572;
+  background-image:url('assets/pc-case-cutout.png');
+  opacity:.5;
 }
-.beam-layer{
-  top:98vh; right:-9%;
-  width:min(660px,60vw); aspect-ratio:1408/768;
-  background-image:url('assets/beam.png');
-  opacity:.28;
+.watercooling-layer{
+  top:96vh; right:-8%;
+  width:min(520px, 36vw); aspect-ratio:1024/572;
+  background-image:url('assets/watercooling-cutout.png');
+  opacity:.55;
 }
-@media (max-width:760px){
-  .circuit-layer{ width:280px; top:1vh; right:-14%; opacity:.26; }
-  .embers-layer{ width:320px; left:-16%; opacity:.32; }
-  .beam-layer{ width:340px; right:-18%; opacity:.22; }
+@media (max-width:1080px){
+  .hw-layer{ display:none; }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -764,7 +764,9 @@ section{ position:relative; }
   overflow:hidden;
 }
 .method-step{
-  background:var(--bg-1);
+  background:rgba(9,15,21,.55);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
   padding:36px 30px;
 }
 .method-index{
@@ -791,8 +793,10 @@ section{ position:relative; }
   align-items:stretch;
 }
 .plan-card{
-  background-color:var(--surface);
-  background-image:linear-gradient(135deg, rgba(201,162,89,.1) 0%, rgba(148,158,168,.05) 46%, rgba(77,123,245,.12) 100%);
+  background-color:rgba(12,20,28,.46);
+  background-image:linear-gradient(135deg, rgba(201,162,89,.13) 0%, rgba(148,158,168,.06) 46%, rgba(77,123,245,.15) 100%);
+  backdrop-filter:blur(20px) saturate(150%);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);
   border:1px solid var(--border-soft);
   border-radius:14px;
   padding:34px 30px;
@@ -804,7 +808,7 @@ section{ position:relative; }
 .plan-featured:hover{ border-color:var(--cyan-dim); }
 .plan-featured{
   border-color:var(--cyan-dim);
-  background:linear-gradient(180deg, rgba(63,232,208,.045), var(--surface) 40%);
+  background:linear-gradient(180deg, rgba(63,232,208,.09), rgba(12,20,28,.52) 40%);
   box-shadow:0 0 0 1px rgba(63,232,208,.12), 0 30px 60px -30px rgba(63,232,208,.25);
 }
 .plan-badge{

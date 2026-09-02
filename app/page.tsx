@@ -1,15 +1,15 @@
 'use client'
 
-import { ArrowUpRight, Menu, Share2, LineChart, Layers, EyeOff } from 'lucide-react'
+import { ArrowUpRight, Menu, Share2 } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
 import { FadeUp } from '@/components/fade-up'
 
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
 
 const tools = [
-  ['01', 'Flujo de opciones', 'Cada orden grande, en su nivel. Sweeps, bloques y prints de dark pool clasificados por strike y vencimiento en tiempo real.', LineChart],
-  ['02', 'Gamma del dealer', 'Dónde el mercado se pega y dónde se suelta. Exposición neta de market makers agregada por strike, con el punto de flip a la vista.', Layers],
-  ['03', 'Dark pool', 'El volumen que no pasa por el libro público: prints fuera de bolsa agrupados por ticker, precio y tamaño de cada bloque.', EyeOff],
+  ['01', 'Flujo de opciones', 'Cada orden grande, en su nivel. Sweeps, bloques y prints de dark pool clasificados por strike y vencimiento en tiempo real.', '/cards/flujo-opciones.jpg', 'gold'],
+  ['02', 'Gamma del dealer', 'Dónde el mercado se pega y dónde se suelta. Exposición neta de market makers agregada por strike, con el punto de flip a la vista.', '/cards/gamma-dealer.jpg', 'white'],
+  ['03', 'Dark pool', 'El volumen que no pasa por el libro público: prints fuera de bolsa agrupados por ticker, precio y tamaño de cada bloque.', '/cards/dark-pool.jpg', 'red'],
 ] as const
 
 const moreTools = [
@@ -165,10 +165,10 @@ export default function Page() {
         </div>
 
         <div className="cards-grid">
-          {tools.map(([number, title, text, Icon], idx) => (
-            <FadeUp key={number} delay={0.4 + idx * 0.15} className="service-card">
+          {tools.map(([number, title, text, image, accent], idx) => (
+            <FadeUp key={number} delay={0.4 + idx * 0.15} className={`service-card accent-${accent}`}>
               <div className="card-media">
-                <Icon size={40} strokeWidth={1.4} />
+                <img src={image} alt={title} loading="lazy" />
               </div>
               <div className="card-text">
                 <h3>{title}</h3>
@@ -179,8 +179,8 @@ export default function Page() {
         </div>
 
         <div className="tool-list-extra">
-          {moreTools.map(([number, title, text]) => (
-            <article className="tool-row-light" key={number}>
+          {moreTools.map(([number, title, text], idx) => (
+            <article className={`tool-row-light accent-${['gold', 'red', 'white'][idx % 3]}`} key={number}>
               <span>{number}</span>
               <div>
                 <h3>{title}</h3>
@@ -197,11 +197,11 @@ export default function Page() {
             <span className="live-dark">● actualización en vivo</span>
           </div>
           <div className="stats-grid-light">
-            {stats.map(([value, label]) => (
+            {stats.map(([value, label], idx) => (
               <article className="stat-card-light" key={label}>
                 <strong>{value}</strong>
                 <span>{label}</span>
-                <div className="stat-line-light" />
+                <div className={`stat-line-light accent-${['gold', 'red', 'white', 'gold', 'red'][idx % 5]}`} />
               </article>
             ))}
           </div>
@@ -232,7 +232,7 @@ export default function Page() {
         </FadeUp>
         <div className="method-list-light">
           {methodSteps.map(([number, title, text], i) => (
-            <FadeUp key={number} delay={0.2 + i * 0.1} className="method-row-light">
+            <FadeUp key={number} delay={0.2 + i * 0.1} className={`method-row-light accent-${['gold', 'red', 'white'][i % 3]}`}>
               <span>{number}</span>
               <div>
                 <h3>{title}</h3>
@@ -252,7 +252,7 @@ export default function Page() {
         </FadeUp>
         <div className="plans-grid-light">
           {plans.map(([name, price, description, features], i) => (
-            <FadeUp key={name} delay={0.15 + i * 0.1} className="plan-card">
+            <FadeUp key={name} delay={0.15 + i * 0.1} className={`plan-card accent-${['white', 'gold', 'red'][i % 3]}`}>
               <p className="eyebrow-dark">{name}</p>
               <strong>
                 {price}

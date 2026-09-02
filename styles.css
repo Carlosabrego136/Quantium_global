@@ -148,24 +148,21 @@ svg{ display:block; }
   background-position:center;
 }
 
-/* --- capas de hardware (foto real recortada): usan el MISMO cover/position
-   que el fondo (.page-bg-photo) para quedar alineadas en escala y posición
-   con la foto real; al hacer scroll se mueven a otra velocidad y "se
-   despegan" del fondo, dando el efecto pop-3D --- */
+/* --- capa de hardware (foto real recortada): usa EXACTAMENTE el mismo
+   inset/cover/position que el fondo (.page-bg-photo) para quedar cuadrada
+   en escala y posición con la foto real; al hacer scroll se mueve a otra
+   velocidad y "se despega" del fondo, dando el efecto pop-3D. Sin opacidad
+   reducida para que se vea nítida sobre el fondo. --- */
 .hw-layer{
-  position:absolute; inset:-2% -2%;
+  position:absolute; inset:-6% -6%;
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center 38%;
   filter:drop-shadow(0 40px 70px rgba(0,0,0,.55));
 }
-.pc-case-layer{
-  background-image:url('assets/pc-case-cutout.png');
-  opacity:.88;
-}
 .watercooling-layer{
   background-image:url('assets/watercooling-cutout.png');
-  opacity:.92;
+  opacity:1;
 }
 @media (max-width:1080px){
   .hw-layer{ display:none; }

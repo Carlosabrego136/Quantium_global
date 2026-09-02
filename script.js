@@ -19,7 +19,8 @@
     if (photo) photo.style.transform = `translateY(${y * -0.035}px) scale(1.06)`;
     layers.forEach(el => {
       const speed = parseFloat(el.dataset.speed || '0.15');
-      el.style.transform = `translateY(${y * speed}px)`;
+      const scale = el.classList.contains('hw-layer') ? ' scale(1.06)' : '';
+      el.style.transform = `translateY(${y * speed}px)${scale}`;
     });
     ticking = false;
   };

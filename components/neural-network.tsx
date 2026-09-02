@@ -31,30 +31,61 @@ export function NeuralNetwork() {
         color: isGold ? GOLD : isBlue ? BLUE : SILVER,
       }
     })
+    const pointCount = points.length
 
     // smooth ease so the pulse breathes instead of ticking sinusoidally raw
     const ease = (t: number) => (Math.sin(t) + 1) / 2
 
-    const draw = () => {
+    const MOBILE_BREAKPOINT = 760
+    let isMobile = window.innerWidth <= MOBILE_BREAKPOINT
+
+    // Canvas size + DPR are cached and only recomputed on resize — resizing a canvas
+    // every animation frame (as before) forces a full reallocation + context reset
+    // 60x/sec, which was the single biggest cost in this component.
+    let width = 0
+    let height = 0
+    let centerX = 0
+    let centerY = 0
+
+    const resize = () => {
       const ratio = Math.min(window.devicePixelRatio || 2, 3)
-      const width = window.innerWidth
-      const height = window.innerHeight
+      width = window.innerWidth
+      height = window.innerHeight
+      centerX = width / 2
+      centerY = height / 2
       canvas.width = Math.round(width * ratio)
       canvas.height = Math.round(height * ratio)
       canvas.style.width = `${width}px`
       canvas.style.height = `${height}px`
       context.setTransform(ratio, 0, 0, ratio, 0, 0)
+      isMobile = window.innerWidth <= MOBILE_BREAKPOINT
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    // Reused every frame instead of the old points.map()/.slice() pattern, which
+    // allocated a brand-new array on every single frame (heavy GC churn).
+    const activeX = new Float32Array(pointCount)
+    const activeY = new Float32Array(pointCount)
+
+    const draw = () => {
       context.clearRect(0, 0, width, height)
 
-      const centerX = width / 2
-      const centerY = height / 2
-      // the whole web breathes — contracts and expands from the center, not perfectly
-      // periodic (two mismatched frequencies layered) so it never feels like a strict loop
-      const breathe = 1 + Math.sin(frame * 0.006) * 0.16 + Math.sin(frame * 0.0037 + 1.4) * 0.07
+      // On mobile the layout stays put (no drift/jitter/breathing) — only the
+      // traveling glints on the lines and the gold node pulse keep animating.
+      const breathe = isMobile ? 1 : 1 + Math.sin(frame * 0.006) * 0.16 + Math.sin(frame * 0.0037 + 1.4) * 0.07
 
-      const active = points.map((point) => {
+      for (let i = 0; i < pointCount; i++) {
+        const point = points[i]
         const anchorX = point.x * width
         const anchorY = point.y * height
+
+        if (isMobile) {
+          activeX[i] = anchorX
+          activeY[i] = anchorY
+          continue
+        }
+
         const dx = anchorX - centerX
         const dy = anchorY - centerY
 
@@ -70,50 +101,63 @@ export function NeuralNetwork() {
           Math.cos(frame * 0.0026 * point.driftSpeed + point.phase * 0.8) * 22 +
           Math.cos(frame * 0.0039 * point.driftSpeed * 1.3 + point.phase * 2.3) * 16
 
-        return {
-          ...point,
-          px: centerX + dx * breathe + jitterX,
-          py: centerY + dy * breathe + jitterY,
-        }
-      })
+        activeX[i] = centerX + dx * breathe + jitterX
+        activeY[i] = centerY + dy * breathe + jitterY
+      }
 
       // connective lines — black, with a bright glint that travels along each line
       context.lineWidth = 1.1
-      active.forEach((point, index) => {
-        active.slice(index + 1).forEach((other) => {
-          const distance = Math.hypot(point.px - other.px, point.py - other.py)
-          const threshold = Math.min(width, height) * 0.36
-          if (distance < threshold) {
-            const proximity = 1 - distance / threshold
-            const baseAlpha = Math.min(0.9, Math.max(0.22, proximity * 0.75))
+      const threshold = Math.min(width, height) * 0.36
+      const thresholdSq = threshold * threshold
 
-            // a bright glint travels back and forth along each line at its own pace
-            const glintPos = (Math.sin(frame * 0.012 + index * 0.63 + point.phase * 0.2) + 1) / 2
-            const band = 0.22
-            const s0 = Math.max(0, glintPos - band)
-            const s2 = Math.min(1, glintPos + band)
+      for (let i = 0; i < pointCount; i++) {
+        const px = activeX[i]
+        const py = activeY[i]
+        const phaseI = points[i].phase
 
-            const grad = context.createLinearGradient(point.px, point.py, other.px, other.py)
-            grad.addColorStop(0, `rgba(8, 8, 10, ${baseAlpha})`)
-            grad.addColorStop(s0, `rgba(8, 8, 10, ${baseAlpha})`)
-            grad.addColorStop(glintPos, `rgba(255, 255, 255, ${Math.min(1, baseAlpha + 0.55)})`)
-            grad.addColorStop(s2, `rgba(8, 8, 10, ${baseAlpha})`)
-            grad.addColorStop(1, `rgba(8, 8, 10, ${baseAlpha})`)
+        for (let j = i + 1; j < pointCount; j++) {
+          const ox = activeX[j]
+          const oy = activeY[j]
+          const dx = px - ox
+          const dy = py - oy
+          const distanceSq = dx * dx + dy * dy
+          // squared-distance pre-filter avoids a sqrt() call for the many pairs
+          // that are already too far apart to be drawn
+          if (distanceSq >= thresholdSq) continue
 
-            context.strokeStyle = grad
-            context.shadowColor = `rgba(0, 0, 0, ${baseAlpha * 0.6})`
-            context.shadowBlur = 3
-            context.beginPath()
-            context.moveTo(point.px, point.py)
-            context.lineTo(other.px, other.py)
-            context.stroke()
-            context.shadowBlur = 0
-          }
-        })
-      })
+          const distance = Math.sqrt(distanceSq)
+          const proximity = 1 - distance / threshold
+          const baseAlpha = Math.min(0.9, Math.max(0.22, proximity * 0.75))
+
+          // a bright glint travels back and forth along each line at its own pace
+          const glintPos = (Math.sin(frame * 0.012 + i * 0.63 + phaseI * 0.2) + 1) / 2
+          const band = 0.22
+          const s0 = Math.max(0, glintPos - band)
+          const s2 = Math.min(1, glintPos + band)
+
+          const grad = context.createLinearGradient(px, py, ox, oy)
+          grad.addColorStop(0, `rgba(8, 8, 10, ${baseAlpha})`)
+          grad.addColorStop(s0, `rgba(8, 8, 10, ${baseAlpha})`)
+          grad.addColorStop(glintPos, `rgba(255, 255, 255, ${Math.min(1, baseAlpha + 0.55)})`)
+          grad.addColorStop(s2, `rgba(8, 8, 10, ${baseAlpha})`)
+          grad.addColorStop(1, `rgba(8, 8, 10, ${baseAlpha})`)
+
+          context.strokeStyle = grad
+          context.shadowColor = `rgba(0, 0, 0, ${baseAlpha * 0.6})`
+          context.shadowBlur = 3
+          context.beginPath()
+          context.moveTo(px, py)
+          context.lineTo(ox, oy)
+          context.stroke()
+          context.shadowBlur = 0
+        }
+      }
 
       // nodes — gold ones get a soft breathing halo plus a crisp bright core for an HD look
-      active.forEach((point) => {
+      for (let i = 0; i < pointCount; i++) {
+        const point = points[i]
+        const px = activeX[i]
+        const py = activeY[i]
         const pulse = ease(frame * 0.02 * point.pulseSpeed + point.phase)
         const [red, green, blue] = point.color
 
@@ -121,12 +165,12 @@ export function NeuralNetwork() {
           // outer soft halo (large blur, low alpha) — the "glow"
           const haloRadius = point.radius * (2.8 + pulse * 1.6)
           const haloAlpha = 0.14 + pulse * 0.22
-          const halo = context.createRadialGradient(point.px, point.py, 0, point.px, point.py, haloRadius)
+          const halo = context.createRadialGradient(px, py, 0, px, py, haloRadius)
           halo.addColorStop(0, `rgba(${GOLD_BRIGHT[0]}, ${GOLD_BRIGHT[1]}, ${GOLD_BRIGHT[2]}, ${haloAlpha})`)
           halo.addColorStop(1, `rgba(${red}, ${green}, ${blue}, 0)`)
           context.fillStyle = halo
           context.beginPath()
-          context.arc(point.px, point.py, haloRadius, 0, Math.PI * 2)
+          context.arc(px, py, haloRadius, 0, Math.PI * 2)
           context.fill()
 
           // sharp bright core so it still reads crisp/HD, not just a blurry blob
@@ -134,7 +178,7 @@ export function NeuralNetwork() {
           context.shadowBlur = 14 + pulse * 14
           context.fillStyle = `rgba(${GOLD_BRIGHT[0]}, ${GOLD_BRIGHT[1]}, ${GOLD_BRIGHT[2]}, ${0.85 + pulse * 0.15})`
           context.beginPath()
-          context.arc(point.px, point.py, point.radius * (0.85 + pulse * 0.25), 0, Math.PI * 2)
+          context.arc(px, py, point.radius * (0.85 + pulse * 0.25), 0, Math.PI * 2)
           context.fill()
           context.shadowBlur = 0
         } else {
@@ -142,18 +186,21 @@ export function NeuralNetwork() {
           context.shadowColor = `rgba(${red}, ${green}, ${blue}, 0.9)`
           context.shadowBlur = 8
           context.beginPath()
-          context.arc(point.px, point.py, point.radius, 0, Math.PI * 2)
+          context.arc(px, py, point.radius, 0, Math.PI * 2)
           context.fill()
           context.shadowBlur = 0
         }
-      })
+      }
 
       frame += 1
       animationFrame = requestAnimationFrame(draw)
     }
 
     draw()
-    return () => cancelAnimationFrame(animationFrame)
+    return () => {
+      cancelAnimationFrame(animationFrame)
+      window.removeEventListener('resize', resize)
+    }
   }, [])
 
   return <canvas ref={canvasRef} aria-hidden="true" className="neural-network" />

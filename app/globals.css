@@ -242,17 +242,19 @@ ul { margin: 0; padding: 0; list-style: none; }
   left: 0;
   right: 0;
   height: 48%;
+  min-height: 360px;
+  overflow: hidden;
   background: var(--panel);
   display: flex;
   flex-direction: column;
-  padding-top: 70px;
+  padding-top: 84px;
 }
-.hero-overlay-inner { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 32px 24px 32px; }
+.hero-overlay-inner { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 32px 24px 32px; min-height: 0; }
 .hero-row { display: flex; align-items: stretch; width: 100%; gap: 48px; }
-.hero-col-left { width: 32%; display: flex; flex-direction: column; justify-content: space-between; gap: 80px; }
-.hero-col-left h1 { font-size: clamp(26px, 3vw, 42px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink); }
+.hero-col-left { width: 32%; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(20px, 5vh, 80px); }
+.hero-col-left h1 { font-size: clamp(24px, 3vw, 42px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink); }
 .slide-counter { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-mute); }
-.hero-col-right { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 80px; }
+.hero-col-right { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(16px, 4vh, 80px); }
 .hero-col-right p { font-size: 18px; line-height: 1.6; color: var(--ink-soft); max-width: 340px; }
 .hero-buttons { display: flex; gap: 10px; }
 .hero-ticker { margin-top: 24px; overflow: hidden; border-top: 1px solid var(--panel-line); padding-top: 12px; }

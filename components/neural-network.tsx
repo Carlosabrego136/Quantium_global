@@ -41,7 +41,7 @@ export function NeuralNetwork() {
           const distance = Math.hypot(point.px - other.px, point.py - other.py)
           if (distance < Math.min(width, height) * 0.24) {
             const [red, green, blue] = point.color
-            const alpha = Math.max(0.045, 0.2 - distance / (width * 2.1))
+            const alpha = Math.max(0.12, 0.55 - distance / (width * 1.1))
             context.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`
             context.beginPath()
             context.moveTo(point.px, point.py)
@@ -54,9 +54,9 @@ export function NeuralNetwork() {
       active.forEach((point, index) => {
         const pulse = 0.7 + Math.sin(frame * 0.014 + point.phase) * 0.2
         const [red, green, blue] = point.color
-        context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${index % 11 === 0 ? 0.98 : 0.58 * pulse})`
-        context.shadowColor = `rgba(${red}, ${green}, ${blue}, .85)`
-        context.shadowBlur = index % 11 === 0 ? 22 : 7
+        context.fillStyle = `rgba(${red}, ${green}, ${blue}, ${index % 11 === 0 ? 1 : 0.92 * pulse})`
+        context.shadowColor = `rgba(${red}, ${green}, ${blue}, 1)`
+        context.shadowBlur = index % 11 === 0 ? 26 : 10
         context.beginPath()
         context.arc(point.px, point.py, point.radius, 0, Math.PI * 2)
         context.fill()

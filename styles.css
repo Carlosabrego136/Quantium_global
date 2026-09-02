@@ -253,9 +253,10 @@ section{ position:relative; }
   transition:background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
 }
 .nav.scrolled{
-  background:rgba(6,10,14,.78);
-  backdrop-filter:blur(14px) saturate(140%);
-  border-bottom-color:var(--border-soft);
+  background:transparent;
+  backdrop-filter:blur(8px) saturate(140%);
+  -webkit-backdrop-filter:blur(8px) saturate(140%);
+  border-bottom-color:rgba(240,217,168,.12);
 }
 .nav-inner{
   max-width:var(--max); margin:0 auto;
@@ -265,19 +266,28 @@ section{ position:relative; }
 .wordmark{
   display:flex; align-items:center; gap:9px;
   font-family:var(--font-display); font-weight:600; font-size:19px;
-  color:var(--text);
-  text-shadow:0 2px 10px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
+  color:var(--gold-bright);
+  text-shadow:0 0 14px rgba(240,217,168,.55), 0 2px 10px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
+  animation:nav-gold-glow 4.5s ease-in-out infinite;
 }
-.wordmark-mark{ width:22px; height:22px; color:var(--cyan); }
+.wordmark-mark{ width:22px; height:22px; color:var(--gold); }
 .wordmark-mark svg{ width:100%; height:100%; }
 
 .nav-links{ display:flex; gap:30px; margin-right:auto; }
 .nav-links a{
-  font-size:14.5px; color:var(--text-dim); font-weight:500;
-  transition:color .18s ease;
-  text-shadow:0 2px 8px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
+  font-size:14.5px; color:var(--gold); font-weight:500;
+  transition:color .18s ease, text-shadow .18s ease;
+  text-shadow:0 0 10px rgba(205,168,106,.4), 0 2px 8px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9);
+  animation:nav-gold-glow 4.5s ease-in-out infinite;
 }
-.nav-links a:hover{ color:var(--text); }
+.nav-links a:hover{ color:var(--gold-bright); text-shadow:0 0 18px rgba(240,217,168,.75), 0 2px 8px rgba(0,0,0,.85); }
+@keyframes nav-gold-glow{
+  0%,100%{ filter:brightness(1); }
+  50%{ filter:brightness(1.22); }
+}
+@media (prefers-reduced-motion: reduce){
+  .wordmark, .nav-links a{ animation:none; }
+}
 .nav-cta{ display:flex; align-items:center; gap:10px; }
 .nav-toggle{ display:none; }
 
@@ -425,24 +435,44 @@ section{ position:relative; }
    tiempo justo detrás de la red neuronal. feTurbulence (animado vía
    SMIL en el <svg> del <body>) + feDisplacementMap generan el boil;
    aquí solo se pinta la mancha negra que ese filtro deforma. */
+/* efecto "distorsión negra": simula que el fondo se deforma y se
+   va oscureciendo con el tiempo justo detrás de la red neuronal.
+   feTurbulence (animado vía SMIL en el <svg> del <body>) +
+   feDisplacementMap generan el boil; dos capas radiales (una base
+   y una más profunda/lenta) dan sensación de degradación continua. */
 .hero-distort{
   position:absolute;
   inset:-22%;
   z-index:-1;
   pointer-events:none;
   background:
-    radial-gradient(closest-side, rgba(0,0,0,.94) 0%, rgba(0,0,0,.68) 40%, rgba(0,0,0,.22) 64%, transparent 82%);
+    radial-gradient(closest-side, rgba(0,0,0,.98) 0%, rgba(0,0,0,.86) 38%, rgba(0,0,0,.5) 62%, transparent 86%);
   filter:url(#heroDistortFilter);
   mix-blend-mode:multiply;
-  opacity:.88;
-  animation:hero-distort-breathe 9s ease-in-out infinite;
+  opacity:.94;
+  animation:hero-distort-breathe 14s ease-in-out infinite;
+}
+.hero-distort::after{
+  content:"";
+  position:absolute; inset:-10%;
+  border-radius:50%;
+  background:radial-gradient(closest-side, rgba(0,0,0,.9) 0%, rgba(0,0,0,.5) 46%, transparent 78%);
+  filter:url(#heroDistortFilter);
+  mix-blend-mode:multiply;
+  animation:hero-distort-decay 21s ease-in-out infinite;
 }
 @keyframes hero-distort-breathe{
-  0%,100%{ opacity:.72; transform:scale(1); }
-  50%{ opacity:.92; transform:scale(1.06); }
+  0%,100%{ opacity:.78; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.1); }
+}
+@keyframes hero-distort-decay{
+  0%,100%{ opacity:.55; transform:scale(.94) rotate(0deg); }
+  50%{ opacity:.85; transform:scale(1.12) rotate(6deg); }
 }
 @media (prefers-reduced-motion: reduce){
-  .hero-distort{ animation:none; opacity:.8; }
+  .hero-distort, .hero-distort::after{ animation:none; }
+  .hero-distort{ opacity:.9; }
+  .hero-distort::after{ opacity:.6; }
 }
 @media (max-width:1080px){
   .hero-distort{ inset:-14%; }

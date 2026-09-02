@@ -144,6 +144,80 @@ onScroll();
     c.closePath();
   }
 
+  const VORTEX_COLORS = ['#3fe8d0', '#4d7bf5', '#9b86f7'];
+
+  // Vórtice digital de fondo: brazos en espiral + partículas cayendo hacia
+  // el centro (Dealer Gamma), como flujo de datos siendo "absorbido" por
+  // el núcleo. Se dibuja ANTES de la red, así nunca tapa ni rompe los nodos.
+  function drawVortex(cx, cy, scale, time){
+    const R = scale * 1.55;
+
+    // halo ambiental suave detrás de todo
+    const haze = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    haze.addColorStop(0,   hexA('#3fe8d0', 0.07));
+    haze.addColorStop(0.5, hexA('#4d7bf5', 0.035));
+    haze.addColorStop(1,   hexA('#4d7bf5', 0));
+    ctx.fillStyle = haze;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.fill();
+
+    const arms = 3;
+    const turns = 2.1;
+    const rot = time * 0.000045;
+
+    // brazos en espiral, trazo fino con brillo, más tenues hacia afuera
+    for (let a = 0; a < arms; a++){
+      const armOffset = (a / arms) * Math.PI * 2;
+      const col = VORTEX_COLORS[a % VORTEX_COLORS.length];
+      const steps = 72;
+      ctx.beginPath();
+      for (let i = 0; i <= steps; i++){
+        const tt = i / steps;
+        const ease = Math.pow(tt, 0.72);
+        const angle = rot + armOffset + ease * turns * Math.PI * 2;
+        const r = ease * R;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r * 0.92;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+      grad.addColorStop(0,    hexA(col, 0));
+      grad.addColorStop(0.12, hexA(col, 0.16));
+      grad.addColorStop(0.6,  hexA(col, 0.22));
+      grad.addColorStop(1,    hexA(col, 0));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.2;
+      ctx.shadowColor = hexA(col, 0.55);
+      ctx.shadowBlur = 7;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    // partículas de datos fluyendo hacia el núcleo
+    const perArm = 6;
+    for (let a = 0; a < arms; a++){
+      const armOffset = (a / arms) * Math.PI * 2;
+      const col = VORTEX_COLORS[a % VORTEX_COLORS.length];
+      for (let i = 0; i < perArm; i++){
+        const phase = i / perArm;
+        const loop = ((time * 0.00016) + phase) % 1;
+        const tt = 1 - loop;                 // 1 (afuera) -> 0 (núcleo)
+        const ease = Math.pow(tt, 0.72);
+        const angle = rot + armOffset + ease * turns * Math.PI * 2;
+        const r = ease * R;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r * 0.92;
+        const alpha = Math.sin(loop * Math.PI) * 0.85; // fade in/out en los extremos
+        ctx.fillStyle = hexA(col, alpha);
+        ctx.shadowColor = hexA(col, alpha);
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+  }
+
   function frame(time){
     const t = reduce ? 0 : time;
     ctx.clearRect(0,0,W,H);
@@ -153,6 +227,8 @@ onScroll();
     const rotY = t * 0.00011;                       // slow continuous spin
     const rotX = Math.sin(t * 0.00019) * 0.22;       // gentle organic tilt
     const bob  = Math.sin(t * 0.00027) * 0.015;      // slight vertical breathing
+
+    drawVortex(cx, cy + bob*scale, scale, t);
 
     // rotate + project every satellite
     const pts = {};

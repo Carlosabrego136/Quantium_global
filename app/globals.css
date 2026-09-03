@@ -254,8 +254,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .hero-overlay-inner { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 32px 24px 32px; min-height: 0; }
 .hero-row { display: flex; align-items: stretch; width: 100%; gap: 48px; }
-.hero-col-left { width: 32%; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(20px, 5vh, 80px); }
-.hero-col-left h1 { font-size: clamp(24px, 3vw, 42px); font-weight: 700; line-height: 1.05; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink); }
+.hero-col-left { width: 46%; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(16px, 4vh, 56px); }
+.hero-col-left h1 { font-size: clamp(22px, 2.6vw, 36px); font-weight: 700; line-height: 1.12; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink); }
 .slide-counter { font-size: 11px; letter-spacing: 0.08em; color: var(--ink-mute); }
 .hero-col-right { flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(16px, 4vh, 80px); }
 .hero-col-right p { font-size: 18px; line-height: 1.6; color: var(--ink-soft); max-width: 340px; }
@@ -331,6 +331,15 @@ ul { margin: 0; padding: 0; list-style: none; }
 .stat-line-light.accent-gold { background: var(--accent-gold); opacity: 0.9; }
 .stat-line-light.accent-red { background: var(--accent-red); opacity: 0.9; }
 .stat-line-light.accent-white { background: var(--accent-white); opacity: 1; box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
+.levels-loading { padding: 28px 0 4px 0; font-size: 14px; font-style: italic; color: var(--ink-mute); animation: levelsPulse 1.8s ease-in-out infinite; }
+@keyframes levelsPulse { 0%, 100% { opacity: 0.45; } 50% { opacity: 0.9; } }
+.faq-row { padding: 22px 0 22px 16px; border-top: 1px solid var(--panel-line); border-left: 3px solid transparent; color: var(--ink); }
+.faq-row:last-child { border-bottom: 1px solid var(--panel-line); }
+.faq-row.accent-gold { border-left-color: var(--accent-gold); }
+.faq-row.accent-red { border-left-color: var(--accent-red); }
+.faq-row.accent-white { border-left-color: var(--accent-white); }
+.faq-row h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--ink); }
+.faq-row p { font-size: 13px; line-height: 1.6; color: var(--ink-soft); max-width: 620px; }
 
 /* ============ Gamma 3D — over video ============ */
 .section-gamma { position: relative; z-index: 1; min-height: 70vh; display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 70px 32px; max-width: 720px; }
@@ -354,6 +363,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ============ Plans — gray cards ============ */
 .section-plans { position: relative; z-index: 2; background: var(--panel); padding: 70px 32px 80px 32px; display: flex; flex-direction: column; gap: 40px; }
 .plans-heading { font-size: clamp(24px, 3.4vw, 44px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink); }
+.plans-note { font-size: 14px; line-height: 1.6; color: var(--ink-soft); max-width: 420px; }
+.plan-single { display: flex; justify-content: center; }
+.plan-single .plan-card { width: 100%; max-width: 420px; }
 .plans-grid-light { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .plan-card { background: #fff; border: 1px solid var(--panel-line); border-top: 3px solid var(--panel-line); border-radius: 20px; padding: 28px 26px; display: grid; align-content: start; gap: 16px; }
 .plan-card.accent-gold { border-top-color: var(--accent-gold); }

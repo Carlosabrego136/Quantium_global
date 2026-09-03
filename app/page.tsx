@@ -7,40 +7,49 @@ import { FadeUp } from '@/components/fade-up'
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
 
 const tools = [
-  ['01', 'Flujo de opciones', 'Cada orden grande, en su nivel. Sweeps, bloques y prints de dark pool clasificados por strike y vencimiento en tiempo real.', '/cards/flujo-opciones.jpg', 'gold'],
-  ['02', 'Gamma del dealer', 'Dónde el mercado se pega y dónde se suelta. Exposición neta de market makers agregada por strike, con el punto de flip a la vista.', '/cards/gamma-dealer.jpg', 'white'],
-  ['03', 'Dark pool', 'El volumen que no pasa por el libro público: prints fuera de bolsa agrupados por ticker, precio y tamaño de cada bloque.', '/cards/dark-pool.jpg', 'red'],
+  ['01', 'Flujo de Opciones', 'Cada trade grande, en el instante en que ocurre. Calls vs puts, primas, sweeps y whales, con el drift del flujo.', '/cards/flujo-opciones.jpg', 'gold'],
+  ['02', 'Superficie de Gamma 3D', 'La exposición del dealer como paisaje: dónde el mercado se pega y dónde se suelta. Gamma, vanna y charm por strike y vencimiento.', '/cards/gamma-dealer.jpg', 'white'],
+  ['03', 'Dark Pool', 'El volumen que no ves en la cinta. Prints y niveles institucionales.', '/cards/dark-pool.jpg', 'red'],
 ] as const
 
 const moreTools = [
-  ['04', 'Superficie de gamma 3D', 'La exposición del dealer por strike y vencimiento, convertida en relieve para encontrar los puntos de tensión.'],
-  ['05', 'Skew y volatilidad', 'Cómo está pagando el mercado por protegerse: skew put-call, term structure y volatilidad implícita por vencimiento.'],
-  ['06', 'Hedging y open interest', 'Cuánto tienen que cubrir los market makers y a qué velocidad, cruzando open interest vivo con la necesidad de cobertura.'],
-  ['07', 'Liquidez y spreads', 'Profundidad real del libro antes de enviar una orden: spreads, tamaño disponible y costo estimado de entrada.'],
-  ['08', 'Cripto y macro', 'El mismo marco de exposición aplicado a BTC y ETH, más los niveles macro que mueven todo el book.'],
+  ['04', 'Volatilidad', 'Skew, estructura temporal y superficie IV. VRP y estacionalidad.'],
+  ['05', 'Macro', 'Curva de bonos, crédito, Fed Watch. El régimen, de un vistazo.'],
+  ['06', 'Cripto', 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.'],
+  ['07', 'Insider & Congreso', 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.'],
+  ['08', 'Forex & Fed Watch', 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.'],
+  ['09', 'Niveles de Mercado', 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.'],
+  ['10', 'Equities', 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.'],
+  ['11', 'Posicionamiento', 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.'],
 ]
 
-const stats = [['7,090', 'SPX · dealer put floor'], ['7,890', 'SPX · call resistance'], ['7,410', 'SPX · zero gamma'], ['760', 'SPY · muro de calls'], ['Q3 2026', 'concentración de OI']]
-
-const methodSteps = [
-  ['01', 'Ingerimos el tape completo', 'Cada contrato de opciones del día, incluyendo bloques, sweeps y actividad fuera de bolsa, entra a nuestro pipeline en tiempo real.'],
-  ['02', 'Reconstruimos la exposición', 'Cruzamos ese flujo con el open interest para estimar cuánta gamma, vanna y delta cargan los market makers en cada strike.'],
-  ['03', 'Lo dejamos en tu pantalla', 'Niveles, superficies y alertas listas para usar, sin hojas de cálculo ni que tengas que programar tu propio pipeline.'],
+const faqs = [
+  ['¿Qué es Quantium Global?', 'Una plataforma de inteligencia financiera en tiempo real: options flow, superficies de gamma 3D, dark pool, volatilidad y macro. 77 herramientas de grado institucional en una sola pantalla.'],
+  ['¿Necesito ser trader profesional?', 'No. Traducimos datos complejos a lenguaje simple. Si operas acciones, opciones, futuros o cripto y quieres ver qué hacen los grandes antes que el mercado, Quantium es para ti.'],
+  ['¿De dónde vienen los datos?', 'De fuentes de grado institucional (UnusualWhales, Convex, QuantData, Yahoo Finance, FRED, Binance) procesadas en tiempo real. Sin delay.'],
+  ['¿Puedo probarlo gratis?', 'Por ahora estamos en acceso anticipado, sin plan gratuito ni registro abierto. El acceso completo llega junto con el lanzamiento comercial.'],
+  ['¿Funciona en el celular?', 'Sí, el tablero es responsivo. Aunque para exprimir las superficies 3D y los heatmaps, la pantalla grande vuela.'],
 ]
 
-const plans = [
-  ['Trader', '$49', 'Para quien ya opera opciones y quiere dejar de adivinar los niveles clave.', ['Flujo de opciones en tiempo real', 'Gamma del dealer por strike', 'Niveles clave de SPX, SPY y QQQ', 'Alertas de sweeps y bloques']],
-  ['Desk', '$149', 'Las 84 herramientas, cobertura completa de tickers y superficies en 3D.', ['Todo lo incluido en Trader', 'Dark pool y superficie de gamma 3D', 'Skew, volatilidad y term structure', 'Cobertura de cripto y macro', 'Acceso a la API de datos']],
-  ['Firma', 'A medida', 'Para fondos y mesas propietarias que necesitan asientos y datos a la medida.', ['Todo lo incluido en Desk', 'Múltiples asientos y permisos', 'Feeds a la medida', 'Soporte directo con el equipo']],
-] as const
+const premiumFeatures = [
+  'Flujo Inusual: escáner UOA y Whale',
+  'Dark Pool: bloques ocultos y sus niveles',
+  'Insider & Congreso: políticos, ejecutivos y 13F',
+  'Vol Surface: volatilidad implícita por activo',
+  'Niveles de Mercado y JPM Collar',
+  'Forex: fortaleza de divisas y trades de bancos',
+  'Datos en tiempo real e histórico completo',
+  'Alertas en tiempo real y soporte prioritario',
+]
 
-const statementWords = 'LOS DATOS QUE MUEVEN EL PRECIO YA EXISTEN.'.split(' ')
-const servicesWords = 'EXPLORE LO QUE OFRECEMOS'.split(' ')
+const heroWords = 'El flujo de opciones, la gamma del dealer y el dark pool. Todo en una sola pantalla.'.split(' ')
+const statementWords = 'CADA ORDEN GRANDE, EN SU NIVEL.'.split(' ')
+const servicesWords = 'TODO EL FLUJO DEL MERCADO EN UN MISMO IDIOMA.'.split(' ')
 
 const navPrimary = [
   ['HERRAMIENTAS', '#herramientas'],
   ['GAMMA', '#gamma'],
-  ['METODOLOGÍA', '#metodo'],
+  ['FAQ', '#faq'],
   ['PLANES', '#planes'],
 ]
 const navSecondary = [
@@ -81,25 +90,27 @@ export default function Page() {
           <div className="hero-overlay-inner">
             <div className="hero-row">
               <div className="hero-col-left">
-                <FadeUp as="h1" delay={0.1}>
-                  VE EL MERCADO
-                  <br />
-                  COMO LO VE UN DEALER
-                </FadeUp>
+                <h1>
+                  {heroWords.map((word, i) => (
+                    <FadeUp as="span" key={`${word}-${i}`} delay={0.1 + i * 0.02} y={16}>
+                      {word}{' '}
+                    </FadeUp>
+                  ))}
+                </h1>
                 <FadeUp as="span" delay={0.5} className="slide-counter">
                   001 / 005
                 </FadeUp>
               </div>
               <div className="hero-col-right">
                 <FadeUp as="p" delay={0.25}>
-                  Flujo de opciones, gamma del dealer y actividad de dark pool, cruzados en tiempo real. 84 herramientas para leer el posicionamiento detrás del precio — sin pagar una terminal institucional.
+                  77 herramientas de análisis sobre opciones, volatilidad, macro y cripto. Los mismos datos que mira una mesa institucional, sin la terminal de una mesa institucional.
                 </FadeUp>
                 <FadeUp delay={0.4} className="hero-buttons">
                   <a className="btn-primary" href="#planes">
                     Solicitar acceso
                   </a>
                   <a className="btn-secondary" href="#herramientas">
-                    Ver 84 herramientas
+                    Ver 77 herramientas
                   </a>
                 </FadeUp>
               </div>
@@ -116,12 +127,30 @@ export default function Page() {
           </div>
         </div>
         <FadeUp as="p" delay={0.6} className="hero-bottom-text">
-          Inteligencia de mercado para operadores activos, con la misma profundidad de datos que usa una mesa institucional.
+          Inteligencia de mercado para operadores activos.
+        </FadeUp>
+      </section>
+
+      <section id="gamma" className="section-gamma">
+        <FadeUp as="p" delay={0} className="eyebrow-light">
+          Superficie de gamma · 3D
+        </FadeUp>
+        <FadeUp as="h2" delay={0.1} className="gamma-heading">
+          La exposición del dealer, por strike y vencimiento.
+        </FadeUp>
+        <FadeUp delay={0.25} className="gamma-copy">
+          <p>Dónde el mercado se pega y dónde se suelta. La gamma de los dealers convertida en relieve, en 3D.</p>
+          <a className="btn-secondary btn-secondary-light" href="#herramientas">
+            Ver superficies <ArrowUpRight size={14} />
+          </a>
         </FadeUp>
       </section>
 
       <section id="cobertura" className="section-statement">
         <div className="statement-inner">
+          <FadeUp as="p" delay={0.05} className="eyebrow-light">
+            Flujo &amp; volumen
+          </FadeUp>
           <h2 className="statement-heading">
             {statementWords.map((word, i) => (
               <FadeUp as="span" key={`${word}-${i}`} delay={0.15 + i * 0.08} y={32}>
@@ -130,13 +159,18 @@ export default function Page() {
             ))}
           </h2>
           <FadeUp as="p" delay={0.9} className="statement-sub">
-            Flujo de opciones en una herramienta, gamma del dealer en otra, dark pool en un tercer sitio que cobra aparte. Quantium los junta en una sola pantalla.
+            El volumen que mueve el precio: sweeps, bloques y dark pool, por strike y por nivel, en tres dimensiones.
           </FadeUp>
-          <FadeUp delay={1.05} className="statement-proof">
+          <FadeUp delay={1.0}>
+            <a className="btn-secondary btn-secondary-light" href="#herramientas" style={{ marginTop: 24 }}>
+              Ver el flujo <ArrowUpRight size={14} />
+            </a>
+          </FadeUp>
+          <FadeUp delay={1.15} className="statement-proof">
             {[
-              ['84', 'herramientas de análisis'],
-              ['12', 'clases de activos cubiertas'],
-              ['<1s', 'latencia de actualización'],
+              ['77', 'herramientas de análisis'],
+              ['11', 'áreas conectadas'],
+              ['0s', 'delay en los datos'],
             ].map(([number, label]) => (
               <div className="proof-item-light" key={label}>
                 <strong>{number}</strong>
@@ -149,7 +183,7 @@ export default function Page() {
 
       <section id="herramientas" className="section-services">
         <FadeUp delay={0} className="services-counter">
-          003 / 005
+          La plataforma
         </FadeUp>
         <div className="services-head-row">
           <h2 className="services-head-col">
@@ -160,7 +194,7 @@ export default function Page() {
             ))}
           </h2>
           <FadeUp as="p" delay={0.25} className="services-head-note">
-            Ocho módulos, un solo mapa del posicionamiento. Cada herramienta responde una pregunta concreta sobre quién está posicionado, dónde y qué tan forzados están los dealers a reaccionar.
+            Once áreas de análisis, conectadas entre sí y bajo la misma piel. Cada una con sus propias herramientas.
           </FadeUp>
         </div>
 
@@ -196,48 +230,34 @@ export default function Page() {
             <p className="eyebrow-dark">— Niveles clave del mercado</p>
             <span className="live-dark">● actualización en vivo</span>
           </div>
-          <div className="stats-grid-light">
-            {stats.map(([value, label], idx) => (
-              <article className="stat-card-light" key={label}>
-                <strong>{value}</strong>
-                <span>{label}</span>
-                <div className={`stat-line-light accent-${['gold', 'red', 'white', 'gold', 'red'][idx % 5]}`} />
-              </article>
-            ))}
-          </div>
+          <p className="levels-loading">Cargando niveles…</p>
         </div>
       </section>
 
-      <section id="gamma" className="section-gamma">
-        <FadeUp as="p" delay={0} className="eyebrow-light">
-          Superficie de gamma · 3D
+      <section id="quienes-lo-usan" className="section-method">
+        <FadeUp as="p" delay={0} className="eyebrow-dark">
+          Quiénes lo usan
         </FadeUp>
-        <FadeUp as="h2" delay={0.1} className="gamma-heading">
-          La exposición del dealer, por strike y por vencimiento.
+        <FadeUp as="h2" delay={0.1} className="method-heading">
+          Quiénes lo usan.
         </FadeUp>
-        <FadeUp delay={0.25} className="gamma-copy">
-          <p>Dónde el mercado se pega y dónde se suelta. Convertimos la gamma agregada de los dealers en una superficie que puedes rotar e inclinar para ver dónde el precio encuentra resistencia.</p>
-          <a className="btn-secondary btn-secondary-light" href="#planes">
-            Ver superficies en vivo <ArrowUpRight size={14} />
-          </a>
+        <FadeUp delay={0.2}>
+          <p className="levels-loading">Cargando opiniones…</p>
         </FadeUp>
       </section>
 
-      <section id="metodo" className="section-method">
+      <section id="faq" className="section-method">
         <FadeUp as="p" delay={0} className="eyebrow-dark">
-          Cómo funciona
+          Preguntas frecuentes
         </FadeUp>
         <FadeUp as="h2" delay={0.1} className="method-heading">
-          De la cinta de órdenes a una señal que puedes usar.
+          Todo lo que quieres saber.
         </FadeUp>
         <div className="method-list-light">
-          {methodSteps.map(([number, title, text], i) => (
-            <FadeUp key={number} delay={0.2 + i * 0.1} className={`method-row-light accent-${['gold', 'red', 'white'][i % 3]}`}>
-              <span>{number}</span>
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
+          {faqs.map(([question, answer], i) => (
+            <FadeUp key={question} delay={0.2 + i * 0.08} className={`faq-row accent-${['gold', 'red', 'white'][i % 3]}`}>
+              <h3>{question}</h3>
+              <p>{answer}</p>
             </FadeUp>
           ))}
         </div>
@@ -245,30 +265,30 @@ export default function Page() {
 
       <section id="planes" className="section-plans">
         <FadeUp as="p" delay={0} className="eyebrow-dark">
-          Acceso
+          Precios
         </FadeUp>
         <FadeUp as="h2" delay={0.05} className="plans-heading">
-          Un plan para cada nivel de operativa.
+          Empieza a leer el flujo.
         </FadeUp>
-        <div className="plans-grid-light">
-          {plans.map(([name, price, description, features], i) => (
-            <FadeUp key={name} delay={0.15 + i * 0.1} className={`plan-card accent-${['white', 'gold', 'red'][i % 3]}`}>
-              <p className="eyebrow-dark">{name}</p>
-              <strong>
-                {price}
-                <small>{price !== 'A medida' ? '/mes' : ''}</small>
-              </strong>
-              <p className="plan-desc">{description}</p>
-              <ul>
-                {features.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
-              </ul>
-              <a className="btn-primary" href="mailto:hello@quantium.global">
-                {name === 'Firma' ? 'Hablar con nosotros' : 'Solicitar acceso'} <ArrowUpRight size={14} />
-              </a>
-            </FadeUp>
-          ))}
+        <FadeUp as="p" delay={0.1} className="plans-note">
+          Un plan Premium con acceso completo a la plataforma.
+        </FadeUp>
+        <div className="plan-single">
+          <FadeUp delay={0.2} className="plan-card accent-gold">
+            <p className="eyebrow-dark">Plan Premium</p>
+            <strong>
+              Próximamente
+            </strong>
+            <p className="plan-desc">Acceso a las 77 herramientas, con datos en tiempo real e histórico completo.</p>
+            <ul>
+              {premiumFeatures.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+            <a className="btn-primary" href="mailto:hello@quantium.global">
+              Solicitar acceso anticipado <ArrowUpRight size={14} />
+            </a>
+          </FadeUp>
         </div>
       </section>
 

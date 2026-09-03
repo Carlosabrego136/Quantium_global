@@ -3,8 +3,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Quantium — Inteligencia de mercado para operadores activos',
-  description: 'Flujo de opciones, gamma del dealer y dark pool, cruzados en tiempo real. 84 herramientas para leer el posicionamiento detrás del precio.',
+  title: 'Quantium: Flujo de opciones, gamma y dark pool en tiempo real',
+  description: '77 herramientas de análisis de mercado: flujo de opciones, gamma del dealer, dark pool, volatilidad, insiders y macro. Tiempo real en Premium.',
   generator: 'v0.app',
   icons: {
     icon: [

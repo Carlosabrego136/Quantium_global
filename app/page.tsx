@@ -330,9 +330,6 @@ export default function Page() {
 
         <SpotlightBorder>
           <FadeUp delay={0.2} className="pricing-card">
-            <div className="pricing-card-media">
-              <img src="/cards/premium.jpg" alt="Plan Premium" loading="lazy" />
-            </div>
             <div className="pricing-card-body">
               <FadeUp delay={0}>
                 <p className="pricing-eyebrow">Plan Premium</p>

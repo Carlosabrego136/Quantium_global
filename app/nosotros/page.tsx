@@ -2,44 +2,15 @@
 
 import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { ScrollScrubHero, type ScrollSection } from '@/components/scroll-scrub-hero'
+import { NosotrosVideoBackground } from '@/components/nosotros-video-background'
 import { FadeUp } from '@/components/fade-up'
 import './nosotros.css'
-
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260821_183659_804e0948-c701-4565-b56b-a99c78f9bfba.mp4'
 
 const navLinks = [
   ['Inicio', '/'],
   ['Equipo', '#equipo'],
   ['Principios', '#principios'],
   ['Contacto', 'mailto:hello@quantium.global'],
-]
-
-const heroSections: ScrollSection[] = [
-  {
-    eyebrow: 'Nuestra historia',
-    heading: 'La mayoría reacciona al mercado. Nosotros te ayudamos a anticiparlo.',
-    body: 'Hunab Villanueva y Victor Valiente fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.',
-    ctaLabel: 'Conoce al equipo',
-    ctaHref: '#equipo',
-    variant: 'primary',
-  },
-  {
-    eyebrow: 'Lo que hacemos diferente',
-    heading: 'Los datos existen semanas antes del titular.',
-    body: 'Grandes compras en opciones, movimientos masivos en fondos, compras del Congreso, ballenas en cripto: esas señales existen antes de la noticia. Quantium te las muestra en tiempo real.',
-    ctaLabel: 'Ver herramientas',
-    ctaHref: '/#herramientas',
-    variant: 'primary',
-  },
-  {
-    eyebrow: 'Nuestros principios',
-    heading: 'Solo lo que importa. Sin ruido.',
-    body: 'Sin exageración, sin predicciones vacías. Si no está respaldado por datos, no entra en una herramienta de Quantium.',
-    ctaLabel: 'Leer más',
-    ctaHref: '#filosofia',
-    variant: 'outline',
-  },
 ]
 
 const principles = [
@@ -114,8 +85,27 @@ export default function NosotrosPage() {
         </a>
       </div>
 
-      {/* ===== SCROLL-SCRUBBED VIDEO HERO ===== */}
-      <ScrollScrubHero src={VIDEO_URL} sections={heroSections} />
+      <NosotrosVideoBackground />
+
+      {/* ===== HERO ===== */}
+      <section className="nz-hero">
+        <div className="nz-hero-content">
+          <FadeUp as="p" delay={0} className="nz-eyebrow">
+            Nuestra historia
+          </FadeUp>
+          <FadeUp as="h1" delay={0.1}>
+            La mayoría reacciona al mercado. Nosotros te ayudamos a anticiparlo.
+          </FadeUp>
+          <FadeUp as="p" delay={0.2}>
+            Hunab Villanueva y Victor Valiente fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.
+          </FadeUp>
+          <FadeUp delay={0.3}>
+            <a className="nz-btn nz-btn--primary" href="#equipo">
+              Conoce al equipo
+            </a>
+          </FadeUp>
+        </div>
+      </section>
 
       {/* ===== FILOSOFÍA / QUOTE ===== */}
       <section id="filosofia" className="nz-section">

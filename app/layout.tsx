@@ -2,7 +2,7 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
-const siteUrl = 'https://quantium.global'
+const siteUrl = 'https://quantium-global-4tcu.vercel.app'
 const siteName = 'Quantium Global'
 const description =
   '77 herramientas de análisis de mercado: flujo de opciones, gamma del dealer, dark pool, volatilidad, insiders y macro. Datos institucionales en tiempo real, en una sola pantalla.'

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://quantium.global'
+  const base = 'https://quantium-global-4tcu.vercel.app'
   return [
     {
       url: base,

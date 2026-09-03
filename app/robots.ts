@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://quantium.global/sitemap.xml',
+    sitemap: 'https://quantium-global-4tcu.vercel.app/sitemap.xml',
   }
 }

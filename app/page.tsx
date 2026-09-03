@@ -3,6 +3,7 @@
 import { ArrowUpRight, Menu, Share2 } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
 import { MarketNodes } from '@/components/market-nodes'
+import { ToolsMarquee } from '@/components/tools-marquee'
 import { FadeUp } from '@/components/fade-up'
 
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
@@ -16,12 +17,17 @@ const tools = [
   { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: null, accent: 'red' },
 ] as const
 
-const moreTools = [
+const moreTools: [string, string, string][] = [
   ['07', 'Insider & Congreso', 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.'],
   ['08', 'Forex & Fed Watch', 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.'],
   ['09', 'Niveles de Mercado', 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.'],
   ['10', 'Equities', 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.'],
   ['11', 'Posicionamiento', 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.'],
+]
+
+const allToolEntries: [string, string, string][] = [
+  ...tools.map((t): [string, string, string] => [t.number, t.title, t.text]),
+  ...moreTools,
 ]
 
 const faqs = [
@@ -219,28 +225,10 @@ export default function Page() {
           </FadeUp>
         </div>
 
-        <div className="cards-grid">
-          {tools.map(({ number, title, text, image, icon: Icon, accent }, idx) => (
-            <FadeUp key={number} delay={0.4 + idx * 0.15} className={`service-card accent-${accent}`}>
-              <div className="card-media">
-                {Icon ? (
-                  <div className="card-media-placeholder">
-                    <Icon size={34} strokeWidth={1.4} />
-                  </div>
-                ) : (
-                  <img src={image} alt={title} loading="lazy" />
-                )}
-              </div>
-              <div className="card-text">
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
+        <ToolsMarquee slides={tools.map((t) => ({ key: t.number, image: t.image, title: t.title }))} />
 
         <div className="tool-list-extra">
-          {moreTools.map(([number, title, text], idx) => (
+          {allToolEntries.map(([number, title, text], idx) => (
             <article className={`tool-row-light accent-${['gold', 'red', 'white'][idx % 3]}`} key={number}>
               <span>{number}</span>
               <div>

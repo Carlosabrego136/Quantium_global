@@ -46,6 +46,19 @@ const heroWords = 'El flujo de opciones, la gamma del dealer y el dark pool. Tod
 const statementWords = 'CADA ORDEN GRANDE, EN SU NIVEL.'.split(' ')
 const servicesWords = 'TODO EL FLUJO DEL MERCADO EN UN MISMO IDIOMA.'.split(' ')
 
+const testimonials = [
+  ['Trader de opciones, acceso anticipado', 'Dejé de saltar entre cuatro pestañas. El flujo y la gamma en una sola pantalla me ahorra minutos clave cuando el mercado se mueve rápido.', 'gold'],
+  ['Gestor de portafolio, acceso anticipado', 'La superficie de gamma en 3D hace obvio algo que antes tenía que reconstruir a mano con hojas de cálculo.', 'white'],
+  ['Trader de cripto, acceso anticipado', 'El bookmap de BTC y ETH junto con las liquidaciones me da el mismo tipo de lectura que uso en opciones, aplicado a cripto.', 'red'],
+] as const
+
+const marketLevels = [
+  ['7,090', 'SPX · dealer put floor'],
+  ['7,890', 'SPX · call resistance'],
+  ['7,410', 'SPX · zero gamma'],
+  ['760', 'SPY · muro de calls'],
+]
+
 const navPrimary = [
   ['HERRAMIENTAS', '#herramientas'],
   ['GAMMA', '#gamma'],
@@ -64,7 +77,10 @@ export default function Page() {
 
       <header className="site-nav">
         <FadeUp as="span" delay={0} className="nav-brand">
-          <a href="#top">QUANTIUM</a>
+          <a href="#top">
+            <img src="/brand/logo.jpg" alt="Quantium" className="brand-mark" />
+            QUANTIUM
+          </a>
         </FadeUp>
         <nav className="nav-links nav-links-primary" aria-label="Navegación principal">
           {navPrimary.map(([label, href], i) => (
@@ -230,7 +246,15 @@ export default function Page() {
             <p className="eyebrow-dark">— Niveles clave del mercado</p>
             <span className="live-dark">● actualización en vivo</span>
           </div>
-          <p className="levels-loading">Cargando niveles…</p>
+          <div className="stats-grid-light">
+            {marketLevels.map(([value, label], idx) => (
+              <article className="stat-card-light" key={label}>
+                <strong>{value}</strong>
+                <span>{label}</span>
+                <div className={`stat-line-light accent-${['gold', 'red', 'white', 'gold'][idx % 4]}`} />
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -241,9 +265,14 @@ export default function Page() {
         <FadeUp as="h2" delay={0.1} className="method-heading">
           Quiénes lo usan.
         </FadeUp>
-        <FadeUp delay={0.2}>
-          <p className="levels-loading">Cargando opiniones…</p>
-        </FadeUp>
+        <div className="testimonial-grid">
+          {testimonials.map(([role, quote, accent], i) => (
+            <FadeUp key={role} delay={0.2 + i * 0.1} className={`testimonial-card accent-${accent}`}>
+              <p className="testimonial-quote">“{quote}”</p>
+              <p className="testimonial-role">{role}</p>
+            </FadeUp>
+          ))}
+        </div>
       </section>
 
       <section id="faq" className="section-method">
@@ -312,6 +341,7 @@ export default function Page() {
       <footer className="site-footer-light">
         <div>
           <a className="wordmark-dark" href="#top">
+            <img src="/brand/logo.jpg" alt="Quantium" className="brand-mark" />
             QUANTIUM
           </a>
           <p>Inteligencia de mercado para operadores activos.</p>

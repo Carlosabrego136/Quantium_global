@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Menu, Share2 } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
+import { MarketNodes } from '@/components/market-nodes'
 import { FadeUp } from '@/components/fade-up'
 
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
@@ -74,6 +75,7 @@ export default function Page() {
   return (
     <div className="site-shell">
       <VideoBackground />
+      <MarketNodes />
 
       <header className="site-nav">
         <FadeUp as="span" delay={0} className="nav-brand">

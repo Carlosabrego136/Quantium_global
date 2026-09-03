@@ -6,12 +6,15 @@ import { NosotrosVideoBackground } from '@/components/nosotros-video-background'
 import { FadeUp } from '@/components/fade-up'
 import './nosotros.css'
 
-const navLinks = [
+const navLeft = [
   ['Inicio', '/'],
   ['Equipo', '#equipo'],
+]
+const navRight = [
   ['Principios', '#principios'],
   ['Contacto', 'mailto:hello@quantium.global'],
 ]
+const navLinks = [...navLeft, ...navRight]
 
 const principles = [
   { title: 'Los datos van primero', text: 'Para cuando un titular llega a las noticias, los grandes inversores ya tienen su posición armada. Te mostramos las señales que preceden a la noticia: movimientos masivos, compras del Congreso, acumulación en cripto, para que no seas el último en enterarte.', accent: 'gold' },
@@ -41,22 +44,49 @@ export default function NosotrosPage() {
     <div className="nz-page">
       <header className="nz-navbar">
         <div className="nz-navbar-inner">
-          <a className="nz-logo" href="/">
-            <img src="/brand/logo.jpg" alt="Quantium" />
-            (QUANTIUM)
-          </a>
           <nav>
-            <ul className="nz-navbar-links">
-              {navLinks.map(([label, href]) => (
+            <ul className="nz-navbar-links nz-left">
+              {navLeft.map(([label, href]) => (
                 <li key={label}>
                   <a href={href}>{label}</a>
                 </li>
               ))}
             </ul>
           </nav>
-          <a className="nz-btn nz-btn--primary nz-navbar-cta" href="/#planes">
-            Solicitar acceso
+
+          <a className="nz-mark" href="/" aria-label="Inicio">
+            <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g fill="#fff" stroke="#fff" strokeWidth="0.9" strokeLinejoin="round">
+                <path d="M27.15 17.40L28.05 3.45A2.05 2.05 0 0 0 23.95 3.45L24.85 17.40Z" />
+                <path d="M30.35 18.49L36.52 5.95A2.05 2.05 0 0 0 32.74 4.38L28.23 17.61Z" />
+                <path d="M32.89 20.73L43.39 11.50A2.05 2.05 0 0 0 40.50 8.61L31.27 19.11Z" />
+                <path d="M34.39 23.77L47.62 19.26A2.05 2.05 0 0 0 46.05 15.48L33.51 21.65Z" />
+                <path d="M34.60 27.15L48.55 28.05A2.05 2.05 0 0 0 48.55 23.95L34.60 24.85Z" />
+                <path d="M33.51 30.35L46.05 36.52A2.05 2.05 0 0 0 47.62 32.74L34.39 28.23Z" />
+                <path d="M31.27 32.89L40.50 43.39A2.05 2.05 0 0 0 43.39 40.50L32.89 31.27Z" />
+                <path d="M28.23 34.39L32.74 47.62A2.05 2.05 0 0 0 36.52 46.05L30.35 33.51Z" />
+                <path d="M24.85 34.60L23.95 48.55A2.05 2.05 0 0 0 28.05 48.55L27.15 34.60Z" />
+                <path d="M21.65 33.51L15.48 46.05A2.05 2.05 0 0 0 19.26 47.62L23.77 34.39Z" />
+                <path d="M19.11 31.27L8.61 40.50A2.05 2.05 0 0 0 11.50 43.39L20.73 32.89Z" />
+                <path d="M17.61 28.23L4.38 32.74A2.05 2.05 0 0 0 5.95 36.52L18.49 30.35Z" />
+                <path d="M17.40 24.85L3.45 23.95A2.05 2.05 0 0 0 3.45 28.05L17.40 27.15Z" />
+                <path d="M18.49 21.65L5.95 15.48A2.05 2.05 0 0 0 4.38 19.26L17.61 23.77Z" />
+                <path d="M20.73 19.11L11.50 8.61A2.05 2.05 0 0 0 8.61 11.50L19.11 20.73Z" />
+                <path d="M23.77 17.61L19.26 4.38A2.05 2.05 0 0 0 15.48 5.95L21.65 18.49Z" />
+              </g>
+            </svg>
           </a>
+
+          <nav>
+            <ul className="nz-navbar-links nz-right">
+              {navRight.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
           <button
             className={`nz-hamburger ${menuOpen ? 'active' : ''}`}
             aria-label="Abrir menú"
@@ -80,9 +110,6 @@ export default function NosotrosPage() {
             </li>
           ))}
         </ul>
-        <a className="nz-btn nz-btn--primary nz-mobile-menu-cta" href="/#planes" onClick={() => setMenuOpen(false)}>
-          Solicitar acceso
-        </a>
       </div>
 
       <NosotrosVideoBackground />
@@ -93,15 +120,21 @@ export default function NosotrosPage() {
           <FadeUp as="p" delay={0} className="nz-eyebrow">
             Nuestra historia
           </FadeUp>
-          <FadeUp as="h1" delay={0.1}>
-            La mayoría reacciona al mercado. Nosotros te ayudamos a anticiparlo.
+          <h1>
+            <span className="l1">
+              <FadeUp as="span" delay={0.15} y={40}>La mayoría reacciona al mercado.</FadeUp>
+            </span>
+            <span className="l2">
+              <FadeUp as="span" delay={0.27} y={40}>Nosotros te ayudamos a anticiparlo.</FadeUp>
+            </span>
+          </h1>
+          <FadeUp as="p" delay={0.45}>
+            <span className="nz-name-gold">Hunab Villanueva</span> y <span className="nz-name-gold">Victor Valiente</span> fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento, pierden porque nadie les enseñó a usar la misma información que usan los grandes.
           </FadeUp>
-          <FadeUp as="p" delay={0.2}>
-            <span className="nz-name-gold">Hunab Villanueva</span> y <span className="nz-name-gold">Victor Valiente</span> fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.
-          </FadeUp>
-          <FadeUp delay={0.3}>
-            <a className="nz-btn nz-btn--primary" href="#equipo">
-              Conoce al equipo
+          <FadeUp delay={0.6}>
+            <a className="nz-cta-view" href="#equipo">
+              <span>conoce al equipo</span>
+              <i className="tl" /><i className="tr" /><i className="bl" /><i className="br" />
             </a>
           </FadeUp>
         </div>

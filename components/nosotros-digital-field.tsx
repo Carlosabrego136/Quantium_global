@@ -8,9 +8,6 @@ const terrainLines = [
   { y: 650, color: '#2f8bff', opacity: 0.42, dur: '11s' },
   { y: 610, color: '#3898ff', opacity: 0.5, dur: '12s' },
   { y: 570, color: '#3fa9ff', opacity: 0.6, dur: '9s' },
-  { y: 535, color: '#4fb8ff', opacity: 0.7, dur: '10s' },
-  { y: 505, color: '#5fc9ff', opacity: 0.8, dur: '13s' },
-  { y: 478, color: '#8fe3ff', opacity: 0.9, dur: '10s' },
 ]
 
 const terrainPaths: Record<number, string> = {
@@ -51,17 +48,13 @@ const candles = [
 
 const particles = [
   { cx: 200, cy: 570, r: 2.2, dur: '3.4s' },
-  { cx: 340, cy: 510, r: 1.6, dur: '4.1s' },
   { cx: 480, cy: 600, r: 2, dur: '3.7s' },
-  { cx: 620, cy: 470, r: 1.4, dur: '4.6s' },
-  { cx: 780, cy: 530, r: 2.4, dur: '3.2s' },
-  { cx: 940, cy: 490, r: 1.6, dur: '4.3s' },
   { cx: 1080, cy: 560, r: 2, dur: '3.8s' },
-  { cx: 1220, cy: 500, r: 1.5, dur: '4.4s' },
   { cx: 1380, cy: 550, r: 2.2, dur: '3.5s' },
-  { cx: 1500, cy: 490, r: 1.7, dur: '4s' },
   { cx: 100, cy: 650, r: 1.8, dur: '3.9s' },
   { cx: 1560, cy: 640, r: 1.9, dur: '3.6s' },
+  { cx: 680, cy: 590, r: 1.6, dur: '4.1s' },
+  { cx: 900, cy: 610, r: 1.7, dur: '4.4s' },
 ]
 
 export function NosotrosDigitalField() {
@@ -89,11 +82,11 @@ export function NosotrosDigitalField() {
         <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#4fb8ff" strokeWidth="1.1">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
             const x0 = 800 + (i - 4) * 46
-            return <line key={`v${i}`} x1={x0} y1={478} x2={800 + (i - 4) * 360} y2={780} opacity={0.34} />
+            return <line key={`v${i}`} x1={x0} y1={570} x2={800 + (i - 4) * 360} y2={780} opacity={0.34} />
           })}
           {[0, 1, 2, 3, 4, 5].map((i) => {
             const t = i / 5
-            const y = 490 + t * 280
+            const y = 575 + t * 205
             const spread = 55 + t * 760
             return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.24 + t * 0.2} />
           })}
@@ -118,7 +111,7 @@ export function NosotrosDigitalField() {
         {/* vertical mesh connectors (turns the contour lines into a woven net) */}
         <g filter="url(#nzGlowSoft)" stroke="#5fc9ff" strokeWidth="1">
           {meshVerticalsX.map((x) => (
-            <line key={x} x1={x} y1={478} x2={x} y2={738} opacity={0.2} />
+            <line key={x} x1={x} y1={570} x2={x} y2={738} opacity={0.2} />
           ))}
         </g>
 

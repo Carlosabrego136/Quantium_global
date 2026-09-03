@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowUpRight, Menu, X, Share2 } from 'lucide-react'
+import { ArrowUpRight, Menu, X, Share2, Check } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
 import { MarketNodes } from '@/components/market-nodes'
 import { ToolsMarquee } from '@/components/tools-marquee'
+import { SpotlightBorder } from '@/components/spotlight-border'
 import { FadeUp } from '@/components/fade-up'
 
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
@@ -310,35 +311,65 @@ export default function Page() {
       </section>
 
       <section id="planes" className="section-plans">
-        <FadeUp as="p" delay={0} className="eyebrow-dark">
-          Precios
-        </FadeUp>
-        <FadeUp as="h2" delay={0.05} className="plans-heading">
-          Empieza a leer el flujo.
-        </FadeUp>
-        <FadeUp as="p" delay={0.1} className="plans-note">
-          Un plan Premium con acceso completo a la plataforma.
-        </FadeUp>
-        <div className="plan-single">
-          <FadeUp delay={0.2} className="plan-card accent-gold">
-            <div className="plan-media">
-              <img src="/cards/premium.jpg" alt="Plan Premium" loading="lazy" />
-            </div>
-            <p className="eyebrow-dark">Plan Premium</p>
-            <strong>
-              Próximamente
-            </strong>
-            <p className="plan-desc">Acceso a las 77 herramientas, con datos en tiempo real e histórico completo.</p>
-            <ul>
-              {premiumFeatures.map((feature) => (
-                <li key={feature}>{feature}</li>
-              ))}
-            </ul>
-            <a className="btn-primary" href="mailto:hello@quantium.global">
-              Solicitar acceso anticipado <ArrowUpRight size={14} />
-            </a>
+        <div className="pricing-header">
+          <div>
+            <FadeUp delay={0}>
+              <span className="pricing-pill">
+                <span className="pricing-pill-dot" />
+                Precios
+              </span>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h2 className="pricing-heading">Empieza a leer el flujo.</h2>
+            </FadeUp>
+          </div>
+          <FadeUp delay={0.2}>
+            <p className="pricing-side-note">Un plan Premium con acceso completo a la plataforma.</p>
           </FadeUp>
         </div>
+
+        <SpotlightBorder>
+          <FadeUp delay={0.2} className="pricing-card">
+            <div className="pricing-card-media">
+              <img src="/cards/premium.jpg" alt="Plan Premium" loading="lazy" />
+            </div>
+            <div className="pricing-card-body">
+              <FadeUp delay={0}>
+                <p className="pricing-eyebrow">Plan Premium</p>
+              </FadeUp>
+              <div className="pricing-divider" />
+
+              <FadeUp delay={0.1}>
+                <div className="pricing-price">
+                  <strong>Próximamente</strong>
+                </div>
+              </FadeUp>
+
+              <FadeUp delay={0.2}>
+                <p className="pricing-desc">Acceso a las 77 herramientas, con datos en tiempo real e histórico completo.</p>
+              </FadeUp>
+
+              <FadeUp delay={0.3}>
+                <a className="pricing-cta" href="mailto:hello@quantium.global">
+                  Solicitar acceso anticipado <ArrowUpRight size={14} />
+                </a>
+              </FadeUp>
+
+              <FadeUp delay={0.4}>
+                <ul className="pricing-features">
+                  {premiumFeatures.map((feature) => (
+                    <li className="pricing-feature" key={feature}>
+                      <span className="pricing-feature-icon">
+                        <Check size={12} />
+                      </span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </FadeUp>
+            </div>
+          </FadeUp>
+        </SpotlightBorder>
       </section>
 
       <section className="section-cta">

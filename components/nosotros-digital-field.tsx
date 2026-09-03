@@ -3,32 +3,50 @@
 // Static, hand-authored geometry (no Math.random) so server/client markup always matches.
 
 const terrainLines = [
-  { y: 620, amp: 34, color: '#1f6fff', opacity: 0.28, dur: '14s' },
-  { y: 560, amp: 46, color: '#2f8bff', opacity: 0.4, dur: '11s' },
-  { y: 500, amp: 58, color: '#3fa9ff', opacity: 0.55, dur: '9s' },
-  { y: 445, amp: 42, color: '#5fc9ff', opacity: 0.7, dur: '13s' },
-  { y: 400, amp: 26, color: '#8fe3ff', opacity: 0.85, dur: '10s' },
+  { y: 640, color: '#1f6fff', opacity: 0.24, dur: '15s' },
+  { y: 600, color: '#276fff', opacity: 0.3, dur: '13s' },
+  { y: 560, color: '#2f8bff', opacity: 0.38, dur: '11s' },
+  { y: 520, color: '#3898ff', opacity: 0.46, dur: '12s' },
+  { y: 480, color: '#3fa9ff', opacity: 0.55, dur: '9s' },
+  { y: 445, color: '#4fb8ff', opacity: 0.65, dur: '10s' },
+  { y: 415, color: '#5fc9ff', opacity: 0.75, dur: '13s' },
+  { y: 388, color: '#8fe3ff', opacity: 0.85, dur: '10s' },
 ]
 
 const terrainPaths: Record<number, string> = {
-  620: 'M -50,620 C 120,586 260,654 430,624 S 720,566 900,616 S 1180,662 1360,610 S 1560,580 1650,624',
-  560: 'M -50,566 C 140,606 300,520 480,562 S 760,614 940,556 S 1220,504 1400,558 S 1580,600 1650,552',
-  500: 'M -50,528 C 160,468 320,548 500,502 S 780,438 960,506 S 1240,556 1420,498 S 1580,452 1650,504',
-  445: 'M -50,458 C 150,494 310,412 490,452 S 770,494 950,438 S 1230,394 1410,444 S 1580,478 1650,430',
-  400: 'M -50,416 C 170,388 330,428 510,398 S 790,362 970,402 S 1250,430 1430,388 S 1580,362 1650,400',
+  640: 'M -50,640 C 130,614 270,668 440,642 S 730,600 910,636 S 1190,672 1370,630 S 1560,606 1650,642',
+  600: 'M -50,586 C 140,624 300,548 480,584 S 760,630 940,580 S 1220,536 1400,582 S 1580,616 1650,574',
+  560: 'M -50,594 C 150,560 310,606 490,566 S 770,528 950,570 S 1230,610 1410,562 S 1580,530 1650,568',
+  520: 'M -50,542 C 160,504 320,556 500,516 S 780,472 960,520 S 1240,562 1420,512 S 1580,478 1650,516',
+  480: 'M -50,502 C 160,450 320,522 500,480 S 780,424 960,486 S 1240,530 1420,476 S 1580,436 1650,482',
+  445: 'M -50,466 C 150,500 310,424 490,460 S 770,500 950,448 S 1230,406 1410,452 S 1580,484 1650,438',
+  415: 'M -50,432 C 150,464 310,392 490,426 S 770,462 950,414 S 1230,376 1410,418 S 1580,448 1650,406',
+  388: 'M -50,398 C 170,372 330,410 510,382 S 790,348 970,386 S 1250,412 1430,372 S 1580,348 1650,384',
 }
 
+// coarse vertical mesh connectors linking the terrain band into a net
+const meshVerticalsX = [40, 160, 280, 400, 520, 640, 960, 1080, 1200, 1320, 1440, 1560]
+
 const candles = [
-  { x: 60, y: 610, h: 46, w: 8, wick: 20, color: '#ffb35a', dur: '5.5s', delay: '0s' },
-  { x: 110, y: 592, h: 30, w: 7, wick: 14, color: '#38e0d8', dur: '6.2s', delay: '0.4s' },
-  { x: 165, y: 560, h: 54, w: 8, wick: 24, color: '#ff8a4d', dur: '5s', delay: '0.9s' },
-  { x: 225, y: 545, h: 26, w: 7, wick: 12, color: '#5fc9ff', dur: '7s', delay: '0.2s' },
-  { x: 285, y: 520, h: 40, w: 7, wick: 16, color: '#38e0d8', dur: '6s', delay: '1.1s' },
-  { x: 1320, y: 600, h: 38, w: 8, wick: 18, color: '#5fc9ff', dur: '5.8s', delay: '0.3s' },
-  { x: 1375, y: 578, h: 50, w: 8, wick: 22, color: '#ff8a4d', dur: '6.5s', delay: '0.7s' },
-  { x: 1430, y: 555, h: 28, w: 7, wick: 12, color: '#38e0d8', dur: '5.2s', delay: '1.3s' },
-  { x: 1485, y: 530, h: 44, w: 8, wick: 20, color: '#ffb35a', dur: '6.8s', delay: '0.5s' },
-  { x: 1540, y: 510, h: 24, w: 6, wick: 10, color: '#5fc9ff', dur: '5.4s', delay: '1s' },
+  { x: 40, y: 618, h: 30, w: 4, wick: 14, color: '#ffb35a', dur: '5.5s', delay: '0s' },
+  { x: 75, y: 600, h: 22, w: 4, wick: 10, color: '#38e0d8', dur: '6.2s', delay: '0.4s' },
+  { x: 112, y: 578, h: 36, w: 4, wick: 16, color: '#ff8a4d', dur: '5s', delay: '0.9s' },
+  { x: 150, y: 560, h: 20, w: 4, wick: 9, color: '#5fc9ff', dur: '7s', delay: '0.2s' },
+  { x: 188, y: 538, h: 28, w: 4, wick: 12, color: '#38e0d8', dur: '6s', delay: '1.1s' },
+  { x: 226, y: 520, h: 18, w: 3, wick: 8, color: '#ffb35a', dur: '6.7s', delay: '0.6s' },
+  { x: 265, y: 500, h: 26, w: 4, wick: 11, color: '#5fc9ff', dur: '5.9s', delay: '1.4s' },
+  { x: 60, y: 478, h: 20, w: 3, wick: 9, color: '#ff8a4d', dur: '6.4s', delay: '0.8s' },
+  { x: 300, y: 470, h: 22, w: 4, wick: 10, color: '#38e0d8', dur: '6.1s', delay: '0.3s' },
+
+  { x: 1560, y: 610, h: 28, w: 4, wick: 13, color: '#5fc9ff', dur: '5.8s', delay: '0.3s' },
+  { x: 1525, y: 590, h: 34, w: 4, wick: 15, color: '#ff8a4d', dur: '6.5s', delay: '0.7s' },
+  { x: 1488, y: 566, h: 20, w: 3, wick: 9, color: '#38e0d8', dur: '5.2s', delay: '1.3s' },
+  { x: 1450, y: 548, h: 30, w: 4, wick: 13, color: '#ffb35a', dur: '6.8s', delay: '0.5s' },
+  { x: 1412, y: 526, h: 18, w: 3, wick: 8, color: '#5fc9ff', dur: '5.4s', delay: '1s' },
+  { x: 1374, y: 504, h: 24, w: 4, wick: 11, color: '#38e0d8', dur: '6.3s', delay: '0.2s' },
+  { x: 1336, y: 486, h: 16, w: 3, wick: 7, color: '#ff8a4d', dur: '7.1s', delay: '0.9s' },
+  { x: 1580, y: 472, h: 20, w: 3, wick: 9, color: '#ffb35a', dur: '5.6s', delay: '1.2s' },
+  { x: 1298, y: 466, h: 22, w: 4, wick: 10, color: '#5fc9ff', dur: '6s', delay: '0.4s' },
 ]
 
 const particles = [
@@ -52,14 +70,14 @@ export function NosotrosDigitalField() {
       <svg className="nz-digital-field-svg" viewBox="0 0 1600 700" preserveAspectRatio="xMidYMax slice">
         <defs>
           <filter id="nzGlowSoft" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="2.6" result="blur" />
+            <feGaussianBlur stdDeviation="2.4" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
           <filter id="nzGlowStrong" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feGaussianBlur stdDeviation="4.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -67,21 +85,21 @@ export function NosotrosDigitalField() {
           </filter>
         </defs>
 
-        {/* perspective floor grid */}
-        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#3fa9ff" strokeWidth="1">
+        {/* perspective floor grid (converging toward the horizon) */}
+        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#4fb8ff" strokeWidth="1">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
             const x0 = 800 + (i - 4) * 46
-            return <line key={`v${i}`} x1={x0} y1={430} x2={800 + (i - 4) * 340} y2={700} opacity={0.22} />
+            return <line key={`v${i}`} x1={x0} y1={388} x2={800 + (i - 4) * 360} y2={700} opacity={0.3} />
           })}
-          {[0, 1, 2, 3, 4].map((i) => {
-            const t = i / 4
-            const y = 460 + t * 220
-            const spread = 60 + t * 700
-            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.15 + t * 0.15} />
+          {[0, 1, 2, 3, 4, 5].map((i) => {
+            const t = i / 5
+            const y = 400 + t * 280
+            const spread = 55 + t * 760
+            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.2 + t * 0.18} />
           })}
         </g>
 
-        {/* wireframe terrain contour lines */}
+        {/* wireframe terrain contour lines (the horizontal weave of the mesh) */}
         <g filter="url(#nzGlowSoft)">
           {terrainLines.map((line) => (
             <path
@@ -90,10 +108,17 @@ export function NosotrosDigitalField() {
               d={terrainPaths[line.y]}
               fill="none"
               stroke={line.color}
-              strokeWidth="1.4"
+              strokeWidth="1.3"
               opacity={line.opacity}
               style={{ animationDuration: line.dur }}
             />
+          ))}
+        </g>
+
+        {/* vertical mesh connectors (turns the contour lines into a woven net) */}
+        <g filter="url(#nzGlowSoft)" stroke="#5fc9ff" strokeWidth="0.9">
+          {meshVerticalsX.map((x) => (
+            <line key={x} x1={x} y1={388} x2={x} y2={648} opacity={0.16} />
           ))}
         </g>
 
@@ -101,8 +126,8 @@ export function NosotrosDigitalField() {
         <g filter="url(#nzGlowStrong)">
           {candles.map((c, i) => (
             <g key={i} className="nz-field-candle" style={{ animationDuration: c.dur, animationDelay: c.delay }}>
-              <line x1={c.x} y1={c.y - c.wick} x2={c.x} y2={c.y + c.h + c.wick} stroke={c.color} strokeWidth="1" opacity="0.6" />
-              <rect x={c.x - c.w / 2} y={c.y} width={c.w} height={c.h} fill={c.color} opacity="0.85" rx="0.5" />
+              <line x1={c.x} y1={c.y - c.wick} x2={c.x} y2={c.y + c.h + c.wick} stroke={c.color} strokeWidth="0.8" opacity="0.55" />
+              <rect x={c.x - c.w / 2} y={c.y} width={c.w} height={c.h} fill={c.color} opacity="0.88" rx="0.5" />
             </g>
           ))}
         </g>

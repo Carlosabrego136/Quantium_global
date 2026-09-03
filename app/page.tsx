@@ -17,12 +17,12 @@ const tools = [
   { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: null, accent: 'red' },
 ] as const
 
-const moreTools: { number: string; title: string; text: string; accent: 'gold' | 'red' | 'white' }[] = [
-  { number: '07', title: 'Insider & Congreso', text: 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.', accent: 'gold' },
-  { number: '08', title: 'Forex & Fed Watch', text: 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.', accent: 'red' },
-  { number: '09', title: 'Niveles de Mercado', text: 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.', accent: 'white' },
-  { number: '10', title: 'Equities', text: 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.', accent: 'gold' },
-  { number: '11', title: 'Posicionamiento', text: 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.', accent: 'red' },
+const moreTools: { number: string; title: string; text: string; image: string; accent: 'gold' | 'red' | 'white' }[] = [
+  { number: '07', title: 'Insider & Congreso', text: 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.', image: '/cards/insider-congreso.jpg', accent: 'gold' },
+  { number: '08', title: 'Forex & Fed Watch', text: 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.', image: '/cards/forex-fedwatch.jpg', accent: 'red' },
+  { number: '09', title: 'Niveles de Mercado', text: 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.', image: '/cards/niveles-mercado.jpg', accent: 'white' },
+  { number: '10', title: 'Equities', text: 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.', image: '/cards/equities.jpg', accent: 'gold' },
+  { number: '11', title: 'Posicionamiento', text: 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.', image: '/cards/posicionamiento.jpg', accent: 'red' },
 ]
 
 const allToolSlides = [

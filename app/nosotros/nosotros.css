@@ -131,6 +131,20 @@ a.nz-cta-view:hover, a.nz-cta-view:focus-visible {
     radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.25) 70%, rgba(0,0,0,0.5) 100%);
 }
 
+/* ============ digital field overlay (screen-blended over the video) ============ */
+.nz-digital-field { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.62; mix-blend-mode: screen; }
+.nz-digital-field-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nz-field-terrain-line { animation-name: nzTerrainBreathe; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+@keyframes nzTerrainBreathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.nz-field-candle { animation-name: nzCandleFloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; transform-origin: center; }
+@keyframes nzCandleFloat { 0%, 100% { transform: translateY(0); opacity: 0.9; } 50% { transform: translateY(-6px); opacity: 1; } }
+.nz-field-particle { animation-name: nzParticleTwinkle; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+@keyframes nzParticleTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.95; } }
+@media (max-width: 640px) { .nz-digital-field { opacity: 0.4; } }
+@media (prefers-reduced-motion: reduce) {
+  .nz-field-terrain-line, .nz-field-candle, .nz-field-particle { animation: none; }
+}
+
 /* ============ hero (static, over the video) ============ */
 .nz-hero { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
 .nz-hero-content { max-width: 900px; padding: 120px 20px 90px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; }

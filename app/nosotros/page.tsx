@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { NosotrosVideoBackground } from '@/components/nosotros-video-background'
+import { NosotrosDigitalField } from '@/components/nosotros-digital-field'
 import { FadeUp } from '@/components/fade-up'
 import './nosotros.css'
 
@@ -113,6 +114,7 @@ export default function NosotrosPage() {
       </div>
 
       <NosotrosVideoBackground />
+      <NosotrosDigitalField />
 
       {/* ===== HERO ===== */}
       <section className="nz-hero">

@@ -210,33 +210,33 @@ ul { margin: 0; padding: 0; list-style: none; }
   animation-iteration-count: infinite;
 }
 .market-node-dot {
-  width: 6px;
-  height: 6px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   flex-shrink: 0;
   animation-name: nodePulse;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
 }
-.market-node.accent-gold .market-node-dot { background: var(--accent-gold); box-shadow: 0 0 8px 2px rgba(184, 146, 90, 0.65), 0 0 18px 5px rgba(184, 146, 90, 0.3); }
-.market-node.accent-red .market-node-dot { background: var(--accent-red); box-shadow: 0 0 8px 2px rgba(154, 59, 46, 0.65), 0 0 18px 5px rgba(154, 59, 46, 0.3); }
-.market-node.accent-white .market-node-dot { background: #fff; box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.55), 0 0 18px 5px rgba(255, 255, 255, 0.25); }
+.market-node.accent-gold .market-node-dot { background: var(--accent-gold); box-shadow: 0 0 14px 4px rgba(184, 146, 90, 0.85), 0 0 34px 10px rgba(184, 146, 90, 0.5), 0 0 60px 16px rgba(184, 146, 90, 0.22); }
+.market-node.accent-red .market-node-dot { background: var(--accent-red); box-shadow: 0 0 14px 4px rgba(154, 59, 46, 0.85), 0 0 34px 10px rgba(154, 59, 46, 0.5), 0 0 60px 16px rgba(154, 59, 46, 0.22); }
+.market-node.accent-white .market-node-dot { background: #fff; box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.75), 0 0 34px 10px rgba(255, 255, 255, 0.42), 0 0 60px 16px rgba(255, 255, 255, 0.2); }
 .market-node-label {
   font-family: ui-monospace, SFMono-Regular, monospace;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.88);
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 18px rgba(255, 255, 255, 0.25);
   white-space: nowrap;
 }
 @keyframes nodeFloat {
   0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-10px); }
+  50% { transform: translate(-50%, -50%) translateY(-14px); }
 }
 @keyframes nodePulse {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.35); }
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.55); }
 }
 @media (max-width: 900px) {
   .market-nodes { display: none; }

@@ -345,24 +345,32 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; grid-auto-rows: 1fr; }
 
-/* ============ tools marquee (drag-enabled infinite strip) ============ */
+/* ============ tools marquee (drag-enabled infinite strip, photo + info together) ============ */
 .nz-marquee-section { position: relative; margin: 8px -32px 28px -32px; padding: 16px 0; overflow: hidden; }
 .nz-marquee-mask { position: absolute; left: 0; right: 0; z-index: 2; height: 60px; pointer-events: none; }
 .nz-marquee-mask svg { width: 100%; height: 100%; display: block; }
 .nz-marquee-mask svg path { fill: var(--panel); }
 .nz-marquee-mask-top { top: 0; }
 .nz-marquee-mask-bottom { bottom: 0; }
-.nz-marquee-track { display: flex; width: max-content; gap: 16px; padding: 12px 0; cursor: grab; user-select: none; touch-action: pan-y; }
+.nz-marquee-track { display: flex; width: max-content; align-items: stretch; gap: 20px; padding: 12px 0; cursor: grab; user-select: none; touch-action: pan-y; }
 .nz-marquee-track.nz-marquee-grabbing { cursor: grabbing; }
-.nz-marquee-slide { position: relative; width: 220px; height: 300px; flex-shrink: 0; border-radius: 16px; overflow: hidden; background: #0a0a0a; }
-.nz-marquee-slide img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.nz-marquee-caption {
-  position: absolute; left: 12px; bottom: 12px; z-index: 1;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  color: #fff; background: rgba(0, 0, 0, 0.55); padding: 5px 10px; border-radius: 4px;
+.nz-marquee-slide {
+  position: relative; flex-shrink: 0; width: 250px;
+  background: #fff; border: 1px solid var(--panel-line); border-top: 3px solid var(--panel-line);
+  border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
 }
+.nz-marquee-slide.accent-gold { border-top-color: var(--accent-gold); }
+.nz-marquee-slide.accent-red { border-top-color: var(--accent-red); }
+.nz-marquee-slide.accent-white { border-top-color: var(--accent-white); }
+.nz-marquee-media { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #0a0a0a; pointer-events: none; }
+.nz-marquee-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nz-marquee-media-placeholder { width: 100%; height: 100%; background: radial-gradient(circle at 50% 40%, rgba(184, 146, 90, 0.18), #0a0a0a 75%); }
+.nz-marquee-number { position: absolute; left: 12px; bottom: 12px; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.85); }
+.nz-marquee-info { padding: 18px 18px 20px 18px; display: flex; flex-direction: column; gap: 8px; }
+.nz-marquee-info h3 { font-size: 15px; font-weight: 600; text-transform: uppercase; color: var(--ink); }
+.nz-marquee-info p { font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
 @media (min-width: 640px) {
-  .nz-marquee-slide { width: 300px; height: 400px; }
+  .nz-marquee-slide { width: 300px; }
   .nz-marquee-mask { height: 80px; }
 }
 @media (max-width: 900px) {

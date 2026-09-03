@@ -17,16 +17,16 @@ const tools = [
   { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: null, accent: 'red' },
 ] as const
 
-const moreTools: [string, string, string][] = [
-  ['07', 'Insider & Congreso', 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.'],
-  ['08', 'Forex & Fed Watch', 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.'],
-  ['09', 'Niveles de Mercado', 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.'],
-  ['10', 'Equities', 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.'],
-  ['11', 'Posicionamiento', 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.'],
+const moreTools: { number: string; title: string; text: string; accent: 'gold' | 'red' | 'white' }[] = [
+  { number: '07', title: 'Insider & Congreso', text: 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.', accent: 'gold' },
+  { number: '08', title: 'Forex & Fed Watch', text: 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.', accent: 'red' },
+  { number: '09', title: 'Niveles de Mercado', text: 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.', accent: 'white' },
+  { number: '10', title: 'Equities', text: 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.', accent: 'gold' },
+  { number: '11', title: 'Posicionamiento', text: 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.', accent: 'red' },
 ]
 
-const allToolEntries: [string, string, string][] = [
-  ...tools.map((t): [string, string, string] => [t.number, t.title, t.text]),
+const allToolSlides = [
+  ...tools.map((t) => ({ number: t.number, title: t.title, text: t.text, image: t.image, accent: t.accent })),
   ...moreTools,
 ]
 
@@ -225,20 +225,7 @@ export default function Page() {
           </FadeUp>
         </div>
 
-        <ToolsMarquee slides={tools.map((t) => ({ key: t.number, image: t.image, title: t.title }))} />
-
-        <div className="tool-list-extra">
-          {allToolEntries.map(([number, title, text], idx) => (
-            <article className={`tool-row-light accent-${['gold', 'red', 'white'][idx % 3]}`} key={number}>
-              <span>{number}</span>
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-              <ArrowUpRight size={16} />
-            </article>
-          ))}
-        </div>
+        <ToolsMarquee slides={allToolSlides} />
 
         <div className="stat-strip-light">
           <div className="stat-strip-head-light">

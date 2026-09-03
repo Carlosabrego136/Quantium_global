@@ -3,10 +3,10 @@
 // Static, hand-authored geometry (no Math.random) so server/client markup always matches.
 
 const terrainLines = [
-  { y: 730, color: '#2a7bff', opacity: 0.4, dur: '15s' },
-  { y: 690, color: '#3486ff', opacity: 0.5, dur: '13s' },
-  { y: 650, color: '#4098ff', opacity: 0.62, dur: '11s' },
-  { y: 610, color: '#4fb0ff', opacity: 0.75, dur: '12s' },
+  { y: 730, color: '#4a95ff', opacity: 0.55, dur: '15s' },
+  { y: 690, color: '#54a0ff', opacity: 0.65, dur: '13s' },
+  { y: 650, color: '#60aeff', opacity: 0.78, dur: '11s' },
+  { y: 610, color: '#70bfff', opacity: 0.92, dur: '12s' },
 ]
 
 const terrainPaths: Record<number, string> = {
@@ -62,14 +62,14 @@ export function NosotrosDigitalField() {
       <svg className="nz-digital-field-svg" viewBox="0 0 1600 780" preserveAspectRatio="xMidYMax slice">
         <defs>
           <filter id="nzGlowSoft" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3.6" result="blur" />
+            <feGaussianBlur stdDeviation="4.6" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
           <filter id="nzGlowStrong" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="5.5" result="blur" />
+            <feGaussianBlur stdDeviation="6.5" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -78,16 +78,16 @@ export function NosotrosDigitalField() {
         </defs>
 
         {/* perspective floor grid (converging toward the horizon) */}
-        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#5fc0ff" strokeWidth="1.2">
+        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#7fd0ff" strokeWidth="1.3">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
             const x0 = 800 + (i - 4) * 46
-            return <line key={`v${i}`} x1={x0} y1={610} x2={800 + (i - 4) * 360} y2={780} opacity={0.44} />
+            return <line key={`v${i}`} x1={x0} y1={610} x2={800 + (i - 4) * 360} y2={780} opacity={0.6} />
           })}
           {[0, 1, 2, 3, 4, 5].map((i) => {
             const t = i / 5
             const y = 613 + t * 167
             const spread = 55 + t * 760
-            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.32 + t * 0.24} />
+            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.44 + t * 0.3} />
           })}
         </g>
 
@@ -108,9 +108,9 @@ export function NosotrosDigitalField() {
         </g>
 
         {/* vertical mesh connectors (turns the contour lines into a woven net) */}
-        <g filter="url(#nzGlowSoft)" stroke="#6fd0ff" strokeWidth="1.1">
+        <g filter="url(#nzGlowSoft)" stroke="#8fd8ff" strokeWidth="1.2">
           {meshVerticalsX.map((x) => (
-            <line key={x} x1={x} y1={610} x2={x} y2={738} opacity={0.3} />
+            <line key={x} x1={x} y1={610} x2={x} y2={738} opacity={0.42} />
           ))}
         </g>
 

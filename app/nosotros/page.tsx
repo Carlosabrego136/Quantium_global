@@ -21,11 +21,11 @@ const principles = [
 ]
 
 const team = [
-  { name: 'Hunab Villanueva', role: 'CEO · Fundador', text: 'Construyó Quantium sobre la convicción de que los inversores independientes fracasan no por falta de talento, sino porque nunca tuvieron acceso a la misma información que los grandes fondos.', accent: 'gold' },
-  { name: 'Victor Valiente', role: 'CMO · Co-fundador', text: 'Lidera la estrategia de marca y crecimiento de Quantium. Enfocado en construir una comunidad de inversores que exigen información real, no titulares, para tomar sus decisiones.', accent: 'white' },
-  { name: 'Leonardo Rodriguez', role: 'Analista · Ingeniero Financiero', text: 'Especializado en análisis cuantitativo e interpretación de flujo de opciones. Aplica modelos rigurosos para traducir señales complejas en conclusiones claras y accionables.', accent: 'red' },
-  { name: 'Edwin Fernández', role: 'Analista · Ingeniero Financiero', text: 'Especializado en derivados y análisis de flujo institucional. Transforma los movimientos más complejos del mercado en inteligencia clara que cualquier inversor puede usar.', accent: 'gold' },
-  { name: 'Hugo De La Fuente', role: 'Analista · Economista', text: 'Economista especializado en macroeconomía, política de bancos centrales y divisas. Aporta el contexto global detrás de cada movimiento de mercado que analizamos.', accent: 'white' },
+  { name: 'Hunab Villanueva', role: 'CEO · Fundador', text: 'Construyó Quantium sobre la convicción de que los inversores independientes fracasan no por falta de talento, sino porque nunca tuvieron acceso a la misma información que los grandes fondos.', accent: 'gold', founder: true },
+  { name: 'Victor Valiente', role: 'CMO · Co-fundador', text: 'Lidera la estrategia de marca y crecimiento de Quantium. Enfocado en construir una comunidad de inversores que exigen información real, no titulares, para tomar sus decisiones.', accent: 'white', founder: true },
+  { name: 'Leonardo Rodriguez', role: 'Analista · Ingeniero Financiero', text: 'Especializado en análisis cuantitativo e interpretación de flujo de opciones. Aplica modelos rigurosos para traducir señales complejas en conclusiones claras y accionables.', accent: 'red', founder: false },
+  { name: 'Edwin Fernández', role: 'Analista · Ingeniero Financiero', text: 'Especializado en derivados y análisis de flujo institucional. Transforma los movimientos más complejos del mercado en inteligencia clara que cualquier inversor puede usar.', accent: 'gold', founder: false },
+  { name: 'Hugo De La Fuente', role: 'Analista · Economista', text: 'Economista especializado en macroeconomía, política de bancos centrales y divisas. Aporta el contexto global detrás de cada movimiento de mercado que analizamos.', accent: 'white', founder: false },
 ]
 
 const sources = [
@@ -97,7 +97,7 @@ export default function NosotrosPage() {
             La mayoría reacciona al mercado. Nosotros te ayudamos a anticiparlo.
           </FadeUp>
           <FadeUp as="p" delay={0.2}>
-            Hunab Villanueva y Victor Valiente fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.
+            <span className="nz-name-gold">Hunab Villanueva</span> y <span className="nz-name-gold">Victor Valiente</span> fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.
           </FadeUp>
           <FadeUp delay={0.3}>
             <a className="nz-btn nz-btn--primary" href="#equipo">
@@ -119,7 +119,7 @@ export default function NosotrosPage() {
           Los inversores independientes no pierden por falta de talento. Pierden porque nunca tuvieron acceso a la misma información que los grandes. Quantium cambia eso.
         </FadeUp>
         <FadeUp as="p" delay={0.35} className="nz-quote-by">
-          Hunab Villanueva — Fundador, Quantium
+          <span className="nz-name-gold">Hunab Villanueva</span> — Fundador, Quantium
         </FadeUp>
       </section>
 
@@ -197,7 +197,7 @@ export default function NosotrosPage() {
           {team.map((member, i) => (
             <FadeUp key={member.name} delay={0.1 + i * 0.08} className={`nz-card nz-accent-${member.accent}`}>
               <span className="nz-card-role">{member.role}</span>
-              <h3>{member.name}</h3>
+              <h3 className={member.founder ? 'nz-name-gold' : ''}>{member.name}</h3>
               <p>{member.text}</p>
               <div className="nz-card-social">
                 <span>𝕏</span>

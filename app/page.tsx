@@ -1,6 +1,7 @@
 'use client'
 
-import { ArrowUpRight, Menu, Share2 } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowUpRight, Menu, X, Share2 } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
 import { MarketNodes } from '@/components/market-nodes'
 import { ToolsMarquee } from '@/components/tools-marquee'
@@ -79,6 +80,8 @@ const navSecondary = [
 ]
 
 export default function Page() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <div className="site-shell">
       <VideoBackground />
@@ -107,10 +110,38 @@ export default function Page() {
             </FadeUp>
           ))}
         </nav>
-        <button className="menu-button" aria-label="Abrir menú">
-          <Menu size={18} />
+        <button
+          className="menu-button"
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </header>
+
+      <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <nav>
+          {navPrimary.map(([label, href, blank]) => (
+            <a
+              key={label}
+              href={href}
+              target={blank ? '_blank' : undefined}
+              rel={blank ? 'noopener noreferrer' : undefined}
+              onClick={() => setMenuOpen(false)}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+        <div className="mobile-menu-actions">
+          {navSecondary.map(([label, href]) => (
+            <a key={label} href={href} className={label === 'SOLICITAR ACCESO' ? 'btn-primary' : 'btn-secondary'} onClick={() => setMenuOpen(false)}>
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
 
       <section id="top" className="section-hero">
         <div className="hero-overlay">

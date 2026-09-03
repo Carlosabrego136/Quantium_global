@@ -15,33 +15,33 @@ type Node = {
 }
 
 const nodes: Node[] = [
-  { id: 'spx', label: 'SPX', x: 700, y: 190, r: 7, accent: 'gold', dur: 6.5, delay: 0 },
-  { id: 'tsla', label: 'TSLA', x: 990, y: 260, r: 6, accent: 'white', dur: 7.2, delay: 0.8 },
-  { id: 'nvda', label: 'NVDA', x: 560, y: 400, r: 6, accent: 'red', dur: 6.8, delay: 1.4 },
-  { id: 'btc', label: 'BTC', x: 1100, y: 330, r: 6, accent: 'gold', dur: 7.6, delay: 0.4 },
-  { id: 'eth', label: 'ETH', x: 850, y: 470, r: 7, accent: 'white', dur: 6.2, delay: 2.0 },
-  { id: 'qqq', label: 'QQQ', x: 460, y: 220, r: 6, accent: 'red', dur: 7.0, delay: 1.1 },
-  { id: 'vix', label: 'VIX', x: 530, y: 540, r: 6, accent: 'gold', dur: 6.6, delay: 1.8 },
-  { id: 'dxy', label: 'DXY', x: 1230, y: 380, r: 6, accent: 'white', dur: 7.4, delay: 0.6 },
+  { id: 'spx', label: 'SPX', x: 742, y: 287, r: 7, accent: 'gold', dur: 6.5, delay: 0 },
+  { id: 'tsla', label: 'TSLA', x: 910, y: 327, r: 6, accent: 'white', dur: 7.2, delay: 0.8 },
+  { id: 'nvda', label: 'NVDA', x: 661, y: 408, r: 6, accent: 'red', dur: 6.8, delay: 1.4 },
+  { id: 'btc', label: 'BTC', x: 974, y: 368, r: 6, accent: 'gold', dur: 7.6, delay: 0.4 },
+  { id: 'eth', label: 'ETH', x: 829, y: 449, r: 7, accent: 'white', dur: 6.2, delay: 2.0 },
+  { id: 'qqq', label: 'QQQ', x: 603, y: 304, r: 6, accent: 'red', dur: 7.0, delay: 1.1 },
+  { id: 'vix', label: 'VIX', x: 643, y: 490, r: 6, accent: 'gold', dur: 6.6, delay: 1.8 },
+  { id: 'dxy', label: 'DXY', x: 1049, y: 397, r: 6, accent: 'white', dur: 7.4, delay: 0.6 },
 
-  { id: 'aapl', label: 'AAPL', x: 370, y: 340, r: 5, accent: 'white', dur: 7.1, delay: 0.9 },
-  { id: 'meta', label: 'META', x: 640, y: 300, r: 5, accent: 'red', dur: 6.9, delay: 1.6 },
-  { id: 'marketmakers', label: 'MARKET MAKERS', x: 900, y: 150, r: 7, accent: 'gold', dur: 7.8, delay: 0.3 },
-  { id: 'dealergamma', label: 'DEALER GAMMA', x: 750, y: 380, r: 9, accent: 'gold', dur: 8.2, delay: 0 },
-  { id: 'optionsflow', label: 'OPTIONS FLOW', x: 470, y: 470, r: 6, accent: 'white', dur: 7.3, delay: 1.2 },
-  { id: 'vanna', label: 'VANNA', x: 830, y: 220, r: 5, accent: 'red', dur: 6.4, delay: 2.1 },
-  { id: 'skew', label: 'SKEW', x: 700, y: 480, r: 5, accent: 'white', dur: 7.5, delay: 0.5 },
-  { id: 'hedging', label: 'HEDGING', x: 990, y: 470, r: 6, accent: 'gold', dur: 6.7, delay: 1.7 },
-  { id: 'openinterest', label: 'OPEN INTEREST', x: 850, y: 180, r: 6, accent: 'white', dur: 7.9, delay: 0.7 },
-  { id: 'liquidez', label: 'LIQUIDEZ', x: 1060, y: 220, r: 5, accent: 'red', dur: 6.3, delay: 1.3 },
-  { id: 'volatility', label: 'VOLATILITY', x: 620, y: 570, r: 5, accent: 'gold', dur: 7.6, delay: 2.2 },
-  { id: 'putwall', label: 'PUT WALL', x: 600, y: 620, r: 5, accent: 'white', dur: 6.1, delay: 0.4 },
-  { id: 'callwall', label: 'CALL WALL', x: 780, y: 610, r: 5, accent: 'red', dur: 7.0, delay: 1.9 },
-  { id: 'spy', label: 'SPY', x: 700, y: 650, r: 6, accent: 'gold', dur: 6.6, delay: 0.2 },
-  { id: 'gammaflip', label: 'GAMMA FLIP', x: 920, y: 570, r: 5, accent: 'white', dur: 7.4, delay: 1.5 },
-  { id: 'darkpool', label: 'DARK POOL', x: 1160, y: 500, r: 5, accent: 'red', dur: 6.9, delay: 0.6 },
-  { id: 'whales', label: 'WHALES', x: 340, y: 470, r: 5, accent: 'gold', dur: 7.7, delay: 1.0 },
-  { id: '10y', label: '10Y', x: 1210, y: 250, r: 5, accent: 'white', dur: 6.5, delay: 2.3 },
+  { id: 'aapl', label: 'AAPL', x: 551, y: 374, r: 5, accent: 'white', dur: 7.1, delay: 0.9 },
+  { id: 'meta', label: 'META', x: 707, y: 350, r: 5, accent: 'red', dur: 6.9, delay: 1.6 },
+  { id: 'marketmakers', label: 'MARKET MAKERS', x: 858, y: 263, r: 7, accent: 'gold', dur: 7.8, delay: 0.3 },
+  { id: 'dealergamma', label: 'DEALER GAMMA', x: 771, y: 397, r: 9, accent: 'gold', dur: 8.2, delay: 0 },
+  { id: 'optionsflow', label: 'OPTIONS FLOW', x: 609, y: 449, r: 6, accent: 'white', dur: 7.3, delay: 1.2 },
+  { id: 'vanna', label: 'VANNA', x: 817, y: 304, r: 5, accent: 'red', dur: 6.4, delay: 2.1 },
+  { id: 'skew', label: 'SKEW', x: 742, y: 455, r: 5, accent: 'white', dur: 7.5, delay: 0.5 },
+  { id: 'hedging', label: 'HEDGING', x: 910, y: 449, r: 6, accent: 'gold', dur: 6.7, delay: 1.7 },
+  { id: 'openinterest', label: 'OPEN INTEREST', x: 829, y: 281, r: 6, accent: 'white', dur: 7.9, delay: 0.7 },
+  { id: 'liquidez', label: 'LIQUIDEZ', x: 951, y: 304, r: 5, accent: 'red', dur: 6.3, delay: 1.3 },
+  { id: 'volatility', label: 'VOLATILITY', x: 696, y: 507, r: 5, accent: 'gold', dur: 7.6, delay: 2.2 },
+  { id: 'putwall', label: 'PUT WALL', x: 684, y: 536, r: 5, accent: 'white', dur: 6.1, delay: 0.4 },
+  { id: 'callwall', label: 'CALL WALL', x: 788, y: 530, r: 5, accent: 'red', dur: 7.0, delay: 1.9 },
+  { id: 'spy', label: 'SPY', x: 742, y: 553, r: 6, accent: 'gold', dur: 6.6, delay: 0.2 },
+  { id: 'gammaflip', label: 'GAMMA FLIP', x: 870, y: 507, r: 5, accent: 'white', dur: 7.4, delay: 1.5 },
+  { id: 'darkpool', label: 'DARK POOL', x: 1009, y: 466, r: 5, accent: 'red', dur: 6.9, delay: 0.6 },
+  { id: 'whales', label: 'WHALES', x: 533, y: 449, r: 5, accent: 'gold', dur: 7.7, delay: 1.0 },
+  { id: '10y', label: '10Y', x: 1038, y: 321, r: 5, accent: 'white', dur: 6.5, delay: 2.3 },
 ]
 
 const edges: [string, string][] = [
@@ -90,6 +90,11 @@ export function MarketNodes() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          <linearGradient id="mnEdgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#8fc9ff" />
+            <stop offset="50%" stopColor="#dff0ff" />
+            <stop offset="100%" stopColor="#5a9bdb" />
+          </linearGradient>
         </defs>
 
         <g className="market-edges" filter="url(#mnGlow)">

@@ -84,7 +84,7 @@ export function MarketNodes() {
       <svg className="market-nodes-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
         <defs>
           <filter id="mnGlow" x="-100%" y="-100%" width="300%" height="300%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feGaussianBlur stdDeviation="1.4" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -111,16 +111,18 @@ export function MarketNodes() {
           })}
         </g>
 
-        <g filter="url(#mnGlow)">
+        <g>
           {nodes.map((node) => (
             <g key={node.id} className={`market-node-svg accent-${node.accent}`} style={{ animationDuration: `${node.dur}s`, animationDelay: `${node.delay}s` }}>
-              <circle
-                className="market-node-svg-dot"
-                cx={node.x}
-                cy={node.y}
-                r={node.r}
-                style={{ animationDuration: `${node.dur * 0.5}s`, animationDelay: `${node.delay}s` }}
-              />
+              <g filter="url(#mnGlow)">
+                <circle
+                  className="market-node-svg-dot"
+                  cx={node.x}
+                  cy={node.y}
+                  r={node.r}
+                  style={{ animationDuration: `${node.dur * 0.5}s`, animationDelay: `${node.delay}s` }}
+                />
+              </g>
               <text className="market-node-svg-label" x={node.x + node.r + 8} y={node.y + 4}>
                 {node.label}
               </text>

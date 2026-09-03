@@ -304,6 +304,9 @@ export default function Page() {
         </FadeUp>
         <div className="plan-single">
           <FadeUp delay={0.2} className="plan-card accent-gold">
+            <div className="plan-media">
+              <img src="/cards/premium.jpg" alt="Plan Premium" loading="lazy" />
+            </div>
             <p className="eyebrow-dark">Plan Premium</p>
             <strong>
               Próximamente

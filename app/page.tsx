@@ -60,9 +60,10 @@ const marketLevels = [
   ['760', 'SPY · muro de calls'],
 ]
 
-const navPrimary = [
+const navPrimary: [string, string, boolean?][] = [
   ['HERRAMIENTAS', '#herramientas'],
   ['GAMMA', '#gamma'],
+  ['NOSOTROS', '/nosotros', true],
   ['FAQ', '#faq'],
   ['PLANES', '#planes'],
 ]
@@ -85,9 +86,11 @@ export default function Page() {
           </a>
         </FadeUp>
         <nav className="nav-links nav-links-primary" aria-label="Navegación principal">
-          {navPrimary.map(([label, href], i) => (
+          {navPrimary.map(([label, href, blank], i) => (
             <FadeUp as="span" key={label} delay={0.05 + i * 0.05}>
-              <a href={href}>{label}</a>
+              <a href={href} target={blank ? '_blank' : undefined} rel={blank ? 'noopener noreferrer' : undefined}>
+                {label}
+              </a>
             </FadeUp>
           ))}
         </nav>

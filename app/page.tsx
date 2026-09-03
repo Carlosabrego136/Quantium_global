@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUpRight, Menu, Share2, Activity, Globe, Bitcoin } from 'lucide-react'
+import { ArrowUpRight, Menu, Share2 } from 'lucide-react'
 import { VideoBackground } from '@/components/video-background'
 import { MarketNodes } from '@/components/market-nodes'
 import { FadeUp } from '@/components/fade-up'
@@ -11,9 +11,9 @@ const tools = [
   { number: '01', title: 'Flujo de Opciones', text: 'Cada trade grande, en el instante en que ocurre. Calls vs puts, primas, sweeps y whales, con el drift del flujo.', image: '/cards/flujo-opciones.jpg', icon: null, accent: 'gold' },
   { number: '02', title: 'Superficie de Gamma 3D', text: 'La exposición del dealer como paisaje: dónde el mercado se pega y dónde se suelta. Gamma, vanna y charm por strike y vencimiento.', image: '/cards/gamma-dealer.jpg', icon: null, accent: 'white' },
   { number: '03', title: 'Dark Pool', text: 'El volumen que no ves en la cinta. Prints y niveles institucionales.', image: '/cards/dark-pool.jpg', icon: null, accent: 'red' },
-  { number: '04', title: 'Volatilidad', text: 'Skew, estructura temporal y superficie IV. VRP y estacionalidad.', image: '/cards/volatilidad.jpg', icon: Activity, accent: 'white' },
-  { number: '05', title: 'Macro', text: 'Curva de bonos, crédito, Fed Watch. El régimen, de un vistazo.', image: '/cards/macro.jpg', icon: Globe, accent: 'gold' },
-  { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: Bitcoin, accent: 'red' },
+  { number: '04', title: 'Volatilidad', text: 'Skew, estructura temporal y superficie IV. VRP y estacionalidad.', image: '/cards/volatilidad.jpg', icon: null, accent: 'white' },
+  { number: '05', title: 'Macro', text: 'Curva de bonos, crédito, Fed Watch. El régimen, de un vistazo.', image: '/cards/macro.jpg', icon: null, accent: 'gold' },
+  { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: null, accent: 'red' },
 ] as const
 
 const moreTools = [

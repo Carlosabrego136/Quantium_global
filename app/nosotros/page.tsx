@@ -1,17 +1,45 @@
 'use client'
 
-import { ArrowUpRight, ArrowDown, Share2 } from 'lucide-react'
-import { ScrollVideo } from '@/components/scroll-video'
+import { useState } from 'react'
+import { ArrowUpRight } from 'lucide-react'
+import { ScrollScrubHero, type ScrollSection } from '@/components/scroll-scrub-hero'
 import { FadeUp } from '@/components/fade-up'
 import './nosotros.css'
 
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260514_135830_bb6491d1-9b66-4aec-9722-13b4dfe3fb46.mp4'
+const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260821_183659_804e0948-c701-4565-b56b-a99c78f9bfba.mp4'
 
 const navLinks = [
-  ['inicio', '/'],
-  ['equipo', '#equipo'],
-  ['principios', '#principios'],
-  ['contacto', 'mailto:hello@quantium.global'],
+  ['Inicio', '/'],
+  ['Equipo', '#equipo'],
+  ['Principios', '#principios'],
+  ['Contacto', 'mailto:hello@quantium.global'],
+]
+
+const heroSections: ScrollSection[] = [
+  {
+    eyebrow: 'Nuestra historia',
+    heading: 'La mayoría reacciona al mercado. Nosotros te ayudamos a anticiparlo.',
+    body: 'Hunab Villanueva y Victor Valiente fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.',
+    ctaLabel: 'Conoce al equipo',
+    ctaHref: '#equipo',
+    variant: 'primary',
+  },
+  {
+    eyebrow: 'Lo que hacemos diferente',
+    heading: 'Los datos existen semanas antes del titular.',
+    body: 'Grandes compras en opciones, movimientos masivos en fondos, compras del Congreso, ballenas en cripto: esas señales existen antes de la noticia. Quantium te las muestra en tiempo real.',
+    ctaLabel: 'Ver herramientas',
+    ctaHref: '/#herramientas',
+    variant: 'primary',
+  },
+  {
+    eyebrow: 'Nuestros principios',
+    heading: 'Solo lo que importa. Sin ruido.',
+    body: 'Sin exageración, sin predicciones vacías. Si no está respaldado por datos, no entra en una herramienta de Quantium.',
+    ctaLabel: 'Leer más',
+    ctaHref: '#filosofia',
+    variant: 'outline',
+  },
 ]
 
 const principles = [
@@ -36,67 +64,58 @@ const sources = [
 ]
 
 export default function NosotrosPage() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <div className="nz-page">
-      <ScrollVideo src={VIDEO_URL} />
-
-      <div className="nz-nav-brand">
-        <FadeUp delay={0}>
-          <a href="/">
+      <header className="nz-navbar">
+        <div className="nz-navbar-inner">
+          <a className="nz-logo" href="/">
             <img src="/brand/logo.jpg" alt="Quantium" />
             (QUANTIUM)
           </a>
-        </FadeUp>
-        <FadeUp delay={0.15}>
-          <p className="nz-nav-tag">[ nosotros ]</p>
-        </FadeUp>
+          <nav>
+            <ul className="nz-navbar-links">
+              {navLinks.map(([label, href]) => (
+                <li key={label}>
+                  <a href={href}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <a className="nz-btn nz-btn--primary nz-navbar-cta" href="/#planes">
+            Solicitar acceso
+          </a>
+          <button
+            className={`nz-hamburger ${menuOpen ? 'active' : ''}`}
+            aria-label="Abrir menú"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span className="nz-hamburger-line" />
+            <span className="nz-hamburger-line" />
+            <span className="nz-hamburger-line" />
+          </button>
+        </div>
+      </header>
+
+      <div className={`nz-mobile-menu ${menuOpen ? 'open' : ''}`}>
+        <ul>
+          {navLinks.map(([label, href]) => (
+            <li key={label}>
+              <a href={href} onClick={() => setMenuOpen(false)}>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a className="nz-btn nz-btn--primary nz-mobile-menu-cta" href="/#planes" onClick={() => setMenuOpen(false)}>
+          Solicitar acceso
+        </a>
       </div>
 
-      <nav className="nz-nav-links">
-        {navLinks.map(([label, href], i) => (
-          <FadeUp key={label} delay={0.1 + i * 0.12}>
-            <a href={href} target={href === '/' ? undefined : href.startsWith('mailto') ? undefined : '_self'}>
-              {label} <ArrowUpRight size={13} />
-            </a>
-          </FadeUp>
-        ))}
-      </nav>
-
-      {/* ===== HERO ===== */}
-      <section className="nz-hero">
-        <div className="nz-hero-row">
-          <h1 className="nz-hero-heading">
-            <FadeUp as="span" delay={0.1} once={false}>La mayoría</FadeUp>
-            <FadeUp as="span" delay={0.22} once={false}>
-              reacciona <em>al mercado.</em>
-            </FadeUp>
-            <FadeUp as="span" delay={0.34} once={false}>Nosotros te</FadeUp>
-            <FadeUp as="span" delay={0.46} once={false}>ayudamos a anticiparlo.</FadeUp>
-          </h1>
-
-          <div className="nz-hero-side">
-            <FadeUp delay={0.4} once={false} className="nz-marker-row" style={{ width: '100%' }}>
-              <span>( A )</span>
-              <span>[ 001 / 006 ]</span>
-            </FadeUp>
-            <FadeUp as="p" delay={0.52} once={false}>
-              Hunab Villanueva y Victor Valiente fundaron Quantium con una convicción simple: los inversores no pierden por falta de talento. Pierden porque nadie les enseñó a usar la misma información que usan los grandes.
-            </FadeUp>
-            <FadeUp delay={0.64} once={false} style={{ width: '100%' }}>
-              <a className="nz-pill" href="#equipo">
-                Conoce al equipo
-              </a>
-            </FadeUp>
-          </div>
-        </div>
-
-        <a href="#filosofia" className="nz-share" style={{ position: 'fixed' }}>
-          <Share2 size={18} />
-        </a>
-        <a href="#filosofia" className="nz-scroll-arrow">
-          <ArrowDown size={18} />
-        </a>
-      </section>
+      {/* ===== SCROLL-SCRUBBED VIDEO HERO ===== */}
+      <ScrollScrubHero src={VIDEO_URL} sections={heroSections} />
 
       {/* ===== FILOSOFÍA / QUOTE ===== */}
       <section id="filosofia" className="nz-section">
@@ -238,7 +257,7 @@ export default function NosotrosPage() {
           Muy pronto vas a poder crear tu cuenta y acceder a las mismas herramientas que usan las mesas institucionales, explicadas en simple.
         </FadeUp>
         <FadeUp delay={0.3} style={{ marginTop: 28 }}>
-          <a className="nz-pill nz-pill-inline" href="/#planes">
+          <a className="nz-btn nz-btn--primary" href="/#planes">
             Ver planes <ArrowUpRight size={14} />
           </a>
         </FadeUp>

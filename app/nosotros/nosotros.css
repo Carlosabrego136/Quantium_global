@@ -1,116 +1,145 @@
-@import url('https://db.onlinewebfonts.com/c/4556933d6966c60eda45bebad34d9c90?family=Flexo+Soft+Medium');
+@import url('https://db.onlinewebfonts.com/c/95cecf452d3208890088a5b4c19c7ecf?family=Helvetica+Neue+ME');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 .nz-page {
   position: relative;
-  font-family: 'Flexo Soft Medium', system-ui, sans-serif;
-  background: #0a0a0a;
+  background: #000;
   color: #fff;
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  font-family: 'Helvetica Neue ME', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-.nz-page * { box-sizing: border-box; }
 .nz-page h1, .nz-page h2, .nz-page h3, .nz-page p { margin: 0; }
 .nz-page a { color: inherit; text-decoration: none; }
 .nz-page ul { margin: 0; padding: 0; list-style: none; }
-.nz-page ::selection { background-color: rgba(255, 255, 255, 0.2); }
+.nz-page button { font-family: inherit; }
 
-/* ============ scroll-scrubbed video background ============ */
-.scroll-video-wrap { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
-.scroll-video-fallback,
-.scroll-video-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.scroll-video-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.35); }
+/* ============ navbar ============ */
+.nz-navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 0 48px; }
+.nz-navbar-inner { max-width: 1400px; margin: 0 auto; height: 72px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+.nz-logo { font-size: 1.25rem; font-weight: 500; color: #fff; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; animation: nzFadeInDown 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.2s both; }
+.nz-logo img { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; }
+.nz-navbar-links { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; gap: 40px; }
+.nz-navbar-links li { opacity: 0; animation: nzFadeInDown 0.5s cubic-bezier(0.23, 1, 0.32, 1) both; }
+.nz-navbar-links li:nth-child(1) { animation-delay: 0.3s; }
+.nz-navbar-links li:nth-child(2) { animation-delay: 0.4s; }
+.nz-navbar-links li:nth-child(3) { animation-delay: 0.5s; }
+.nz-navbar-links li:nth-child(4) { animation-delay: 0.6s; }
+.nz-navbar-links a { font-size: 0.9375rem; font-weight: 300; opacity: 0.9; transition: opacity 0.2s ease; }
+.nz-navbar-links a:hover { opacity: 1; }
+.nz-navbar-cta { font-size: 0.8125rem; padding: 4px 10px; animation: nzFadeInDown 0.5s cubic-bezier(0.23, 1, 0.32, 1) 0.7s both; }
+@keyframes nzFadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ============ navbar (fixed corners) ============ */
-.nz-nav-brand { position: fixed; left: 20px; top: 20px; z-index: 50; }
-.nz-nav-brand a { display: flex; align-items: center; gap: 10px; font-family: ui-monospace, monospace; font-size: 18px; font-weight: 500; letter-spacing: -0.01em; color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
-.nz-nav-brand img { width: 26px; height: 26px; border-radius: 7px; object-fit: cover; box-shadow: 0 0 0 1px rgba(255,255,255,0.2); }
-.nz-nav-tag { margin-top: 24px; font-family: ui-monospace, monospace; font-size: 10px; color: rgba(255,255,255,0.6); }
-.nz-nav-links { position: fixed; right: 20px; top: 20px; z-index: 50; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.nz-nav-links a { display: flex; align-items: center; gap: 4px; font-family: ui-monospace, monospace; font-size: 12px; color: rgba(255,255,255,0.8); text-shadow: 0 1px 8px rgba(0,0,0,0.5); transition: color 0.25s ease; }
-.nz-nav-links a:hover { color: #fff; }
-.nz-nav-links svg { transition: transform 0.25s ease; }
-.nz-nav-links a:hover svg { transform: translate(2px, -2px); }
+/* ============ hamburger ============ */
+.nz-hamburger { display: none; position: relative; width: 32px; height: 24px; background: none; border: 0; cursor: pointer; }
+.nz-hamburger-line { position: absolute; left: 0; width: 32px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+.nz-hamburger-line:nth-child(1) { top: 2px; }
+.nz-hamburger-line:nth-child(2) { top: 11px; }
+.nz-hamburger-line:nth-child(3) { top: 20px; }
+.nz-hamburger.active .nz-hamburger-line:nth-child(1) { top: 11px; transform: rotate(45deg); }
+.nz-hamburger.active .nz-hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nz-hamburger.active .nz-hamburger-line:nth-child(3) { top: 11px; transform: rotate(-45deg); }
 
-/* ============ hero ============ */
-.nz-hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; }
-.nz-hero-row { display: flex; flex-direction: column; gap: 40px; padding: 0 20px 64px 20px; }
-.nz-hero-heading { max-width: 640px; font-size: clamp(34px, 6vw, 68px); font-weight: 500; text-transform: uppercase; line-height: 1.05; letter-spacing: -0.01em; color: #fff; text-shadow: 0 4px 24px rgba(0,0,0,0.5); }
-.nz-hero-heading span { display: block; }
-.nz-hero-heading em { font-style: italic; font-weight: 300; text-transform: none; }
-.nz-hero-side { display: flex; flex-direction: column; align-items: flex-start; width: 100%; max-width: 340px; }
-.nz-marker-row { display: flex; align-items: center; justify-content: space-between; width: 100%; font-family: ui-monospace, monospace; color: #fff; margin-bottom: 24px; }
-.nz-marker-row span:first-child { font-size: 18px; }
-.nz-marker-row span:last-child { font-size: 12px; color: rgba(255,255,255,0.7); }
-.nz-hero-side p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.85); text-shadow: 0 1px 8px rgba(0,0,0,0.5); margin-bottom: 24px; }
-.nz-pill { display: block; width: 100%; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.6); padding: 12px 32px; text-align: center; font-family: ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: #fff; transition: all 0.3s ease; }
-.nz-pill:hover { background: #fff; color: #0a0a0a; }
-.nz-pill-inline { display: inline-flex; align-items: center; gap: 8px; width: auto; }
+/* ============ mobile menu ============ */
+.nz-mobile-menu {
+  position: fixed; inset: 0; z-index: 99;
+  background: rgba(0, 0, 0, 0.97);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px;
+  opacity: 0; visibility: hidden; transform: translateY(-8px);
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.nz-mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.nz-mobile-menu ul { display: flex; flex-direction: column; align-items: center; gap: 32px; }
+.nz-mobile-menu a { font-size: 1.75rem; font-weight: 300; transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); display: inline-block; }
+.nz-mobile-menu.open li:nth-child(1) a { transform: translateY(0); opacity: 1; transition-delay: 0.1s; }
+.nz-mobile-menu.open li:nth-child(2) a { transform: translateY(0); opacity: 1; transition-delay: 0.15s; }
+.nz-mobile-menu.open li:nth-child(3) a { transform: translateY(0); opacity: 1; transition-delay: 0.2s; }
+.nz-mobile-menu.open li:nth-child(4) a { transform: translateY(0); opacity: 1; transition-delay: 0.25s; }
+.nz-mobile-menu-cta { transform: translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+.nz-mobile-menu.open .nz-mobile-menu-cta { transform: translateY(0); opacity: 1; transition-delay: 0.3s; }
 
-.nz-share { position: fixed; bottom: 20px; left: 20px; z-index: 40; color: rgba(255,255,255,0.8); transition: color 0.25s ease; }
-.nz-share:hover { color: #fff; }
-.nz-scroll-arrow { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.8); animation: nzBounce 1.6s infinite; }
-@keyframes nzBounce { 0%, 100% { transform: translateX(-50%) translateY(-6px); } 50% { transform: translateX(-50%) translateY(4px); } }
+/* ============ buttons ============ */
+.nz-btn { display: inline-block; font-size: 0.8125rem; font-weight: 400; padding: 5px 12px; border-radius: 0; letter-spacing: 0.02em; transition: all 0.3s ease; cursor: pointer; }
+.nz-btn--primary { background: #fff; color: #000; border: 1px solid #fff; }
+.nz-btn--primary:hover { background: transparent; color: #fff; }
+.nz-btn--outline { background: transparent; color: #fff; border: none; padding: 8px 0; text-decoration: underline; text-underline-offset: 4px; }
+.nz-btn--outline:hover { opacity: 0.7; }
 
-/* ============ generic cinematic section (over video) ============ */
-.nz-section { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 90px 20px; }
-.nz-eyebrow { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 18px; }
-.nz-heading { font-size: clamp(28px, 5vw, 52px); font-weight: 500; text-transform: uppercase; line-height: 1.1; letter-spacing: -0.01em; color: #fff; text-shadow: 0 4px 24px rgba(0,0,0,0.5); max-width: 760px; }
-.nz-body { margin-top: 20px; font-size: 15px; line-height: 1.75; color: rgba(255,255,255,0.82); text-shadow: 0 1px 8px rgba(0,0,0,0.5); max-width: 620px; }
+/* ============ scroll-scrubbed video block ============ */
+.nz-scroll-video { position: relative; width: 100%; height: 500vh; }
+.nz-scroll-video-el { position: sticky; top: 0; width: 100%; height: 100vh; object-fit: cover; z-index: 1; display: block; background: #000; }
+.nz-content-overlay { position: fixed; inset: 0; height: 100vh; z-index: 3; pointer-events: none; }
+.nz-section-content { position: absolute; inset: 0; display: flex; opacity: 0; transition: opacity 0.4s ease; }
+.nz-section-content.active { opacity: 1; pointer-events: auto; }
+.nz-scroll-content { max-width: 480px; padding: 64px; }
+.nz-scroll-eyebrow { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-bottom: 14px; opacity: 0; transform: translateY(20px); }
+.nz-scroll-content h1 { font-size: clamp(2rem, 3vw, 2.25rem); font-weight: 400; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.02em; opacity: 0; transform: translateY(20px); }
+.nz-scroll-content p { font-size: clamp(0.875rem, 1.2vw, 1.125rem); font-weight: 300; line-height: 1.5; margin-bottom: 32px; opacity: 0; transform: translateY(20px); }
+.nz-scroll-content .nz-btn { opacity: 0; transform: translateY(20px); }
+.nz-section-content.active .nz-scroll-eyebrow { opacity: 1; transform: translateY(0); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.05s; }
+.nz-section-content.active .nz-scroll-content h1 { opacity: 1; transform: translateY(0); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.1s; }
+.nz-section-content.active .nz-scroll-content p { opacity: 0.85; transform: translateY(0); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.25s; }
+.nz-section-content.active .nz-btn { opacity: 1; transform: translateY(0); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.4s; }
 
-/* quote */
+.nz-section-content--1 { align-items: flex-end; justify-content: flex-start; }
+.nz-section-content--2 { align-items: flex-start; justify-content: flex-end; }
+.nz-section-content--3 { align-items: flex-end; justify-content: flex-end; }
+
+/* ============ generic section (after the scroller) ============ */
+.nz-section { position: relative; padding: 110px 20px; }
+.nz-eyebrow { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 18px; }
+.nz-heading { font-size: clamp(28px, 5vw, 52px); font-weight: 400; text-transform: uppercase; line-height: 1.1; letter-spacing: -0.01em; color: #fff; max-width: 760px; }
+.nz-body { margin-top: 20px; font-size: 15px; font-weight: 300; line-height: 1.75; color: rgba(255,255,255,0.82); max-width: 620px; }
+
 .nz-quote-mark { font-size: 64px; line-height: 1; color: var(--accent-gold, #b8925a); margin-bottom: 8px; }
-.nz-quote { font-size: clamp(22px, 3.4vw, 36px); font-weight: 300; font-style: italic; line-height: 1.35; color: #fff; text-shadow: 0 4px 24px rgba(0,0,0,0.5); max-width: 780px; }
+.nz-quote { font-size: clamp(22px, 3.4vw, 36px); font-weight: 300; font-style: italic; line-height: 1.35; color: #fff; max-width: 780px; }
 .nz-quote-by { margin-top: 24px; font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
 
 .nz-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 32px; max-width: 920px; }
 
-/* content panels (dense info, semi-opaque glass over video) */
-.nz-panel-section { position: relative; padding: 80px 20px; }
+.nz-panel-section { position: relative; padding: 90px 20px; }
 .nz-panel-head { max-width: 620px; margin-bottom: 40px; }
-.nz-grid { display: grid; gap: 18px; }
+.nz-grid { display: grid; gap: 1px; background: rgba(255,255,255,0.14); }
 .nz-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .nz-grid-3 { grid-template-columns: repeat(3, 1fr); }
-.nz-card {
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-top: 3px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
-  padding: 26px 24px;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+.nz-card { background: #000; padding: 30px 26px; border-top: 2px solid rgba(255,255,255,0.14); }
 .nz-card.nz-accent-gold { border-top-color: var(--accent-gold, #b8925a); }
 .nz-card.nz-accent-red { border-top-color: var(--accent-red, #9a3b2e); }
 .nz-card.nz-accent-white { border-top-color: #fff; }
-.nz-card h3 { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 10px; }
-.nz-card p { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.78); }
+.nz-card h3 { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 10px; }
+.nz-card p { font-size: 13px; font-weight: 300; line-height: 1.65; color: rgba(255,255,255,0.78); }
 .nz-card-role { font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 4px; display: block; }
 .nz-card-social { margin-top: 14px; display: flex; gap: 12px; font-size: 12px; color: rgba(255,255,255,0.5); font-family: ui-monospace, monospace; }
 
-.nz-legal { position: relative; padding: 60px 20px; }
-.nz-legal p { max-width: 720px; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,0.55); }
+.nz-legal { position: relative; padding: 70px 20px; }
+.nz-legal p { max-width: 720px; font-size: 12px; font-weight: 300; line-height: 1.7; color: rgba(255,255,255,0.55); }
 
-/* final CTA */
-.nz-cta { position: relative; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 90px 20px; }
+.nz-cta { position: relative; padding: 120px 20px; }
 
-/* footer */
 .nz-footer { position: relative; padding: 60px 20px 40px 20px; border-top: 1px solid rgba(255,255,255,0.14); display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; }
 .nz-footer-col h4 { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
-.nz-footer-col a, .nz-footer-col p { font-size: 13px; color: rgba(255,255,255,0.75); display: block; margin-bottom: 8px; max-width: 280px; line-height: 1.6; }
+.nz-footer-col a, .nz-footer-col p { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.75); display: block; margin-bottom: 8px; max-width: 280px; line-height: 1.6; }
 .nz-footer-brand { display: flex; align-items: center; gap: 10px; font-family: ui-monospace, monospace; font-size: 15px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; margin-bottom: 12px; }
 .nz-footer-brand img { width: 24px; height: 24px; border-radius: 6px; object-fit: cover; }
-.nz-footer-bottom { width: 100%; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.6; }
+.nz-footer-bottom { width: 100%; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.6; }
 
-@media (min-width: 720px) {
-  .nz-hero-row { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 32px; padding: 0 48px 80px 48px; }
-  .nz-section { padding: 90px 48px; }
-  .nz-panel-section { padding: 90px 48px; }
-  .nz-legal { padding: 60px 48px; }
-  .nz-cta { padding: 90px 48px; }
-  .nz-footer { padding: 60px 48px 40px 48px; }
-  .nz-nav-brand { left: 48px; top: 28px; }
-  .nz-nav-links { right: 48px; top: 28px; }
+/* ============ mobile ============ */
+@media (max-width: 768px) {
+  .nz-navbar { padding: 0 24px; }
+  .nz-navbar-inner { height: 64px; }
+  .nz-navbar-links, .nz-navbar-cta { display: none; }
+  .nz-hamburger { display: block; }
+
+  .nz-scroll-content { max-width: 100%; padding: 32px 24px; }
+  .nz-scroll-content h1 { font-size: 1.75rem; }
+  .nz-section-content--2 { justify-content: flex-start; align-items: flex-start; padding-top: 72px; }
+  .nz-section-content--3 { justify-content: flex-start; align-items: flex-end; }
+
+  .nz-grid-2, .nz-grid-3, .nz-two-col { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 720px) {
-  .nz-grid-2, .nz-grid-3, .nz-two-col { grid-template-columns: 1fr; }
+@media (min-width: 769px) {
+  .nz-section, .nz-panel-section, .nz-legal, .nz-cta, .nz-footer { padding-left: 48px; padding-right: 48px; }
 }

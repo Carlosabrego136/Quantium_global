@@ -3,11 +3,10 @@
 // Static, hand-authored geometry (no Math.random) so server/client markup always matches.
 
 const terrainLines = [
-  { y: 730, color: '#1f6fff', opacity: 0.26, dur: '15s' },
-  { y: 690, color: '#276fff', opacity: 0.33, dur: '13s' },
-  { y: 650, color: '#2f8bff', opacity: 0.42, dur: '11s' },
-  { y: 610, color: '#3898ff', opacity: 0.5, dur: '12s' },
-  { y: 570, color: '#3fa9ff', opacity: 0.6, dur: '9s' },
+  { y: 730, color: '#2a7bff', opacity: 0.4, dur: '15s' },
+  { y: 690, color: '#3486ff', opacity: 0.5, dur: '13s' },
+  { y: 650, color: '#4098ff', opacity: 0.62, dur: '11s' },
+  { y: 610, color: '#4fb0ff', opacity: 0.75, dur: '12s' },
 ]
 
 const terrainPaths: Record<number, string> = {
@@ -63,7 +62,7 @@ export function NosotrosDigitalField() {
       <svg className="nz-digital-field-svg" viewBox="0 0 1600 780" preserveAspectRatio="xMidYMax slice">
         <defs>
           <filter id="nzGlowSoft" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feGaussianBlur stdDeviation="3.6" result="blur" />
             <feMerge>
               <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
@@ -79,16 +78,16 @@ export function NosotrosDigitalField() {
         </defs>
 
         {/* perspective floor grid (converging toward the horizon) */}
-        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#4fb8ff" strokeWidth="1.1">
+        <g className="nz-field-grid" filter="url(#nzGlowSoft)" stroke="#5fc0ff" strokeWidth="1.2">
           {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
             const x0 = 800 + (i - 4) * 46
-            return <line key={`v${i}`} x1={x0} y1={570} x2={800 + (i - 4) * 360} y2={780} opacity={0.34} />
+            return <line key={`v${i}`} x1={x0} y1={610} x2={800 + (i - 4) * 360} y2={780} opacity={0.44} />
           })}
           {[0, 1, 2, 3, 4, 5].map((i) => {
             const t = i / 5
-            const y = 575 + t * 205
+            const y = 613 + t * 167
             const spread = 55 + t * 760
-            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.24 + t * 0.2} />
+            return <line key={`h${i}`} x1={800 - spread} y1={y} x2={800 + spread} y2={y} opacity={0.32 + t * 0.24} />
           })}
         </g>
 
@@ -109,9 +108,9 @@ export function NosotrosDigitalField() {
         </g>
 
         {/* vertical mesh connectors (turns the contour lines into a woven net) */}
-        <g filter="url(#nzGlowSoft)" stroke="#5fc9ff" strokeWidth="1">
+        <g filter="url(#nzGlowSoft)" stroke="#6fd0ff" strokeWidth="1.1">
           {meshVerticalsX.map((x) => (
-            <line key={x} x1={x} y1={570} x2={x} y2={738} opacity={0.2} />
+            <line key={x} x1={x} y1={610} x2={x} y2={738} opacity={0.3} />
           ))}
         </g>
 

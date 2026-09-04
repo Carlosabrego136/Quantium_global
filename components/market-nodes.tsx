@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 // Static, hand-authored geometry (no Math.random) so server/client markup always matches.
 // Coordinate space: 1600 x 900 viewBox, scaled to the viewport.
 
@@ -44,43 +46,55 @@ const nodes: Node[] = [
   { id: '10y', label: '10Y', x: 658, y: 230, r: 4, accent: 'red', dur: 10.1, delay: 2.3 },
 ]
 
-const edges: [string, string][] = [
-  ['dealergamma', 'eth'],
-  ['dealergamma', 'marketmakers'],
-  ['dealergamma', 'vanna'],
-  ['dealergamma', 'liquidez'],
-  ['dealergamma', 'openinterest'],
-  ['dealergamma', 'spx'],
-  ['marketmakers', 'tsla'],
-  ['marketmakers', 'aapl'],
-  ['marketmakers', 'meta'],
-  ['spx', 'optionsflow'],
-  ['spx', 'skew'],
-  ['spx', 'vix'],
-  ['spx', 'volatility'],
-  ['spx', 'putwall'],
-  ['spx', 'callwall'],
-  ['spx', 'qqq'],
-  ['spx', 'btc'],
-  ['spx', 'hedging'],
-  ['spx', 'nvda'],
-  ['optionsflow', 'aapl'],
-  ['optionsflow', 'whales'],
-  ['hedging', 'nvda'],
-  ['hedging', 'gammaflip'],
-  ['hedging', 'darkpool'],
-  ['qqq', 'btc'],
-  ['putwall', 'spy'],
-  ['callwall', 'spy'],
-  ['btc', 'dxy'],
-  ['dxy', '10y'],
-]
-
 const nodeById = Object.fromEntries(nodes.map((n) => [n.id, n]))
 
+// A handful of pairs that get a traveling light pulse (data packet), instead of a fixed connecting line
+const pulseRoutes: [string, string, number, number][] = [
+  ['dealergamma', 'eth', 4.5, 0],
+  ['dealergamma', 'marketmakers', 5.2, 1.1],
+  ['spx', 'optionsflow', 4.8, 2.3],
+  ['spx', 'vix', 5.6, 0.6],
+  ['spx', 'btc', 5.0, 1.8],
+  ['marketmakers', 'tsla', 6.1, 3.0],
+  ['optionsflow', 'whales', 5.4, 2.6],
+  ['hedging', 'gammaflip', 4.9, 1.4],
+  ['putwall', 'spy', 5.8, 3.4],
+  ['btc', 'dxy', 6.3, 0.9],
+]
+
+// Large, heavily-blurred foreground particles (depth-of-field bokeh)
+const bokeh = [
+  { cx: 560, cy: 250, r: 46, accent: 'gold', dur: 14, delay: 0 },
+  { cx: 1080, cy: 620, r: 58, accent: 'red', dur: 17, delay: 3 },
+  { cx: 1150, cy: 260, r: 34, accent: 'gold', dur: 12.5, delay: 1.6 },
+  { cx: 480, cy: 640, r: 40, accent: 'red', dur: 15.5, delay: 4.2 },
+  { cx: 800, cy: 700, r: 30, accent: 'gold', dur: 13, delay: 2.4 },
+]
+
 export function MarketNodes() {
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // #1: subtle mouse parallax across two depth layers
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    function onPointerMove(e: PointerEvent) {
+      if (!root) return
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2
+      root.style.setProperty('--mn-px', `${nx * 7}px`)
+      root.style.setProperty('--mn-py', `${ny * 5}px`)
+      root.style.setProperty('--mn-px-far', `${nx * 20}px`)
+      root.style.setProperty('--mn-py-far', `${ny * 14}px`)
+    }
+    window.addEventListener('pointermove', onPointerMove)
+    return () => window.removeEventListener('pointermove', onPointerMove)
+  }, [])
+
   return (
-    <div className="market-nodes" aria-hidden="true">
+    <div className="market-nodes" aria-hidden="true" ref={rootRef}>
       <svg className="market-nodes-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
         <defs>
           <filter id="mnGlow" x="-100%" y="-100%" width="300%" height="300%">
@@ -90,11 +104,9 @@ export function MarketNodes() {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <linearGradient id="mnEdgeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#8fc9ff" />
-            <stop offset="50%" stopColor="#dff0ff" />
-            <stop offset="100%" stopColor="#5a9bdb" />
-          </linearGradient>
+          <filter id="mnBokehBlur" x="-150%" y="-150%" width="400%" height="400%">
+            <feGaussianBlur stdDeviation="18" />
+          </filter>
           <radialGradient id="mnGoldMetal" cx="35%" cy="30%" r="75%">
             <stop offset="0%" stopColor="#fff6e0" />
             <stop offset="35%" stopColor="#ffbd6b" />
@@ -109,25 +121,71 @@ export function MarketNodes() {
           </radialGradient>
         </defs>
 
-        <g className="market-orbit-group">
-          {nodes.map((node) => (
-            <g key={node.id} className={`market-node-svg accent-${node.accent}`} style={{ animationDuration: `${node.dur}s`, animationDelay: `${node.delay}s` }}>
-              <g filter="url(#mnGlow)">
-                <circle
-                  className="market-node-svg-dot"
-                  cx={node.x}
-                  cy={node.y}
-                  r={node.r}
-                  style={{ animationDuration: `${node.dur * 0.5}s`, animationDelay: `${node.delay}s` }}
-                />
-              </g>
-              <g className="market-node-counter" style={{ transformOrigin: `${node.x}px ${node.y}px` }}>
-                <text className="market-node-svg-label" x={node.x + node.r + 8} y={node.y + 4}>
-                  {node.label}
-                </text>
-              </g>
-            </g>
+        {/* #2: out-of-focus bokeh particles — foreground depth layer, reacts more to parallax */}
+        <g className="market-bokeh-layer">
+          {bokeh.map((b, i) => (
+            <circle
+              key={i}
+              className={`market-bokeh accent-${b.accent}`}
+              cx={b.cx}
+              cy={b.cy}
+              r={b.r}
+              filter="url(#mnBokehBlur)"
+              style={{ animationDuration: `${b.dur}s`, animationDelay: `${b.delay}s` }}
+            />
           ))}
+        </g>
+
+        {/* #1: nodes — mid depth layer */}
+        <g className="market-node-layer">
+          <g className="market-orbit-group">
+            {nodes.map((node) => (
+              <g key={node.id} className={`market-node-svg accent-${node.accent}`} style={{ animationDuration: `${node.dur}s`, animationDelay: `${node.delay}s` }}>
+                <g filter="url(#mnGlow)">
+                  <circle
+                    className="market-node-svg-dot"
+                    cx={node.x}
+                    cy={node.y}
+                    r={node.r}
+                    style={{ animationDuration: `${node.dur * 0.5}s`, animationDelay: `${node.delay}s` }}
+                  />
+                </g>
+                <g className="market-node-counter" style={{ transformOrigin: `${node.x}px ${node.y}px` }}>
+                  <text className="market-node-svg-label" x={node.x + node.r + 8} y={node.y + 4}>
+                    {node.label}
+                  </text>
+                </g>
+              </g>
+            ))}
+
+            {/* #3: traveling data pulses between select nodes (no fixed lines) */}
+            {pulseRoutes.map(([fromId, toId, dur, delay], i) => {
+              const a = nodeById[fromId]
+              const b = nodeById[toId]
+              if (!a || !b) return null
+              return (
+                <circle key={i} className="market-pulse" r={2.4} filter="url(#mnGlow)">
+                  <animateMotion
+                    dur={`${dur}s`}
+                    begin={`${delay}s`}
+                    repeatCount="indefinite"
+                    path={`M${a.x},${a.y} L${b.x},${b.y}`}
+                    keyPoints="0;1"
+                    keyTimes="0;1"
+                    calcMode="linear"
+                  />
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;0"
+                    keyTimes="0;0.12;0.85;1"
+                    dur={`${dur}s`}
+                    begin={`${delay}s`}
+                    repeatCount="indefinite"
+                  />
+                </circle>
+              )
+            })}
+          </g>
         </g>
       </svg>
     </div>

@@ -16,6 +16,8 @@ export function VideoBackground() {
         src={VIDEO_URL}
       />
       <div className="video-background-overlay" />
+      <div className="video-vignette-breathe" />
+      <div className="video-grain" />
     </div>
   )
 }

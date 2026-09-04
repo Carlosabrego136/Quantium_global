@@ -362,7 +362,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .statement-proof { margin-top: 36px; display: flex; gap: 34px; flex-wrap: wrap; }
 .proof-item-light { display: grid; gap: 4px; }
 .proof-item-light strong { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,0.4); }
-.proof-item-light span { max-width: 120px; font-size: 10px; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.7); }
+.proof-item-light span { max-width: 120px; font-size: 10px; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.9); text-shadow: -1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4), -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4); }
 
 /* ============ Section 3 — Services (gray) ============ */
 .section-services { position: relative; z-index: 2; background: var(--panel); display: flex; flex-direction: column; padding: 70px 32px 80px 32px; }
@@ -440,7 +440,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .stat-strip-light { margin-top: 56px; }
 .stat-strip-head-light { margin-bottom: 24px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .eyebrow-dark { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
-.eyebrow-light { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); text-shadow: 0 1px 8px rgba(0,0,0,0.4); }
+.eyebrow-light { margin: 0; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.9); text-shadow: -1px -1px 0 rgba(0,0,0,0.4), 1px -1px 0 rgba(0,0,0,0.4), -1px 1px 0 rgba(0,0,0,0.4), 1px 1px 0 rgba(0,0,0,0.4); }
 .live-dark { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); }
 .stats-grid-light { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
 .stat-card-light { display: grid; gap: 9px; padding: 16px 0; border-top: 1px solid var(--panel-line); }

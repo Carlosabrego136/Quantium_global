@@ -250,12 +250,16 @@ ul { margin: 0; padding: 0; list-style: none; }
 .market-node-svg { animation-name: mnFloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 @keyframes mnFloat { 0%, 100% { transform: translateY(0); opacity: 0.18; } 50% { transform: translateY(-11px); opacity: 1; } }
 .market-node-svg-dot { opacity: 1; }
+.market-orbit-group { transform-origin: 800px 420px; animation: mnOrbit 130s linear infinite; }
+.market-node-counter { animation: mnOrbitCounter 130s linear infinite; }
+@keyframes mnOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes mnOrbitCounter { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 .market-node-svg.accent-gold .market-node-svg-dot { fill: url(#mnGoldMetal); }
 .market-node-svg.accent-red .market-node-svg-dot { fill: url(#mnRedMetal); }
 .market-node-svg.accent-white .market-node-svg-dot { fill: #fff; }
 .market-node-svg-label { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12.5px; font-weight: 500; letter-spacing: 0.07em; fill: rgba(255, 255, 255, 0.96); paint-order: stroke; stroke: rgba(0, 0, 0, 0.35); stroke-width: 2px; stroke-linejoin: round; }
 @media (prefers-reduced-motion: reduce) {
-  .market-edge-line, .market-node-svg, .market-node-svg-dot { animation: none; }
+  .market-edge-line, .market-node-svg, .market-node-svg-dot, .market-orbit-group, .market-node-counter { animation: none; }
 }
 
 /* ============ fixed navbar ============ */

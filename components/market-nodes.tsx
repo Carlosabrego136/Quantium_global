@@ -109,7 +109,7 @@ export function MarketNodes() {
           </radialGradient>
         </defs>
 
-        <g>
+        <g className="market-orbit-group">
           {nodes.map((node) => (
             <g key={node.id} className={`market-node-svg accent-${node.accent}`} style={{ animationDuration: `${node.dur}s`, animationDelay: `${node.delay}s` }}>
               <g filter="url(#mnGlow)">
@@ -121,9 +121,11 @@ export function MarketNodes() {
                   style={{ animationDuration: `${node.dur * 0.5}s`, animationDelay: `${node.delay}s` }}
                 />
               </g>
-              <text className="market-node-svg-label" x={node.x + node.r + 8} y={node.y + 4}>
-                {node.label}
-              </text>
+              <g className="market-node-counter" style={{ transformOrigin: `${node.x}px ${node.y}px` }}>
+                <text className="market-node-svg-label" x={node.x + node.r + 8} y={node.y + 4}>
+                  {node.label}
+                </text>
+              </g>
             </g>
           ))}
         </g>

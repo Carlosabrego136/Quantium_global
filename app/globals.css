@@ -249,10 +249,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 @keyframes mnEdgeFlow { to { stroke-dashoffset: -180; } }
 .market-node-svg { animation-name: mnFloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
 @keyframes mnFloat { 0%, 100% { transform: translateY(0); opacity: 0.12; } 50% { transform: translateY(-18px); opacity: 1; } }
-.market-node-svg-dot { transform-box: fill-box; transform-origin: center; animation-name: mnPulse; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
-@keyframes mnPulse { 0%, 100% { opacity: 0.8; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
-.market-node-svg.accent-gold .market-node-svg-dot { fill: var(--accent-gold); }
-.market-node-svg.accent-red .market-node-svg-dot { fill: var(--accent-red); }
+.market-node-svg-dot { opacity: 1; }
+.market-node-svg.accent-gold .market-node-svg-dot { fill: url(#mnGoldMetal); }
+.market-node-svg.accent-red .market-node-svg-dot { fill: url(#mnRedMetal); }
 .market-node-svg.accent-white .market-node-svg-dot { fill: #fff; }
 .market-node-svg-label { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 12.5px; font-weight: 500; letter-spacing: 0.07em; fill: rgba(255, 255, 255, 0.96); paint-order: stroke; stroke: rgba(0, 0, 0, 0.35); stroke-width: 2px; stroke-linejoin: round; }
 @media (prefers-reduced-motion: reduce) {

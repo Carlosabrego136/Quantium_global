@@ -95,6 +95,18 @@ export function MarketNodes() {
             <stop offset="50%" stopColor="#dff0ff" />
             <stop offset="100%" stopColor="#5a9bdb" />
           </linearGradient>
+          <radialGradient id="mnGoldMetal" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stopColor="#fff3d6" />
+            <stop offset="35%" stopColor="#e0b878" />
+            <stop offset="70%" stopColor="#a97a3d" />
+            <stop offset="100%" stopColor="#7a5426" />
+          </radialGradient>
+          <radialGradient id="mnRedMetal" cx="35%" cy="30%" r="75%">
+            <stop offset="0%" stopColor="#ffd9cf" />
+            <stop offset="35%" stopColor="#c9614a" />
+            <stop offset="70%" stopColor="#8f3423" />
+            <stop offset="100%" stopColor="#5e1f14" />
+          </radialGradient>
         </defs>
 
         <g>

@@ -235,24 +235,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* ============ floating ticker nodes over the video ============ */
 .market-nodes { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; mix-blend-mode: screen; --mn-px: 0px; --mn-py: 0px; --mn-px-far: 0px; --mn-py-far: 0px; }
 
-/* ============ corner viewfinder frame (same L-mark language as the Nosotros CTA) ============ */
-.viewfinder-frame { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-.vf-corner { position: absolute; width: 30px; height: 30px; }
-.vf-corner::before, .vf-corner::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.5); }
-.vf-corner::before { width: 100%; height: 1.6px; }
-.vf-corner::after { width: 1.6px; height: 100%; }
-.vf-tl { top: 26px; left: 26px; }
-.vf-tl::before, .vf-tl::after { top: 0; left: 0; }
-.vf-tr { top: 26px; right: 26px; }
-.vf-tr::before, .vf-tr::after { top: 0; right: 0; }
-.vf-bl { bottom: 26px; left: 26px; }
-.vf-bl::before, .vf-bl::after { bottom: 0; left: 0; }
-.vf-br { bottom: 26px; right: 26px; }
-.vf-br::before, .vf-br::after { bottom: 0; right: 0; }
-@media (max-width: 900px) {
-  .viewfinder-frame { display: none; }
-}
-
 /* ============ cinematic edge vignette (frames the scene, keeps the center clear) ============ */
 .video-frame-vignette {
   position: fixed;

@@ -87,6 +87,13 @@ export default function Page() {
     <div className="site-shell">
       <VideoBackground />
       <MarketNodes />
+      <div className="viewfinder-frame" aria-hidden="true">
+        <i className="vf-corner vf-tl" />
+        <i className="vf-corner vf-tr" />
+        <i className="vf-corner vf-bl" />
+        <i className="vf-corner vf-br" />
+      </div>
+      <div className="video-frame-vignette" aria-hidden="true" />
 
       <header className="site-nav">
         <FadeUp as="span" delay={0} className="nav-brand">

@@ -30,8 +30,8 @@ const tagMap: Record<FadeUpTag, ElementType> = {
 export function FadeUp({
   children,
   delay = 0,
-  duration = 0.7,
-  y = 24,
+  duration = 0.4,
+  y = 12,
   className,
   style,
   as = 'div',
@@ -45,7 +45,7 @@ export function FadeUp({
       style={style}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount: 0.2 }}
+      viewport={{ once, amount: 0.1 }}
       transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

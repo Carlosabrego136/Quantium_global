@@ -11,24 +11,24 @@ import { FadeUp } from '@/components/fade-up'
 const ticker = ['SPX 5,482.10 +0.42%', 'VIX 13.86 -2.10%', 'QQQ 481.27 +0.61%', 'NVDA 138.44 +1.85%', 'TSLA 243.90 -0.77%', 'BTC 71,240 +2.14%', 'ETH 3,802 +1.02%', 'DXY 104.12 -0.18%', '10Y 4.28% +0.03', 'GAMMA FLIP 7,410']
 
 const tools = [
-  { number: '01', title: 'Flujo de Opciones', text: 'Cada trade grande, en el instante en que ocurre. Calls vs puts, primas, sweeps y whales, con el drift del flujo.', image: '/cards/flujo-opciones.jpg', icon: null, accent: 'gold' },
-  { number: '02', title: 'Superficie de Gamma 3D', text: 'La exposición del dealer como paisaje: dónde el mercado se pega y dónde se suelta. Gamma, vanna y charm por strike y vencimiento.', image: '/cards/gamma-dealer.jpg', icon: null, accent: 'white' },
-  { number: '03', title: 'Dark Pool', text: 'El volumen que no ves en la cinta. Prints y niveles institucionales.', image: '/cards/dark-pool.jpg', icon: null, accent: 'red' },
-  { number: '04', title: 'Volatilidad', text: 'Skew, estructura temporal y superficie IV. VRP y estacionalidad.', image: '/cards/volatilidad.jpg', icon: null, accent: 'white' },
-  { number: '05', title: 'Macro', text: 'Curva de bonos, crédito, Fed Watch. El régimen, de un vistazo.', image: '/cards/macro.jpg', icon: null, accent: 'gold' },
-  { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', icon: null, accent: 'red' },
+  { number: '01', title: 'Flujo de Opciones', text: 'Cada trade grande, en el instante en que ocurre. Calls vs puts, primas, sweeps y whales, con el drift del flujo.', image: '/cards/flujo-opciones.jpg', video: null, icon: null, accent: 'gold' },
+  { number: '02', title: 'Superficie de Gamma 3D', text: 'La exposición del dealer como paisaje: dónde el mercado se pega y dónde se suelta. Gamma, vanna y charm por strike y vencimiento.', image: '/cards/gamma-dealer.jpg', video: null, icon: null, accent: 'white' },
+  { number: '03', title: 'Dark Pool', text: 'El volumen que no ves en la cinta. Prints y niveles institucionales.', image: '/cards/dark-pool.jpg', video: null, icon: null, accent: 'red' },
+  { number: '04', title: 'Volatilidad', text: 'Skew, estructura temporal y superficie IV. VRP y estacionalidad.', image: '/cards/volatilidad.jpg', video: '/cards/video/volatilidad.mp4', icon: null, accent: 'white' },
+  { number: '05', title: 'Macro', text: 'Curva de bonos, crédito, Fed Watch. El régimen, de un vistazo.', image: '/cards/macro.jpg', video: null, icon: null, accent: 'gold' },
+  { number: '06', title: 'Cripto', text: 'Liquidaciones, funding, gamma y bookmap de BTC / ETH.', image: '/cards/cripto.jpg', video: null, icon: null, accent: 'red' },
 ] as const
 
-const moreTools: { number: string; title: string; text: string; image: string; accent: 'gold' | 'red' | 'white' }[] = [
-  { number: '07', title: 'Insider & Congreso', text: 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.', image: '/cards/insider-congreso.jpg', accent: 'gold' },
-  { number: '08', title: 'Forex & Fed Watch', text: 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.', image: '/cards/forex-fedwatch.jpg', accent: 'red' },
-  { number: '09', title: 'Niveles de Mercado', text: 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.', image: '/cards/niveles-mercado.jpg', accent: 'white' },
+const moreTools: { number: string; title: string; text: string; image: string; video?: string; accent: 'gold' | 'red' | 'white' }[] = [
+  { number: '07', title: 'Insider & Congreso', text: 'Qué compran los ejecutivos y los políticos, con su reporte y su retraso.', image: '/cards/insider-congreso.jpg', video: '/cards/video/insider-congreso.mp4', accent: 'gold' },
+  { number: '08', title: 'Forex & Fed Watch', text: 'Fuerza de divisas, trades bancarios y la curva de probabilidad de la Fed.', image: '/cards/forex-fedwatch.jpg', video: '/cards/video/forex-fedwatch.mp4', accent: 'red' },
+  { number: '09', title: 'Niveles de Mercado', text: 'Gamma flip, call y put wall, max pain. Dónde están los imanes del precio.', image: '/cards/niveles-mercado.jpg', video: '/cards/video/niveles-mercado.mp4', accent: 'white' },
   { number: '10', title: 'Equities', text: 'Exposición y gamma por acción. La foto del posicionamiento, sin ruido.', image: '/cards/equities.jpg', accent: 'gold' },
-  { number: '11', title: 'Posicionamiento', text: 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.', image: '/cards/posicionamiento.jpg', accent: 'red' },
+  { number: '11', title: 'Posicionamiento', text: 'Cómo está parado el mercado: open interest, net drift y sesgo por vencimiento.', image: '/cards/posicionamiento.jpg', video: '/cards/video/posicionamiento.mp4', accent: 'red' },
 ]
 
 const allToolSlides = [
-  ...tools.map((t) => ({ number: t.number, title: t.title, text: t.text, image: t.image, accent: t.accent })),
+  ...tools.map((t) => ({ number: t.number, title: t.title, text: t.text, image: t.image, video: t.video ?? undefined, accent: t.accent })),
   ...moreTools,
 ]
 

@@ -7,6 +7,7 @@ export type MarqueeSlide = {
   title: string
   text: string
   image?: string
+  video?: string
   accent?: 'gold' | 'red' | 'white'
 }
 
@@ -28,7 +29,9 @@ export function ToolsMarquee({ slides }: { slides: MarqueeSlide[] }) {
         {doubled.map((slide, i) => (
           <div className={`nz-marquee-slide accent-${slide.accent ?? 'gold'}`} key={`${slide.number}-${i}`}>
             <div className="nz-marquee-media">
-              {slide.image ? (
+              {slide.video ? (
+                <video src={slide.video} autoPlay muted loop playsInline preload="metadata" />
+              ) : slide.image ? (
                 <img src={slide.image} alt={slide.title} loading="lazy" draggable={false} />
               ) : (
                 <div className="nz-marquee-media-placeholder" />

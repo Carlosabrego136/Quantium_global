@@ -392,7 +392,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nz-marquee-slide.accent-red { border-top-color: var(--accent-red); }
 .nz-marquee-slide.accent-white { border-top-color: var(--accent-white); }
 .nz-marquee-media { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #0a0a0a; pointer-events: none; }
-.nz-marquee-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nz-marquee-media img, .nz-marquee-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nz-marquee-media-placeholder { width: 100%; height: 100%; background: radial-gradient(circle at 50% 40%, rgba(184, 146, 90, 0.18), #0a0a0a 75%); }
 .nz-marquee-number { position: absolute; left: 12px; bottom: 12px; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; color: rgba(255, 255, 255, 0.85); }
 .nz-marquee-info { padding: 18px 18px 20px 18px; display: flex; flex-direction: column; gap: 8px; }

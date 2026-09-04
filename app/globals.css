@@ -196,7 +196,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ============ floating ticker nodes over the video ============ */
-.market-nodes { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.market-nodes { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; mix-blend-mode: screen; }
 .market-node {
   position: absolute;
   display: flex;
@@ -248,7 +248,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .market-edge-line { stroke: url(#mnEdgeGradient); stroke-width: 1.4; stroke-dasharray: 7 11; opacity: 0.8; animation: mnEdgeFlow 3.4s linear infinite; }
 @keyframes mnEdgeFlow { to { stroke-dashoffset: -180; } }
 .market-node-svg { animation-name: mnFloat; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
-@keyframes mnFloat { 0%, 100% { transform: translateY(0); opacity: 0.12; } 50% { transform: translateY(-18px); opacity: 1; } }
+@keyframes mnFloat { 0%, 100% { transform: translateY(0); opacity: 0.18; } 50% { transform: translateY(-11px); opacity: 1; } }
 .market-node-svg-dot { opacity: 1; }
 .market-node-svg.accent-gold .market-node-svg-dot { fill: url(#mnGoldMetal); }
 .market-node-svg.accent-red .market-node-svg-dot { fill: url(#mnRedMetal); }
